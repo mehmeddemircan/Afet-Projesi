@@ -8,7 +8,7 @@ export const AllArea = () => async (dispatch) => {
       });
   
       const { data } = await axios.get(
-        `${process.env.SERVER_API_URL}/api/areas`
+        `/api/areas`
       );
   
       dispatch({
