@@ -33,7 +33,7 @@ export const AllPersonType = () => async (dispatch) => {
       });
   
       const { data } = await axios.post(
-        `https://afetbackendapi.onrender.com/api/create-persontype`,personType
+        `/api/create-persontype`,personType
       );
   
       dispatch({
@@ -56,7 +56,7 @@ export const AllPersonType = () => async (dispatch) => {
       });
   
       const { data } = await axios.delete(
-        `https://afetbackendapi.onrender.com/api/personTypes/${id}/delete`
+        `/api/personTypes/${id}/delete`
       );
   
       dispatch({
@@ -79,7 +79,7 @@ export const AllPersonType = () => async (dispatch) => {
       });
   
       const { data } = await axios.put(
-        `https://afetbackendapi.onrender.com/api/personTypes/${id}/update`,personType
+        `/api/personTypes/${id}/update`,personType
       );
   
       dispatch({
