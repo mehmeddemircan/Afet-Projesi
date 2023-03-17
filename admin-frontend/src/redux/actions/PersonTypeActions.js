@@ -10,7 +10,7 @@ export const AllPersonType = () => async (dispatch) => {
       });
   
       const { data } = await axios.get(
-        `/api/personTypes`
+        `https://afetbackendapi.onrender.com/api/personTypes`
       );
   
       dispatch({
