@@ -9,7 +9,7 @@ export const AllCategory = (page,limit) => async (dispatch) => {
       });
   
       const { data } = await axios.get(
-        `/api/categories?page=${page}&limit=${limit}`,
+        `https://afetbackendapi.onrender.com/api/categories?page=${page}&limit=${limit}`,
       );
   
       dispatch({
@@ -31,7 +31,7 @@ export const AllCategory = (page,limit) => async (dispatch) => {
       });
   
       const { data } = await axios.post(
-        `/api/create-category`,category
+        `https://afetbackendapi.onrender.com/api/create-category`,category
       );
   
       dispatch({
@@ -54,7 +54,7 @@ export const AllCategory = (page,limit) => async (dispatch) => {
       });
   
       const { data } = await axios.delete(
-        `/api/category/${id}/delete`
+        `https://afetbackendapi.onrender.com/api/category/${id}/delete`
       );
   
       dispatch({
@@ -76,7 +76,7 @@ export const AllCategory = (page,limit) => async (dispatch) => {
       });
   
       const { data } = await axios.put(
-        `/api/category/${id}/update`,category
+        `https://afetbackendapi.onrender.com/api/category/${id}/update`,category
       );
   
       dispatch({
@@ -99,7 +99,7 @@ export const AllCategory = (page,limit) => async (dispatch) => {
       });
   
       const { data } = await axios.put(
-        `/api/categories/${id}/add-sub`,sub
+        `https://afetbackendapi.onrender.com/api/categories/${id}/add-sub`,sub
       );
   
       dispatch({
@@ -123,7 +123,7 @@ export const GetCategories = () => async (dispatch) => {
     });
 
     const { data } = await axios.get(
-      `/api/get-all-category`,
+      `https://afetbackendapi.onrender.com/api/get-all-category`,
     );
 
     dispatch({

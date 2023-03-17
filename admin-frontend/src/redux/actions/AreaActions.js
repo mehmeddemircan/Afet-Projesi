@@ -8,7 +8,7 @@ export const AllArea = () => async (dispatch) => {
       });
   
       const { data } = await axios.get(
-        `/api/areas`
+        `https://afetbackendapi.onrender.com/api/areas`
       );
   
       dispatch({
@@ -30,7 +30,7 @@ export const AllArea = () => async (dispatch) => {
       });
   
       const { data } = await axios.post(
-        `/api/create-area`,area
+        `https://afetbackendapi.onrender.com/api/create-area`,area
       );
   
       dispatch({
@@ -52,7 +52,7 @@ export const AllArea = () => async (dispatch) => {
       });
   
       const { data } = await axios.post(
-        `/api/areas/${id}/add-product`,product
+        `https://afetbackendapi.onrender.com/api/areas/${id}/add-product`,product
       );
   
       dispatch({
@@ -74,7 +74,7 @@ export const AllArea = () => async (dispatch) => {
       });
   
       const { data } = await axios.delete(
-        `/api/areas/${areaId}/products/${productId}/remove`
+        `https://afetbackendapi.onrender.com/api/areas/${areaId}/products/${productId}/remove`
       );
   
       dispatch({
@@ -98,7 +98,7 @@ export const AllArea = () => async (dispatch) => {
       });
   
       const { data } = await axios.get(
-        `/api/areas/${id}/requriredProducts`
+        `https://afetbackendapi.onrender.com/api/areas/${id}/requriredProducts`
       );
   
       dispatch({
@@ -120,7 +120,7 @@ export const AllArea = () => async (dispatch) => {
       });
   
       const { data } = await axios.delete(
-        `/api/areas/${id}/delete`
+        `https://afetbackendapi.onrender.com/api/areas/${id}/delete`
       );
   
       dispatch({

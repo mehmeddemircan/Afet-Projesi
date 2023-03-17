@@ -17,7 +17,7 @@ export const AllUser = (limit, page) => async (dispatch) => {
       type: GET_ALL_USER_REQUEST,
     });
 
-    const { data } = await axios.get(`/api/users?limit=${limit}&page=${page}`);
+    const { data } = await axios.get(`https://afetbackendapi.onrender.com/api/users?limit=${limit}&page=${page}`);
 
     dispatch({
       type: GET_ALL_USER_SUCCESS,
@@ -38,7 +38,7 @@ export const SearchUser = (name) => async (dispatch) => {
     });
 
     const { data } = await axios.get(
-      `/api/users/search?name=${name}`
+      `https://afetbackendapi.onrender.com/api/users/search?name=${name}`
     );
 
     dispatch({
@@ -61,7 +61,7 @@ export const UpdateUserRole = (id) => async (dispatch) => {
       });
   
       const { data } = await axios.put(
-        `/api/users/${id}/update-role`
+        `https://afetbackendapi.onrender.com/api/users/${id}/update-role`
       );
   
       dispatch({
