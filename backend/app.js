@@ -27,10 +27,11 @@ fs.readdirSync("./routes").map((r) =>
 );
 // Routes
 app.get("/", (req, res) => {
+  res.setHeader("Access-Control-Allow-Credentials","true")
   res.send("Homepage");
 });
 
 app.listen(PORT, () =>
   console.log(`Server Started at Port ${PORT}
-=> http://localhost:${PORT}`)
+=>https://mernafetbackend.onrender.com/`)
 );
