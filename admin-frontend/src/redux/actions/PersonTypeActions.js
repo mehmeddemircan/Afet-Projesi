@@ -10,7 +10,7 @@ export const AllPersonType = () => async (dispatch) => {
       });
   
       const { data } = await axios.get(
-        `https://afetbackendapi.onrender.com/api/personTypes`
+        `${process.env.SERVER_API_URL}/api/personTypes`
       );
   
       dispatch({
@@ -33,7 +33,7 @@ export const AllPersonType = () => async (dispatch) => {
       });
   
       const { data } = await axios.post(
-        `/api/create-persontype`,personType
+        `${process.env.SERVER_API_URL}/api/create-persontype`,personType
       );
   
       dispatch({
@@ -56,7 +56,7 @@ export const AllPersonType = () => async (dispatch) => {
       });
   
       const { data } = await axios.delete(
-        `/api/personTypes/${id}/delete`
+        `${process.env.SERVER_API_URL}/api/personTypes/${id}/delete`
       );
   
       dispatch({
@@ -79,7 +79,7 @@ export const AllPersonType = () => async (dispatch) => {
       });
   
       const { data } = await axios.put(
-        `/api/personTypes/${id}/update`,personType
+        `${process.env.SERVER_API_URL}/api/personTypes/${id}/update`,personType
       );
   
       dispatch({
