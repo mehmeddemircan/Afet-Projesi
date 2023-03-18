@@ -53,7 +53,8 @@ const ProductDetailsDesc = () => {
 
   return (
     <Fragment>
-      <div className="card  col-md-6 mt-3">
+      <div className="col">
+      <div className="card  mt-3">
         <div className="card-body">
           <Descriptions
             title={
@@ -129,6 +130,7 @@ const ProductDetailsDesc = () => {
             </form>
           </Descriptions>
         </div>
+      </div>
       </div>
     </Fragment>
   );

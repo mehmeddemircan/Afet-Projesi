@@ -37,7 +37,7 @@ const ProductItem = ({ product }) => {
         style={{
           width: 300,
         }}
-        className="my-3"
+        className="my-3 mx-2"
         cover={
           <div
             style={{

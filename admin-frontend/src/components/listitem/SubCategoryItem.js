@@ -38,7 +38,10 @@ const SubCategoryItem = ({ sub }) => {
           <>
             {showEditForm ? (
               <input
-                className="form-control w-25 rounded-3 ms-1"
+                className="form-control  rounded-3 ms-1"
+                style={{
+                  maxWidth: "230px",
+                }}
                 onKeyDown={handleUpdateSubCategory}
                 value={name}
                 onChange={(e) => setName(e.target.value)}

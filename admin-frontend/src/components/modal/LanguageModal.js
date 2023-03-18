@@ -125,57 +125,42 @@ const LanguageModal = ({ showLanguageModal, handleCancelLanguageModal }) => {
           </TabPane>
           {/* Currency */}
           <TabPane tab="Currency" key="2">
+            <h4 style={{ padding: "5px 0px 5px 10px" }}>Choose a currency</h4>
             <div
               style={{
-                display: "flex",
-                flexWrap: "wrap",
-                justifyContent: "space-between",
                 maxHeight: 480,
                 overflowY: "auto",
               }}
+              className="container d-flex justify-content-center flex-wrap"
             >
-              <h4 style={{ padding: "5px 0px 5px 10px" }}>Choose a currency</h4>
-
-              <ul style={{ padding: 0 }}>
-                {languages.map(({ code, name, country_code }) => (
-                  <li
-                    style={{
-                      display: "inline-block",
-                      padding: 4,
-                      fontSize: 15,
-                      height: 50,
-                      lineHeight: "40px",
-                      borderRadius: 20,
-                      margin: "8px",
-
-                      color: currentLanguageCode === code ? "#1890ff" : "",
-                      border:
-                        currentLanguageCode === code
-                          ? "1px solid #1890ff"
-                          : "1px solid rgba(34,34,34,0.10)",
-                    }}
-                    className="col-md-2"
+              {languages.map(({ code, name, country_code }) => (
+                <div class="col col-lg-3 col-md-4 col-sm-12" key={country_code}>
+                  <button
+                    class=" w-100 btn btn-md btn-sm  btn-light rounded-pill p-3 my-2 "
                     aria-disabled={currentLanguageCode === code}
                     onClick={() => {
                       i18next.changeLanguage(code);
                       handleCancelLanguageModal();
                     }}
                   >
-                    <a style={{ padding: "9px 12px" }}>
+                    <span
+                      className="d-inline-flex justify-content-center "
+                      style={{ fontSize: "16px" }}
+                    >
                       {" "}
-                      <span
+                      <p
                         className={`flag-icon flag-icon-${country_code} mx-2`}
                         // style={{
                         //   opacity: currentLanguageCode === code ? 0.5 : 1,
                         // }}
-                      ></span>
+                      ></p>
                       {name}
-                    </a>
-                  </li>
-                ))}
+                    </span>
+                  </button>
+                </div>
+              ))}
 
-                <div style={{ height: "110vh" }}></div>
-              </ul>
+              <div style={{ height: "110vh" }}></div>
             </div>
           </TabPane>
         </Tabs>

@@ -4,6 +4,7 @@ import "../scrollbar/ProductImagesScroll.css";
 const ProductImagesList = ({ product }) => {
   return (
     <Fragment>
+      <div className="">
       <div
         className="scrollbar mt-3 "
         style={{ maxHeight: "320px", overflowY: "auto" }}
@@ -12,6 +13,8 @@ const ProductImagesList = ({ product }) => {
           style={{
             listStyle: "none",
             marginBottom: 2,
+            paddingLeft :  12
+            
           }}
         >
           <Image.PreviewGroup>
@@ -30,6 +33,7 @@ const ProductImagesList = ({ product }) => {
               ))}
           </Image.PreviewGroup>
         </ul>
+      </div>
       </div>
     </Fragment>
   );

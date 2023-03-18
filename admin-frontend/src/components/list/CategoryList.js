@@ -8,7 +8,7 @@ const CategoryList = () => {
   
   return (
     <Fragment>
-      <div className="my-4 d-flex flex-wrap justify-content-between" >
+      <div className="my-4 d-flex flex-wrap justify-content-center" >
         {getAllCategory.categories.map((category) => (
           <CategoryItem key={category._id} category={category} />
         ))}

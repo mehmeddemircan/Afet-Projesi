@@ -115,100 +115,99 @@ const ProductDetailsPage = () => {
       <Fragment>
         <ProductDetailsBreadcrumb />
         {image}
-        <div className="row">
-          <div className="d-flex justify-content-evenly ">
-            {loading ? <h4>loading</h4> : <ProductDetailsDesc />}
 
-            <div className="col-md-2 ms-4">
-              <Card
-                hoverable
-                style={{
-                  width: 300,
-                }}
-                className="my-3"
-                cover={
-                  <div
-                    style={{
-                      position: "relative",
-                      display: "inline-block",
-                    }}
-                  >
-                    <Image.PreviewGroup>
-                      <Image
-                        alt="example"
-                        src={
-                          product && product._id === id
-                            ? product.images && product.images.length == 0
-                              ? "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-                              : product.images[0].url
-                            : null
-                        }
-                        height={182}
-                        width={300}
-                        style={{ objectFit: "cover" }}
-                      />
-                    </Image.PreviewGroup>
-                    <Tooltip placement="topLeft" title="Delete">
-                      <button
-                        className="btn btn-sm "
-                        style={{ position: "absolute", top: 0, right: 0 }}
-                        // onClick={handleDeleteProduct}
-                      >
-                        <i class="fa-solid fa-x"></i>
-                      </button>
-                    </Tooltip>
-                  </div>
-                }
-                actions={[
-                  image === "" ? (
-                    <label className="btn btn-primary btn-sm">
-                      <i class="fa-solid fa-plus me-2"></i>Image
-                      <input
-                        type="file"
-                        multiple
-                        hidden
-                        accept="images/*"
-                        onChange={FileUploadChange}
-                      />
-                    </label>
-                  ) : (
-                    <label
-                      className="btn btn-primary btn-sm"
-                      onClick={handleAddImage}
+        <div className="d-flex flex-wrap flex-row justify-content-center ">
+          {loading ? <h4>loading</h4> : <ProductDetailsDesc />}
+
+          <div className=" ms-4">
+            <Card
+              hoverable
+              style={{
+                width: 300,
+              }}
+              className="my-3"
+              cover={
+                <div
+                  style={{
+                    position: "relative",
+                    display: "inline-block",
+                  }}
+                >
+                  <Image.PreviewGroup>
+                    <Image
+                      alt="example"
+                      src={
+                        product && product._id === id
+                          ? product.images && product.images.length == 0
+                            ? "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+                            : product.images[0].url
+                          : null
+                      }
+                      height={182}
+                      width={300}
+                      style={{ objectFit: "cover" }}
+                    />
+                  </Image.PreviewGroup>
+                  <Tooltip placement="topLeft" title="Delete">
+                    <button
+                      className="btn btn-sm "
+                      style={{ position: "absolute", top: 0, right: 0 }}
+                      // onClick={handleDeleteProduct}
                     >
-                      Upload
-                    </label>
-                  ),
-                  <EditOutlined key="edit" />,
-                  <EllipsisOutlined key="ellipsis" />,
-                ]}
-              >
-                <Meta
-                  //   avatar={<Avatar src="https://joesch.moe/api/v1/random" />}
-                  title={product.title}
-                  description="This is the description"
-                />
-              </Card>
-              <div className="row">
-                <div className="d-flex justify-content-end">
-                  {images &&
-                    images.map((image) => (
-                      <span className="avatar-item" style={{ margin: "0 7px" }}>
-                        <Badge
-                          count="X"
-                          key={image.public_id}
-                          onClick={() => handleImageRemove(image.public_id)}
-                          style={{ cursor: "pointer" }}
-                        >
-                          <Avatar src={image.url} size={64} shape="square" />
-                        </Badge>
-                      </span>
-                    ))}
+                      <i class="fa-solid fa-x"></i>
+                    </button>
+                  </Tooltip>
                 </div>
+              }
+              actions={[
+                image === "" ? (
+                  <label className="btn btn-primary btn-sm">
+                    <i class="fa-solid fa-plus me-2"></i>Image
+                    <input
+                      type="file"
+                      multiple
+                      hidden
+                      accept="images/*"
+                      onChange={FileUploadChange}
+                    />
+                  </label>
+                ) : (
+                  <label
+                    className="btn btn-primary btn-sm"
+                    onClick={handleAddImage}
+                  >
+                    Upload
+                  </label>
+                ),
+                <EditOutlined key="edit" />,
+                <EllipsisOutlined key="ellipsis" />,
+              ]}
+            >
+              <Meta
+                //   avatar={<Avatar src="https://joesch.moe/api/v1/random" />}
+                title={product.title}
+                description="This is the description"
+              />
+            </Card>
+            <div className="row">
+              <div className="d-flex justify-content-end">
+                {images &&
+                  images.map((image) => (
+                    <span className="avatar-item" style={{ margin: "0 7px" }}>
+                      <Badge
+                        count="X"
+                        key={image.public_id}
+                        onClick={() => handleImageRemove(image.public_id)}
+                        style={{ cursor: "pointer" }}
+                      >
+                        <Avatar src={image.url} size={64} shape="square" />
+                      </Badge>
+                    </span>
+                  ))}
               </div>
             </div>
-            <ProductImagesList product={product} />
           </div>
+          <ProductImagesList product={product} />
         </div>
       </Fragment>
     </MainLayout>

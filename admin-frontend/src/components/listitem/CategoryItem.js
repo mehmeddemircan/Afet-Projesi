@@ -40,7 +40,7 @@ const CategoryItem = ({ category }) => {
   return (
     <Fragment>
       <Card
-        className="my-2"
+        className="my-2 mx-2"
         hoverable={true}
         style={{
           width: 300,

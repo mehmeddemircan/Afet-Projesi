@@ -8,7 +8,7 @@ const ProductList = () => {
 
   return (
     <Fragment>
-     <div className="my-4 d-flex flex-row flex-wrap justify-content-between">
+     <div className="my-4 d-flex flex-row flex-wrap justify-content-center">
         {getAllProduct.products.map((product) => (
           <ProductItem key={product._id} product={product} />
         ))}
