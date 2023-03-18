@@ -23,7 +23,11 @@ const LoginModal = ({ showLoginModal, handleCancelLoginModal }) => {
   const userSignup = () => {
     const user = { name, email, password };
 
-    dispatch(_register(user));
+    if (name == "" || email == "" || password == "") {
+      toast.error("Please fill the all box");
+    } else {
+      dispatch(_register(user));
+    }
   };
   const dispatch = useDispatch();
   const userLogin = (e) => {
@@ -37,10 +41,21 @@ const LoginModal = ({ showLoginModal, handleCancelLoginModal }) => {
   };
 
   useEffect(() => {
-    if (auth.authenticate == true) {
+    if (register) {
+      setName("");
+      setEmail("");
+      setPassword("");
+    }
+  }, [register]);
+
+  useEffect(() => {
+    if (!auth.authenticating && auth.error !== "") {
+      toast.error(auth.error);
+    }
+    if (auth.authenticate) {
       handleCancelLoginModal();
     }
-  }, [auth.authenticate]);
+  }, [auth.authenticating, auth.error, auth.authenticate]);
 
   return (
     <Fragment>
@@ -166,17 +181,19 @@ const LoginModal = ({ showLoginModal, handleCancelLoginModal }) => {
                         style={{ backgroundColor: "#222" }}
                         onClick={userLogin}
                       >
-                        Register
+                        Submit
                       </button>
                     </div>
 
                     <p class="text-center text-muted mt-3 mb-0">
-                      Have already an account?{" "}
+                      {register
+                        ? " Have already an account ? "
+                        : "Didn't you have account still ? "}
                       <a
                         class="fw-bold text-body"
                         onClick={handleRegisterLogin}
                       >
-                        <u>Login here</u>
+                        <u>{register ? "Login here" : "Signup here"}</u>
                       </a>
                     </p>
                   </form>

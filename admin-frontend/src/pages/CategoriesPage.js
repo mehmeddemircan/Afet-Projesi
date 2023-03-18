@@ -55,10 +55,7 @@ const CategoriesPage = () => {
     deleteUpdateCategory.updateSuccess,
     deleteUpdateCategory.addedSubToCategory
   ]);
-
-
-    
-
+  
     useEffect(() => {
         dispatch(AllSubCategory())
     }, [dispatch])

@@ -80,7 +80,7 @@ const LanguageModal = ({ showLanguageModal, handleCancelLanguageModal }) => {
               </div>
 
               <div class="container">
-                <div class="row  row-cols-4 gy-5">
+                <div class="d-flex justify-content-start row  gy-5">
                   {languages.map(
                     ({ code, name, country_code, country_name }) => (
                       <div
@@ -88,7 +88,7 @@ const LanguageModal = ({ showLanguageModal, handleCancelLanguageModal }) => {
                         key={country_code}
                       >
                         <button
-                          class="w-100 btn-light rounded-pill p-3 my-2 "
+                          class=" w-100 btn btn-md btn-sm  btn-light rounded-pill p-3 my-2 "
                           onClick={() => {
                             i18next.changeLanguage(code);
                             handleCancelLanguageModal();
@@ -102,7 +102,10 @@ const LanguageModal = ({ showLanguageModal, handleCancelLanguageModal }) => {
                                 : "1px solid rgb(221,221,221)",
                           }}
                         >
-                          <span style={{ fontSize: "16px" }}>
+                          <span
+                            className="d-inline-flex justify-content-center "
+                            style={{ fontSize: "16px" }}
+                          >
                             <img
                               src={`https://flagicons.lipis.dev/flags/4x3/${country_code}.svg`}
                               alt=""

@@ -69,7 +69,8 @@ export const authReducer = (state = initialState, action) => {
     case REGISTER_FAIL:
       return {
         ...state,
-        error: action.payload,
+        authenticating : false , 
+        error: action.payload.error,
       };
 
     default:

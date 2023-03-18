@@ -42,7 +42,7 @@ export const Login = (user) => async (dispatch) => {
     dispatch({
       type: LOGIN_FAIL,
 
-      payload: error.response,
+      payload: error.response.data,
     });
   }
 };
@@ -51,6 +51,8 @@ export const register = (user) => async (dispatch) => {
   try {
     dispatch({ type: REGISTER_REQUEST });
 
+
+    
     const res = await axios.post("https://afetbackendapi.onrender.com/api/register", user);
 
     // Success
@@ -70,10 +72,12 @@ export const register = (user) => async (dispatch) => {
 
       //   fail
     }
+   
+
   } catch (error) {
     dispatch({
       type: REGISTER_FAIL,
-      payload: error.message,
+      payload: error.response.data,
     });
   }
 };
@@ -94,7 +98,7 @@ export const isUserLoggedIn = () => {
     } else {
       dispatch({
         type: LOGIN_FAIL,
-        payload: { error: "Failed to login" },
+        payload: "das",
       });
     }
   };

@@ -7,15 +7,26 @@ const crypto = require('crypto');
 exports.register = catchAsyncErrors(async (req, res, next) => {
     const { name, email, password } = req.body;
   
+
+    // Checks if email and password is entered by user
+    if (!name || !email || !password) {
+      res.status(400).json({
+        success: false,
+        error: "Please provide an email and password",
+      });
+    }
+  
+
     const _user = await User.findOne({ email });
   
+
     if (_user) {
       res.status(400).json({
         success: false,
         error: "This email already taken Try again please ! ",
       });
     }
-  
+    
     const user = await User.create({
       name,
       email,
