@@ -1,10 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import GoogleMapReact from "google-map-react";
+import { Button, Popover } from 'antd';
+import { useDispatch, useSelector } from "react-redux";
+import { AllArea } from "../../redux/actions/AreaActions";
 
-const AnyReactComponent = ({ text }) => (
-  <div className="card">
-    <div className="btn btn-outline-primary">{text}</div>;
+const AnyReactComponent = ({area, text }) => (
+
+
+
+    <Popover content={(
+      <div>
+        <p>latitude {area.coordinates.latitude}</p>
+        <p>longitude {area.coordinates.longitude}</p>
+    <p>gerekli ürünler : </p>
+    <p>gerekli insanlar</p>
   </div>
+    )} title={text}>
+      <Button type="default" icon={<i class="fa-solid fa-hand"></i>}></Button>
+    </Popover>
+
 );
 
 export default function SimpleMap() {
@@ -16,6 +30,12 @@ export default function SimpleMap() {
     zoom: 6,
   };
 
+  const getAllArea = useSelector((state) => state.getAllArea)
+  const dispatch= useDispatch()
+useEffect(() => {
+dispatch(AllArea())
+}, [dispatch])
+
   return (
     // Important! Always set the container height explicitly
     <div style={{ height: "100vh", width: "100%" }}>
@@ -24,7 +44,13 @@ export default function SimpleMap() {
         defaultCenter={defaultProps.center}
         defaultZoom={defaultProps.zoom}
       >
-        <AnyReactComponent lat={39.955413} lng={32.337844} text="Deneme" />
+        {getAllArea.areas.map((area) => (
+            <AnyReactComponent area={area} key={area._id} lat={
+              area.coordinates.latitude 
+            } lng={area.coordinates.longitude} text={<>
+            <a>{area.name} Depremi</a>
+            </>} />
+        ))}
       </GoogleMapReact>
     </div>
   );
