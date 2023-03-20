@@ -54,19 +54,8 @@ const AddAreaModal = ({ showAddAreaModal, handleCloseAddAreaModal }) => {
               />
             </div>
             <div className="d-flex">
-              <div className="me-4 col-5 ">
-                <label for="recipient-name" class="col-form-label">
-                  Longitude{" "}
-                </label>
-                <input
-                  type="number"
-                  class="form-control "
-                  id="longitude"
-                  value={longitude}
-                  onChange={(e) => setLongitude(e.target.value)}
-                />
-              </div>
-              <div className="ms-4 col-5">
+              
+              <div className="me-4 col-5">
                 <label for="recipient-name" class="col-form-label">
                   Latitude
                 </label>
@@ -76,6 +65,18 @@ const AddAreaModal = ({ showAddAreaModal, handleCloseAddAreaModal }) => {
                   id="latitude"
                   value={latitude}
                   onChange={(e) => setLatitude(e.target.value)}
+                />
+              </div>
+              <div className="ms-4 col-5 ">
+                <label for="recipient-name" class="col-form-label">
+                  Longitude{" "}
+                </label>
+                <input
+                  type="number"
+                  class="form-control "
+                  id="longitude"
+                  value={longitude}
+                  onChange={(e) => setLongitude(e.target.value)}
                 />
               </div>
             </div>
