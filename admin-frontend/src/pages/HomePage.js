@@ -4,8 +4,8 @@ import HomeJumbotron from '../components/jumbotron/HomeJumbotron'
 
 
 
-import GoogleMapComponent from '../components/map/GoogleMapComponent'
-import SimpleMap from '../components/map/Deneme'
+
+import SimpleMap from '../components/map/MapComponent'
 
 
 
