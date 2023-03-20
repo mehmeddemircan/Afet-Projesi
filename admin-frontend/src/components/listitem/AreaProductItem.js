@@ -29,17 +29,18 @@ const AreaProductItem = ({ product }) => {
           </>,
         ]}
       >
+         <AddProductToAreaModal
+        product={product}
+        handleCloseAddProductToAreaModal={handleCloseAddProductToAreaModal}
+        showAddProductToAreaModal={showAddProductToAreaModal}
+      />
         <List.Item.Meta
           title={<a>{product.title}</a>}
           description="Ant Design, a design language for background applications, is refined by Ant UED Team"
         />
       </List.Item>
 
-      <AddProductToAreaModal
-        product={product}
-        handleCloseAddProductToAreaModal={handleCloseAddProductToAreaModal}
-        showAddProductToAreaModal={showAddProductToAreaModal}
-      />
+     
     </Fragment>
   );
 };

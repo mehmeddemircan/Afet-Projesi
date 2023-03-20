@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 
 const AddProductToAreaModal = ({
   product,
-  showAddPersonToAreaModal,
+  showAddProductToAreaModal,
   handleCloseAddProductToAreaModal,
 }) => { 
 
@@ -27,15 +27,13 @@ const AddProductToAreaModal = ({
     <Fragment>
       <Modal
         centered
-        open={showAddPersonToAreaModal}
+        open={showAddProductToAreaModal}
          onOk={handleAddProductToArea}
         onCancel={handleCloseAddProductToAreaModal}
       >
         <form>
           <div class="form-group">
-            <h4>Product Title </h4>
-            <h4>Product Title </h4>
-            <h4>Product Title </h4>
+              <h3>{product.title}</h3>
             <p>
               {/* {product.title} {product._id} */}
             </p>
