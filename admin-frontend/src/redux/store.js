@@ -3,10 +3,13 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
 import {
   addAreaReducer,
+  addPersonToAreaReducer,
   addProductToAreaReducer,
   deleteUpdateAreaReducer,
   getAllAreaReducer,
+  getRequriredPeopleReducer,
   getRequriredProductsReducer,
+  removePersonFromAreaReducer,
   removeProductFromAreaReducer,
 } from "./reducers/AreaReducer";
 import {
@@ -69,6 +72,9 @@ const rootReducer = combineReducers({
   getRequriredProducts: getRequriredProductsReducer,
   removeProductFromArea: removeProductFromAreaReducer,
   deleteUpdateArea: deleteUpdateAreaReducer,
+  addPersonToArea : addPersonToAreaReducer,
+  removePersonFromArea : removePersonFromAreaReducer,
+  getRequriredPeople: getRequriredPeopleReducer
 });
 
 const initialState = {};

@@ -13,7 +13,7 @@ exports.createArea = catchAsyncErrors(async (req, res) => {
 
 exports.getAllArea = catchAsyncErrors(async (req, res) => {
   try {
-    const areas = await Area.find().populate("requrired_products.Product");
+    const areas = await Area.find().populate("requrired_products.Product").populate("requrired_people.Person");
     res.status(200).json(areas);
   } catch (error) {
     res.status(500).json(error);
@@ -116,6 +116,71 @@ exports.getRequriredProducts = catchAsyncErrors( async (req, res) => {
     const area = await Area.findById(req.params.id).populate('requrired_products.Product');
     const requrired_products = area.requrired_products;
     res.status(200).json(requrired_products);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Server Error');
+  }
+});
+
+
+// POST /areas/:areaId/add-product
+exports.addRequriredPersonToRequriment = catchAsyncErrors(async (req, res) => {
+  try {
+    // Find the requirement by ID
+    const area = await Area.findById(req.params.areaId);
+    if (!area) {
+      return res.status(404).send("area not found");
+    }
+
+    const newRequiredPerson = {
+      Person: req.body.Person,
+      quantity: req.body.quantity,
+    };
+    // Create a new RequiredProduct document
+
+    // Add the new RequiredProduct to the requirement's required_products array
+    area.requrired_people.push(newRequiredPerson);
+
+    // Save the requirement
+    await area.save();
+
+    // Return the updated requirement
+    res.json({
+      message : 'Successfully added person to area'
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server error");
+  }
+});
+
+exports.removePersonFromRequriredPeople = catchAsyncErrors(
+  // Delete controller to remove product from required_products array
+  async (req, res) => {
+    try {
+      const area = await Area.findById(req.params.id);
+      if (!area) {
+        return res.status(404).json({ message: "Area not found" });
+      }
+
+      // Remove product from required_products array
+      area.requrired_people.pull({ _id: req.params.objectId });
+      await area.save();
+
+      res.json({ message: "Person removed from required people array" });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: "Server Error" });
+    }
+  }
+);
+
+exports.getRequriredPeople = catchAsyncErrors( async (req, res) => {
+  try {
+ 
+    const area = await Area.findById(req.params.id).populate('requrired_people.Person');
+    const requrired_people = area.requrired_people;
+    res.status(200).json(requrired_people);
   } catch (error) {
     console.error(error);
     res.status(500).send('Server Error');
