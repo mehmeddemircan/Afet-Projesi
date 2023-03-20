@@ -12,6 +12,7 @@ import { DeleteArea } from "../../redux/actions/AreaActions";
 const { Meta } = Card;
 const AreaItem = ({ area }) => {
 
+  
   const dispatch = useDispatch()
 
   const handleDeleteArea = () => {
@@ -51,7 +52,7 @@ const AreaItem = ({ area }) => {
         >
           <Meta
             description={
-                <AlanCardDescription />
+                <AlanCardDescription key={area._id} area={area}/>
             }
           />
         </a>

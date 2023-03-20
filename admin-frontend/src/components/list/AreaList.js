@@ -11,7 +11,7 @@ const AreaList = () => {
       <div className="row">
         <div className="d-flex flex-wrap justify-content-between">
           {getAllArea.areas.map((area) => (
-            <AreaItem key={area.id} area={area} />
+            <AreaItem key={area._id} area={area} />
           ))}
         </div>
       </div>

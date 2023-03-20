@@ -32,10 +32,7 @@ const GET_ALL_AREA_INITIAL_STATE = {
     {
       _id: "",
       name: "",
-      cordinates: {
-        longitude: 0,
-        latitude: 0,
-      },
+      coordinates: null,
       requrired_products: [],
       requrired_people: [],
     },
