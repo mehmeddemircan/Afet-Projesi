@@ -1,7 +1,12 @@
 import React from 'react'
 import MainLayout from '../components/layout/MainLayout'
 import HomeJumbotron from '../components/jumbotron/HomeJumbotron'
-import MyMap from '../components/map/MapView'
+
+
+
+import GoogleMapComponent from '../components/map/GoogleMapComponent'
+import SimpleMap from '../components/map/Deneme'
+
 
 
 
@@ -10,7 +15,9 @@ const HomePage = () => {
         <MainLayout>
 
             <HomeJumbotron />
-          <MyMap />
+      
+   
+          <SimpleMap />
         </MainLayout>
   )
 }

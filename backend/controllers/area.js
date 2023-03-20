@@ -13,7 +13,7 @@ exports.createArea = catchAsyncErrors(async (req, res) => {
 
 exports.getAllArea = catchAsyncErrors(async (req, res) => {
   try {
-    const areas = await Area.find();
+    const areas = await Area.find().populate("requrired_products.Product");
     res.status(200).json(areas);
   } catch (error) {
     res.status(500).json(error);
