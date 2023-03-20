@@ -8,7 +8,7 @@ export const AllProduct = () => async (dispatch) => {
       });
   
       const { data } = await axios.get(
-        `https://afetbackendapi.onrender.com/api/products`
+        `https://afetapi.onrender.com/api/products`
       );
   
       dispatch({
@@ -31,7 +31,7 @@ export const AllProduct = () => async (dispatch) => {
       });
   
       const { data } = await axios.post(
-        `https://afetbackendapi.onrender.com/api/create-product`,product
+        `https://afetapi.onrender.com/api/create-product`,product
       );
   
       dispatch({
@@ -54,7 +54,7 @@ export const AllProduct = () => async (dispatch) => {
       });
   
       const { data } = await axios.delete(
-        `https://afetbackendapi.onrender.com/api/products/${id}/delete`
+        `https://afetapi.onrender.com/api/products/${id}/delete`
       );
   
       dispatch({
@@ -77,7 +77,7 @@ export const AllProduct = () => async (dispatch) => {
       });
   
       const { data } = await axios.put(
-        `https://afetbackendapi.onrender.com/api/products/${id}/update`,product
+        `https://afetapi.onrender.com/api/products/${id}/update`,product
       );
   
       dispatch({
@@ -100,7 +100,7 @@ export const AllProduct = () => async (dispatch) => {
       });
   
       const { data } = await axios.get(
-        `https://afetbackendapi.onrender.com/api/product/${id}`
+        `https://afetapi.onrender.com/api/product/${id}`
       );
   
       dispatch({
@@ -123,7 +123,7 @@ export const AllProduct = () => async (dispatch) => {
       });
   
       const { data } = await axios.put(
-        `https://afetbackendapi.onrender.com/api/products/${id}/images`,image
+        `https://afetapi.onrender.com/api/products/${id}/images`,image
       );
   
       dispatch({

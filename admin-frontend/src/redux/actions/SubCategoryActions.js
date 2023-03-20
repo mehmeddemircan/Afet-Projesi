@@ -9,7 +9,7 @@ export const AllSubCategory = () => async (dispatch) => {
       });
   
       const { data } = await axios.get(
-        `https://afetbackendapi.onrender.com/api/subcategories`
+        `https://afetapi.onrender.com/api/subcategories`
       );
   
       dispatch({
@@ -32,7 +32,7 @@ export const AllSubCategory = () => async (dispatch) => {
       });
   
       const { data } = await axios.post(
-        `https://afetbackendapi.onrender.com/api/create-subcategory`,subcategory
+        `https://afetapi.onrender.com/api/create-subcategory`,subcategory
       );
   
       dispatch({
@@ -55,7 +55,7 @@ export const AllSubCategory = () => async (dispatch) => {
       });
   
       const { data } = await axios.delete(
-        `https://afetbackendapi.onrender.com/api/subcategory/${id}/delete`
+        `https://afetapi.onrender.com/api/subcategory/${id}/delete`
       );
   
       dispatch({
@@ -78,7 +78,7 @@ export const AllSubCategory = () => async (dispatch) => {
       });
   
       const { data } = await axios.put(
-        `https://afetbackendapi.onrender.com/api/subcategory/${id}/update`,subcategory
+        `https://afetapi.onrender.com/api/subcategory/${id}/update`,subcategory
       );
   
       dispatch({

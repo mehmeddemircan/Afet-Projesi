@@ -36,7 +36,7 @@ export const AllArea = () => async (dispatch) => {
     });
 
     const { data } = await axios.get(
-      `https://afetbackendapi.onrender.com/api/areas`
+      `https://afetapi.onrender.com/api/areas`
     );
 
     dispatch({
@@ -58,7 +58,7 @@ export const AddArea = (area) => async (dispatch) => {
     });
 
     const { data } = await axios.post(
-      `https://afetbackendapi.onrender.com/api/create-area`,
+      `https://afetapi.onrender.com/api/create-area`,
       area
     );
 
@@ -81,7 +81,7 @@ export const AddProductToArea = (id, product) => async (dispatch) => {
     });
 
     const { data } = await axios.post(
-      `https://afetbackendapi.onrender.com/api/areas/${id}/add-product`,
+      `https://afetapi.onrender.com/api/areas/${id}/add-product`,
       product
     );
 
@@ -105,7 +105,7 @@ export const RemoveProductFromArea =
       });
 
       const { data } = await axios.delete(
-        `https://afetbackendapi.onrender.com/api/areas/${areaId}/products/${productId}/remove`
+        `https://afetapi.onrender.com/api/areas/${areaId}/products/${productId}/remove`
       );
 
       dispatch({
@@ -127,7 +127,7 @@ export const GetRequriredProducts = (id) => async (dispatch) => {
     });
 
     const { data } = await axios.get(
-      `https://afetbackendapi.onrender.com/api/areas/${id}/requriredProducts`
+      `https://afetapi.onrender.com/api/areas/${id}/requriredProducts`
     );
 
     dispatch({
@@ -149,7 +149,7 @@ export const DeleteArea = (id) => async (dispatch) => {
     });
 
     const { data } = await axios.delete(
-      `https://afetbackendapi.onrender.com/api/areas/${id}/delete`
+      `https://afetapi.onrender.com/api/areas/${id}/delete`
     );
 
     dispatch({
@@ -171,7 +171,7 @@ export const AddPersonToArea = (id, person) => async (dispatch) => {
     });
 
     const { data } = await axios.post(
-      `http://localhost:5000/api/areas/${id}/add-person`,
+      `https://afetapi.onrender.com/api/areas/${id}/add-person`,
       person
     );
 
@@ -194,7 +194,7 @@ export const RemovePersonFromArea = (areaId, personId) => async (dispatch) => {
     });
 
     const { data } = await axios.delete(
-      `http://localhost:5000/api/areas/${areaId}/people/${personId}/remove`
+      `https://afetapi.onrender.com/api/areas/${areaId}/people/${personId}/remove`
     );
 
     dispatch({
@@ -217,7 +217,7 @@ export const GetRequriredPeople = (id) => async (dispatch) => {
     });
 
     const { data } = await axios.get(
-      `http://localhost:5000/api/areas/${id}/requriredPeople`
+      `https://afetapi.onrender.com/api/areas/${id}/requriredPeople`
     );
 
     dispatch({
