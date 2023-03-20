@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import GoogleMapReact from "google-map-react";
-import { Button, Popover } from "antd";
+import { Badge, Button, Popover, Tag } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { AllArea } from "../../redux/actions/AreaActions";
 
@@ -10,7 +10,12 @@ const AnyReactComponent = ({ area, text }) => (
       <div>
         <p>latitude {area.coordinates.latitude}</p>
         <p>longitude {area.coordinates.longitude}</p>
-        <p>gerekli ürünler : </p>
+        <p>gerekli ürünler : {area.requrired_products.length == 0 ? "ihtiyac yok" : area.requrired_products.map((product) => (
+            
+            <Badge count={product.quantity} className="me-2">
+            <Tag color="#f50">{product.Product.title}</Tag>
+            </Badge>
+        ))} </p>
         <p>gerekli insanlar</p>
       </div>
     }
