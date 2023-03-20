@@ -35,7 +35,21 @@ const AnyReactComponent = ({ area, text }) => (
              
           </div>
           } </p>
-        <p>gerekli insanlar</p>
+        <p>gerekli insanlar  :  {area.requrired_products.length == 0 ? "ihtiyac yok" :  <div 
+          className="d-flex flex-wrap justify-content-start"
+          >
+             
+              {
+              area.requrired_people.map((person) => (
+                <div className="mt-2 ms-2">
+                <Badge count={person.quantity} className="me-2">
+                <Tag color="#f50">{person.Person.name}</Tag>
+                </Badge>
+                </div>
+            ))
+            }
+             
+          </div> }</p>
       </div>
     }
     title={text}
