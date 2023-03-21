@@ -189,3 +189,28 @@ exports.getRequriredPeople = catchAsyncErrors( async (req, res) => {
     res.status(500).send('Server Error');
   }
 });
+
+
+exports.getFilterQueryForArea = catchAsyncErrors(async (req,res) => {
+  // Controller function to filter areas based on required_products
+  try {
+    const priorityOrders = req.query.priorityOrders; // Get an array of priorityOrder values from the query parameter
+    const areas = await Area.find().populate('requrired_products.Product').populate('requrired_people.Person');; // Retrieve all areas from the database
+    let filteredProducts = areas  ; 
+    if (priorityOrders) {
+      filteredProducts = areas.filter((area) => {
+        // Filter the required_products array of each area to only include products with priorityOrder values in the priorityOrders array
+        area.requrired_products = area.requrired_products.filter(product => priorityOrders.includes(product.priorityOrder));
+        return area.requrired_products.length > 0; // Only include areas that have at least one product with a priorityOrder value in the priorityOrders array
+      });
+    }
+    res.json(filteredProducts);
+  } catch (error) {
+
+    console.error(error);
+    return res.status(500).json({ error: 'Internal Server Error' }); // Return an error response if there is an issue with the database query
+
+
+
+
+}})

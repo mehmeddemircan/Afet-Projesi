@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import MainLayout from "../components/layout/MainLayout";
 import AddAreaButton from "../components/buttons/AddAreaButton";
 import AreaList from "../components/list/AreaList";
@@ -17,8 +17,9 @@ const AllAreaPage = () => {
   const addArea = useSelector((state) => state.addArea);
   const deleteUpdateArea = useSelector((state) => state.deleteUpdateArea);
   const getAllArea = useSelector((state) => state.getAllArea);
+  const [priorities, setPriorities] = useState([])
   useEffect(() => {
-    dispatch(AllArea());
+    dispatch(AllArea(priorities));
 
     if (addArea.success) {
       dispatch({ type: ADD_AREA_RESET });

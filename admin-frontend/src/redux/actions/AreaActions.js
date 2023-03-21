@@ -29,14 +29,16 @@ import {
   REMOVE_REQURIRED_PRODUCT_FROM_SUCCESS,
 } from "../constants/AreaConstants";
 
-export const AllArea = () => async (dispatch) => {
+export const AllArea = (priorities) => async (dispatch) => {
   try {
     dispatch({
       type: GET_ALL_AREA_REQUEST,
     });
 
     const { data } = await axios.get(
-      `https://afetapi.onrender.com/api/areas`
+      priorities !== []
+        ? `https://afetapi.onrender.com/api/get-filter-areas?priorityOrders=${priorities}`
+        : `https://afetapi.onrender.com/api/get-filter-areas?priorityOrders=`
     );
 
     dispatch({
@@ -208,7 +210,6 @@ export const RemovePersonFromArea = (areaId, personId) => async (dispatch) => {
     });
   }
 };
-
 
 export const GetRequriredPeople = (id) => async (dispatch) => {
   try {

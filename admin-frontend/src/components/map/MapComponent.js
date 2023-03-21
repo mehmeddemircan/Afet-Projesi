@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import GoogleMapReact from "google-map-react";
 import { Badge, Button, Popover, Tag } from "antd";
 import { useDispatch, useSelector } from "react-redux";
@@ -66,41 +66,140 @@ export default function SimpleMap() {
   };
 
   const getAllArea = useSelector((state) => state.getAllArea);
+  const [checkedValues, setCheckedValues] = useState([]);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(AllArea());
-  }, [dispatch]);
+    dispatch(AllArea(checkedValues));
+  }, [dispatch,checkedValues.length]);
 
+  const handleCheckboxChange = (value) => {
+    if (checkedValues.includes(value)) {
+      // Remove the value from the checkedValues array if it already exists
+      setCheckedValues(checkedValues.filter((v) => v !== value));
+    } else {
+      // Add the value to the checkedValues array if it doesn't already exist
+      setCheckedValues([...checkedValues, value]);
+    }
+  };
   return (
     // Important! Always set the container height explicitly
-<Fragment>
-   
+    <Fragment>
+      <div className="container my-3">
+        <div className="d-flex flex-row justify-content-end">
+          <Popover
+            placement="bottom"
+            content={
+              <div className="d-flex flex-column">
+                <div className="px-2 mb-2 border-bottom">
+                  {" "}
+                  <input
+                    class="form-check-input me-2"
+                    type="checkbox"
+                    value="Cok Acil"
+                    id="flexCheckDefault"
+                    onClick={(e)  => handleCheckboxChange(e.target.value) }
+                  />{" "}
+                  <a
+                    style={{
+                      fontSize: "15px",
+                    }}
+                  >
+                    Cok Acil Olanlar
+                  </a>
+                </div>
+                <div className="px-2  mb-2 border-bottom">
+                  {" "}
+                  <input
+                    class="form-check-input me-2"
+                    type="checkbox"
+                    value="Acil"
+                    id="flexCheckDefault"
+                    onClick={(e)  => handleCheckboxChange(e.target.value) }
+                  />{" "}
+                  <a
+                    style={{
+                      fontSize: "15px",
+                    }}
+                  >
+                    {" "}
+                    Acil Olanlar
+                  </a>
+                </div>
+                <div className="px-2 mb-2 border-bottom">
+                  {" "}
+                  <input
+                    class="form-check-input me-2"
+                    type="checkbox"
+                    value="Normal"
+                    id="flexCheckDefault"
+                    onClick={(e)  => handleCheckboxChange(e.target.value) }
+                  />{" "}
+                  <a
+                    style={{
+                      fontSize: "15px",
+                    }}
+                  >
+                    Normal Olanlar
+                  </a>
+                </div>
+                <div className="px-2 mb-2 border-bottom">
+                  {" "}
+                  <input
+                    class="form-check-input me-2"
+                    type="checkbox"
+                    value="Acil Degil"
+                    id="flexCheckDefault"
+                    onClick={(e)  => handleCheckboxChange(e.target.value) }
+                  />{""}
+                  <a
+                    style={{
+                      fontSize: "15px",
+                    }}
+                  >
+                    Suan Gerekli olmayanlar
+                  </a>
+                </div>
+              
+              </div>
+            }
+            title="Filters"
+            trigger="click"
+          >
+            <button
+              className="btn text-white rounded-pill mx-2"
+              style={{ backgroundColor: "#222" }}
+            >
+              Filters <i class="fa-solid fa-filter text-white"></i>
+            </button>
+          </Popover>
+        </div>
+      </div>
 
-    <div className="container-fluid" style={{ height: "100vh" }}>
-      <GoogleMapReact
-        bootstrapURLKeys={{ key: "" }}
-        defaultCenter={defaultProps.center}
-        defaultZoom={defaultProps.zoom}
-      >
-        {!getAllArea.success ? (
-          <h2>loading</h2>
-        ) : (
-          getAllArea.areas.map((area) => (
-            <AnyReactComponent
-              area={area}
-              key={area._id}
-              lat={area.coordinates.latitude}
-              lng={area.coordinates.longitude}
-              text={
-                <>
-                  <a>{area.name} Depremi</a>
-                </>
-              }
-            />
-          ))
-        )}
-      </GoogleMapReact>
-    </div>
+      <div className="container-fluid" style={{ height: "100vh" }}>
+        <GoogleMapReact
+          bootstrapURLKeys={{ key: "" }}
+          defaultCenter={defaultProps.center}
+          defaultZoom={defaultProps.zoom}
+        >
+          {!getAllArea.success ? (
+            <h2>loading</h2>
+          ) : (
+            getAllArea.areas.map((area) => (
+              <AnyReactComponent
+                area={area}
+                key={area._id}
+                lat={area.coordinates.latitude}
+                lng={area.coordinates.longitude}
+                text={
+                  <>
+                    <a>{area.name} Depremi</a>
+                  </>
+                }
+              />
+            ))
+          )}
+        </GoogleMapReact>
+      </div>
     </Fragment>
   );
 }
