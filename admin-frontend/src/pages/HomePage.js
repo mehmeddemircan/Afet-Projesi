@@ -15,9 +15,9 @@ const HomePage = () => {
         <MainLayout>
 
             <HomeJumbotron />
-      
-   
-          <SimpleMap />
+              
+
+         
         </MainLayout>
   )
 }

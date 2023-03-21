@@ -1,22 +1,28 @@
 import { FloatButton } from "antd";
 import React, { Fragment } from "react";
 import { CustomerServiceOutlined } from "@ant-design/icons";
-const ShowMapButton = () => {
+import SimpleMap from "../map/MapComponent";
+const ShowMapButton = ({ showMap, handleToggleShowMap }) => {
   return (
     <Fragment>
       <FloatButton
         type="button"
         className="rounded-pill"
         shape="square"
+        onClick={handleToggleShowMap}
         description={
           <div className="d-flex align-items-center">
             <a
               className="text-white "
               style={{ fontSize: "16px", textDecoration: "none" }}
             >
-              Show Map
+              {showMap ? "Close Map" : "Show Map"}
             </a>
-            <i class="fa-solid fa-map mx-2 fs-5 text-white"></i>
+            {showMap ? (
+              <i class="fa-solid fa-x mx-2 fs-5 text-white"></i>
+            ) : (
+              <i class="fa-solid fa-map mx-2 fs-5 text-white"></i>
+            )}
           </div>
         }
         style={{
