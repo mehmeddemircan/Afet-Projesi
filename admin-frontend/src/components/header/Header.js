@@ -7,7 +7,6 @@ import NotLoggedInSegment from "./NotLoggedInSegment";
 import { useSelector } from "react-redux";
 import LoggedInSegment from "./LoggedInSegment";
 
-import HeaderSearchButton from "./HeaderSearchButton";
 const Header = () => {
   const auth = useSelector((state) => state.auth);
 
@@ -21,16 +20,13 @@ const Header = () => {
     setShowLanguageModal(false);
   };
 
-
-
-
   return (
     <Fragment>
       <nav
         class="navbar  navbar-expand-sm navbar-light   "
-        style={{ 
-          border: '1px solid rgb(221,221,221)',
-          }}
+        style={{
+          border: "1px solid rgb(221,221,221)",
+        }}
       >
         <div class="container  d-flex  justify-content-between py-2">
           <div className="d-inline-flex align-items-center">
@@ -55,10 +51,10 @@ const Header = () => {
                 Herhangi bir yer{" "}
                 <a className="ms-2" href="#">
                   {" "}
-                  |
+                 
                 </a>
               </div>
-                <HeaderSearchButton />
+             
             </button>
           </div>
           <div>
@@ -78,7 +74,6 @@ const Header = () => {
           </div>
         </div>
       </nav>
-        
     </Fragment>
   );
 };

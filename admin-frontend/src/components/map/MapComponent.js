@@ -1,12 +1,14 @@
-import React, { Fragment, useEffect, useState , useRef } from "react";
+import React, { Fragment, useEffect, useState, useRef } from "react";
 import GoogleMapReact from "google-map-react";
-import { List ,Badge, Button, Popover, Tag } from "antd";
+import { List, Badge, Button, Popover, Tag } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { AllArea } from "../../redux/actions/AreaActions";
 import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng,
 } from "react-places-autocomplete";
+import SearchMapButton from "./SearchMapButton";
+import FiltersButton from "./FiltersButton";
 
 const AnyReactComponent = ({ area, text }) => (
   <Popover
@@ -74,8 +76,8 @@ export default function MapComponent() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(AllArea(checkedValues));
-  }, [dispatch,checkedValues.length]);
-
+  }, [dispatch, checkedValues.length]);
+  // Filter actions
   const handleCheckboxChange = (value) => {
     if (checkedValues.includes(value)) {
       // Remove the value from the checkedValues array if it already exists
@@ -86,195 +88,51 @@ export default function MapComponent() {
     }
   };
 
-// search and focus
-const [address, setAddress] = useState("");
-const [center, setCenter] = useState(defaultProps.center);
-const [zoom, setZoom] = useState(defaultProps.zoom);
-const mapRef = useRef();
-const handleSelect = async (value) => {
-  const results = await geocodeByAddress(value);
-  const latLng = await getLatLng(results[0]);
-  console.log(latLng.lat);
-  console.log(latLng.lng);
-  setAddress(value);
-  setCenter(latLng);
-  setZoom(10);
-  mapRef.current.panTo(latLng);
- 
-};
+  // search and focus
+  const [address, setAddress] = useState("");
+  const [center, setCenter] = useState(defaultProps.center);
+  const [zoom, setZoom] = useState(defaultProps.zoom);
+  const mapRef = useRef();
 
-useEffect(() => {
-  if (address === "") {
-    setCenter(defaultProps.center)
-    setZoom(defaultProps.zoom)
-  }
-}, [address])
+  const handleSelect = async (value) => {
+    const results = await geocodeByAddress(value);
+    const latLng = await getLatLng(results[0]);
+    console.log(latLng.lat);
+    console.log(latLng.lng);
+    setAddress(value);
+    setCenter(latLng);
+    setZoom(10);
+    mapRef.current.panTo(latLng);
+  };
 
-const handleMapChange = ({ center }) => {
-  setCenter(center);
-   setZoom(address === "" ? defaultProps.zoom : 10)
-};
+  useEffect(() => {
+    if (address === "") {
+      setCenter(defaultProps.center);
+      setZoom(defaultProps.zoom);
+    }
+  }, [address]);
+
+  const handleMapChange = ({ center }) => {
+    setCenter(center);
+    setZoom(address === "" ? defaultProps.zoom : 10);
+  };
 
   return (
     // Important! Always set the container height explicitly
     <Fragment>
       <div className="container my-3">
         <div className="d-flex flex-row justify-content-end">
-        <Popover
-       
-        overlayStyle={{
-          width: "512px",
-        }}
-        placement="bottomRight"
-        content={
-          <div>
-            <PlacesAutocomplete
-              value={address}
-              onChange={setAddress}
-              onSelect={handleSelect}
-            >
-              {({
-                getInputProps,
-                suggestions,
-                getSuggestionItemProps,
-                loading,
-              }) => (
-                <div>
-                  <input
-                    className="form-control w-100 mb-3"
-                    {...getInputProps({ placeholder: "Search places..." })}
-                  />
-                  <List>
-                    {loading && <div>Loading...</div>}
-                    {suggestions.map((suggestion) => {
-                      const style = {
-                        backgroundColor: suggestion.active ? "#e6e6e6" : "#fff",
-                      };
-                      return (
-                        <List.Item
-                          {...getSuggestionItemProps(suggestion, { style })}
-                        >
-                          {suggestion.description}
-                        </List.Item>
-                      );
-                    })}
-                  </List>
-                </div>
-              )}
-            </PlacesAutocomplete>
-          </div>
-        }
-        title={
-          <a style={{ color: "rgb(255,56,92)", fontSize: "15px" }}>
-            Search Your Address
-          </a>
-        }
-        trigger="click"
-      >
-        <button
-          style={{ backgroundColor: "rgb(255,56,92)" }}
-          className="btn rounded-pill mx-2"
-        >
-          <i class="fa-solid fa-magnifying-glass text-white"></i>
-        </button>
-      </Popover>
-          <Popover
-            placement="bottom"
-            content={
-              <div className="d-flex flex-column">
-                <div className="px-2 mb-2 border-bottom">
-                  {" "}
-                  <input
-                    class="form-check-input me-2"
-                    type="checkbox"
-                    value="Cok Acil"
-                    id="flexCheckDefault"
-                    onClick={(e)  => handleCheckboxChange(e.target.value) }
-                  />{" "}
-                  <a
-                    style={{
-                      fontSize: "15px",
-                    }}
-                  >
-                    Cok Acil Olanlar
-                  </a>
-                </div>
-                <div className="px-2  mb-2 border-bottom">
-                  {" "}
-                  <input
-                    class="form-check-input me-2"
-                    type="checkbox"
-                    value="Acil"
-                    id="flexCheckDefault"
-                    onClick={(e)  => handleCheckboxChange(e.target.value) }
-                  />{" "}
-                  <a
-                    style={{
-                      fontSize: "15px",
-                    }}
-                  >
-                    {" "}
-                    Acil Olanlar
-                  </a>
-                </div>
-                <div className="px-2 mb-2 border-bottom">
-                  {" "}
-                  <input
-                    class="form-check-input me-2"
-                    type="checkbox"
-                    value="Normal"
-                    id="flexCheckDefault"
-                    onClick={(e)  => handleCheckboxChange(e.target.value) }
-                  />{" "}
-                  <a
-                    style={{
-                      fontSize: "15px",
-                    }}
-                  >
-                    Normal Olanlar
-                  </a>
-                </div>
-                <div className="px-2 mb-2 border-bottom">
-                  {" "}
-                  <input
-                    class="form-check-input me-2"
-                    type="checkbox"
-                    value="Acil Degil"
-                    id="flexCheckDefault"
-                    onClick={(e)  => handleCheckboxChange(e.target.value) }
-                  />{""}
-                  <a
-                    style={{
-                      fontSize: "15px",
-                    }}
-                  >
-                    Suan Gerekli olmayanlar
-                  </a>
-                </div>
-              
-              </div>
-            }
-            title="Filters"
-            trigger="click"
-          >
-            <button
-              className="btn text-white rounded-pill mx-2"
-              style={{ backgroundColor: "#222" }}
-            >
-              Filters <i class="fa-solid fa-filter text-white"></i>
-            </button>
-          </Popover>
+          <SearchMapButton
+            address={address}
+            setAddress={setAddress}
+            handleSelect={handleSelect}
+          />
+          <FiltersButton handleCheckboxChange={handleCheckboxChange} />
         </div>
       </div>
 
       <div className="container-fluid" style={{ height: "100vh" }}>
-        <GoogleMapReact
-      
-      
-          center={center}
-          zoom={zoom}
-          onChange={handleMapChange}
-        >
+        <GoogleMapReact center={center} zoom={zoom} onChange={handleMapChange}>
           {!getAllArea.success ? (
             <h2>loading</h2>
           ) : (

@@ -5,11 +5,7 @@ import MainFooter from "../footer/MainFooter";
 
 import BackTopButton from "../backtop/BackTop";
 import ShowMapButton from "../floatbutton/ShowMapButton";
-import PlacesAutocomplete, {
-  geocodeByAddress,
-  getLatLng,
-} from "react-places-autocomplete";
-import { List, Popover } from "antd";
+
 
 import MapComponent from "../map/MapComponent";
 
