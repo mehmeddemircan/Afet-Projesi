@@ -1,8 +1,12 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState , useRef } from "react";
 import GoogleMapReact from "google-map-react";
-import { Badge, Button, Popover, Tag } from "antd";
+import { List ,Badge, Button, Popover, Tag } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { AllArea } from "../../redux/actions/AreaActions";
+import PlacesAutocomplete, {
+  geocodeByAddress,
+  getLatLng,
+} from "react-places-autocomplete";
 
 const AnyReactComponent = ({ area, text }) => (
   <Popover
@@ -56,7 +60,7 @@ const AnyReactComponent = ({ area, text }) => (
   </Popover>
 );
 
-export default function SimpleMap() {
+export default function MapComponent() {
   const defaultProps = {
     center: {
       lat: 39,
@@ -81,11 +85,99 @@ export default function SimpleMap() {
       setCheckedValues([...checkedValues, value]);
     }
   };
+
+// search and focus
+const [address, setAddress] = useState("");
+const [center, setCenter] = useState(defaultProps.center);
+const [zoom, setZoom] = useState(defaultProps.zoom);
+const mapRef = useRef();
+const handleSelect = async (value) => {
+  const results = await geocodeByAddress(value);
+  const latLng = await getLatLng(results[0]);
+  console.log(latLng.lat);
+  console.log(latLng.lng);
+  setAddress(value);
+  setCenter(latLng);
+  setZoom(10);
+  mapRef.current.panTo(latLng);
+ 
+};
+
+useEffect(() => {
+  if (address === "") {
+    setCenter(defaultProps.center)
+    setZoom(defaultProps.zoom)
+  }
+}, [address])
+
+const handleMapChange = ({ center }) => {
+  setCenter(center);
+   setZoom(address === "" ? defaultProps.zoom : 10)
+};
+
   return (
     // Important! Always set the container height explicitly
     <Fragment>
       <div className="container my-3">
         <div className="d-flex flex-row justify-content-end">
+        <Popover
+       
+        overlayStyle={{
+          width: "512px",
+        }}
+        placement="bottomRight"
+        content={
+          <div>
+            <PlacesAutocomplete
+              value={address}
+              onChange={setAddress}
+              onSelect={handleSelect}
+            >
+              {({
+                getInputProps,
+                suggestions,
+                getSuggestionItemProps,
+                loading,
+              }) => (
+                <div>
+                  <input
+                    className="form-control w-100 mb-3"
+                    {...getInputProps({ placeholder: "Search places..." })}
+                  />
+                  <List>
+                    {loading && <div>Loading...</div>}
+                    {suggestions.map((suggestion) => {
+                      const style = {
+                        backgroundColor: suggestion.active ? "#e6e6e6" : "#fff",
+                      };
+                      return (
+                        <List.Item
+                          {...getSuggestionItemProps(suggestion, { style })}
+                        >
+                          {suggestion.description}
+                        </List.Item>
+                      );
+                    })}
+                  </List>
+                </div>
+              )}
+            </PlacesAutocomplete>
+          </div>
+        }
+        title={
+          <a style={{ color: "rgb(255,56,92)", fontSize: "15px" }}>
+            Search Your Address
+          </a>
+        }
+        trigger="click"
+      >
+        <button
+          style={{ backgroundColor: "rgb(255,56,92)" }}
+          className="btn rounded-pill mx-2"
+        >
+          <i class="fa-solid fa-magnifying-glass text-white"></i>
+        </button>
+      </Popover>
           <Popover
             placement="bottom"
             content={
@@ -177,9 +269,11 @@ export default function SimpleMap() {
 
       <div className="container-fluid" style={{ height: "100vh" }}>
         <GoogleMapReact
-          bootstrapURLKeys={{ key: "" }}
-          defaultCenter={defaultProps.center}
-          defaultZoom={defaultProps.zoom}
+      
+      
+          center={center}
+          zoom={zoom}
+          onChange={handleMapChange}
         >
           {!getAllArea.success ? (
             <h2>loading</h2>

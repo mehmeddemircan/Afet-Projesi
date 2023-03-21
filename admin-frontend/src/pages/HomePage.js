@@ -6,6 +6,7 @@ import HomeJumbotron from '../components/jumbotron/HomeJumbotron'
 
 
 import SimpleMap from '../components/map/MapComponent'
+import AddressSearchBox from '../components/search/AddressSearchBox'
 
 
 
@@ -13,7 +14,7 @@ import SimpleMap from '../components/map/MapComponent'
 const HomePage = () => {
   return (
         <MainLayout>
-
+        
             <HomeJumbotron />
               
 

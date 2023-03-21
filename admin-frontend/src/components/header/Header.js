@@ -7,6 +7,7 @@ import NotLoggedInSegment from "./NotLoggedInSegment";
 import { useSelector } from "react-redux";
 import LoggedInSegment from "./LoggedInSegment";
 
+import HeaderSearchButton from "./HeaderSearchButton";
 const Header = () => {
   const auth = useSelector((state) => state.auth);
 
@@ -20,11 +21,16 @@ const Header = () => {
     setShowLanguageModal(false);
   };
 
+
+
+
   return (
     <Fragment>
       <nav
         class="navbar  navbar-expand-sm navbar-light   "
-        style={{ border: "1px solid rgb(221,221,221)" }}
+        style={{ 
+          border: '1px solid rgb(221,221,221)',
+          }}
       >
         <div class="container  d-flex  justify-content-between py-2">
           <div className="d-inline-flex align-items-center">
@@ -52,12 +58,7 @@ const Header = () => {
                   |
                 </a>
               </div>
-              <button
-                style={{ backgroundColor: "rgb(255,56,92)" }}
-                className="btn rounded-pill mx-2"
-              >
-                <i class="fa-solid fa-magnifying-glass text-white"></i>
-              </button>
+                <HeaderSearchButton />
             </button>
           </div>
           <div>
@@ -77,6 +78,7 @@ const Header = () => {
           </div>
         </div>
       </nav>
+        
     </Fragment>
   );
 };

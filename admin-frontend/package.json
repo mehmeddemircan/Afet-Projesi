@@ -25,6 +25,7 @@
     "react-infinite-scroll-component": "^6.1.0",
     "react-leaflet": "^4.2.1",
     "react-openlayers": "^0.3.0",
+    "react-places-autocomplete": "^7.3.0",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.9.0",
     "react-scripts": "5.0.1",

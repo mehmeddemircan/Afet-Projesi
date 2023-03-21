@@ -1,12 +1,17 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState , useRef} from "react";
 import Header from "../header/Header";
 import Footer from "../footer/Footer";
 import MainFooter from "../footer/MainFooter";
 
 import BackTopButton from "../backtop/BackTop";
 import ShowMapButton from "../floatbutton/ShowMapButton";
-import SimpleMap from "../map/MapComponent";
-import { Popover } from "antd";
+import PlacesAutocomplete, {
+  geocodeByAddress,
+  getLatLng,
+} from "react-places-autocomplete";
+import { List, Popover } from "antd";
+
+import MapComponent from "../map/MapComponent";
 
 const MainLayout = (props) => {
   const [showMap, setShowMap] = useState(false);
@@ -14,14 +19,15 @@ const MainLayout = (props) => {
   const handleToggleShowMap = () => {
     setShowMap((prev) => !prev);
   };
+ 
 
   return (
     <Fragment>
       <Header />
       {showMap ? (
         <>
-          
-          <SimpleMap />
+        
+          <MapComponent   />
         </>
       ) : (
         <div className="container">{props.children}</div>
