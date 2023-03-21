@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AddArea } from "../../../redux/actions/AreaActions";
 import { toast } from "react-toastify";
 
-const AddAreaModal = ({ showAddAreaModal, handleCloseAddAreaModal }) => {
+const AddAreaModal = ({ lat,lng, showAddAreaModal, handleCloseAddAreaModal }) => {
   const addArea = useSelector((state) => state.addArea);
   const [name, setName] = useState("");
   const [coordinates, setCoordinates] = useState({
@@ -14,6 +14,12 @@ const AddAreaModal = ({ showAddAreaModal, handleCloseAddAreaModal }) => {
   const [longitude, setLongitude] = useState(0);
   const [latitude, setLatitude] = useState(0);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    setLatitude(lat)
+    setLongitude(lng)
+  }, [lat,lng])
+
   const handleAddNewArea = () => {
     dispatch(AddArea({ name, coordinates }));
 
@@ -84,42 +90,7 @@ const AddAreaModal = ({ showAddAreaModal, handleCloseAddAreaModal }) => {
               className="my-4"
               style={{ maxHeight: "200px", overflowY: "auto" }}
             >
-              {/* <label for="recipient-name" class="col-form-label">
-                  Requrired Products
-                </label>
-          
-            <List  itemLayout="horizontal">
-        <List.Item
-          actions={[
-                <button className="btn btn-primary btn-sm rounded-pill">Add</button>
-          ]}
-        >
-          <List.Item.Meta
-            title={<a>dsadsaasd</a>}
-          
-          />
-        </List.Item>
-        <List.Item
-          actions={[
-            <button className="btn btn-primary btn-sm rounded-pill">Add</button>
-          ]}
-        >
-          <List.Item.Meta
-            title={<a>dsadsaasd</a>}
-          
-          />
-        </List.Item>
-        <List.Item
-          actions={[
-            <button className="btn btn-primary btn-sm rounded-pill">Add</button>
-          ]}
-        >
-          <List.Item.Meta
-            title={<a>dsadsaasd</a>}
-         
-          />
-        </List.Item>
-      </List> */}
+             
             </div>
           </div>
         </form>

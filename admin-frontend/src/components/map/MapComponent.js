@@ -1,17 +1,27 @@
 import React, { Fragment, useEffect, useState, useRef } from "react";
 import GoogleMapReact from "google-map-react";
-import { List, Badge, Button, Popover, Tag } from "antd";
+
+import { List, Badge, Button, Popover, Tag, Tooltip } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { AllArea } from "../../redux/actions/AreaActions";
+import { AllArea, DeleteArea } from "../../redux/actions/AreaActions";
 import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng,
 } from "react-places-autocomplete";
 import SearchMapButton from "./SearchMapButton";
 import FiltersButton from "./FiltersButton";
+import AddAreaModal from "../modal/Area/AddAreaModal";
+import { ADD_AREA_RESET } from "../../redux/constants/AreaConstants";
+const MarkerComponent = ({ area, text }) => {
 
-const AnyReactComponent = ({ area, text }) => (
-  <Popover
+  const dispatch = useDispatch()
+
+    const handleDeleteArea = (id) => {
+        dispatch(DeleteArea(id))
+    }
+
+    return (
+      <Popover
     content={
       <div>
         <div className="d-flex justify-content-start">
@@ -56,11 +66,21 @@ const AnyReactComponent = ({ area, text }) => (
         </p>
       </div>
     }
-    title={text}
+    title={(
+      <div className="d-flex justify-content-between">
+          <a>{text}</a>
+          <i class="fa-solid fa-x" onClick={() => handleDeleteArea(area._id)}></i>
+      </div>
+    )}
   >
     <Button type="default" icon={<i class="fa-solid fa-hand"></i>}></Button>
   </Popover>
-);
+    )
+
+}
+
+
+
 
 export default function MapComponent() {
   const defaultProps = {
@@ -72,11 +92,16 @@ export default function MapComponent() {
   };
 
   const getAllArea = useSelector((state) => state.getAllArea);
+  const addArea = useSelector((state) => state.addArea);
   const [checkedValues, setCheckedValues] = useState([]);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(AllArea(checkedValues));
-  }, [dispatch, checkedValues.length]);
+    if (addArea.success) {
+      setMarker(null);
+      dispatch({ type: ADD_AREA_RESET });
+    }
+  }, [dispatch, checkedValues.length, addArea.success]);
   // Filter actions
   const handleCheckboxChange = (value) => {
     if (checkedValues.includes(value)) {
@@ -116,6 +141,15 @@ export default function MapComponent() {
     setCenter(center);
     setZoom(address === "" ? defaultProps.zoom : 10);
   };
+  // onClick
+  const [marker, setMarker] = useState(null);
+
+  const onMapClick = (event) => {
+    setMarker({
+      lat: event.lat,
+      lng: event.lng,
+    });
+  };
 
   return (
     // Important! Always set the container height explicitly
@@ -132,12 +166,17 @@ export default function MapComponent() {
       </div>
 
       <div className="container-fluid" style={{ height: "100vh" }}>
-        <GoogleMapReact center={center} zoom={zoom} onChange={handleMapChange}>
+        <GoogleMapReact
+          center={center}
+          zoom={zoom}
+          onChange={handleMapChange}
+          onClick={onMapClick}
+        >
           {!getAllArea.success ? (
             <h2>loading</h2>
           ) : (
             getAllArea.areas.map((area) => (
-              <AnyReactComponent
+              <MarkerComponent
                 area={area}
                 key={area._id}
                 lat={area.coordinates.latitude}
@@ -150,8 +189,42 @@ export default function MapComponent() {
               />
             ))
           )}
+          {marker && <Marker lat={marker.lat} lng={marker.lng} />}
         </GoogleMapReact>
       </div>
     </Fragment>
   );
 }
+
+const Marker = ({ lat, lng, marker }) => {
+  const [showAddAreaModal, setShowAddAreaModal] = useState(false);
+
+  const handleShowAddAreaModal = () => {
+    setShowAddAreaModal(true);
+  };
+
+  const handleCloseAddAreaModal = () => {
+    setShowAddAreaModal(false);
+  };
+
+  return (
+    <Tooltip placement="topLeft" title={showAddAreaModal ? "" : "Add Area"}>
+      <Button
+        style={{ position: "fixed" }}
+        type="ghost"
+        icon={
+          <i class="fa-sharp fa-solid fa-location-dot text-danger fs-4"></i>
+        }
+        onClick={handleShowAddAreaModal}
+      ></Button>
+
+      <AddAreaModal
+        marker={marker}
+        lat={lat}
+        lng={lng}
+        showAddAreaModal={showAddAreaModal}
+        handleCloseAddAreaModal={handleCloseAddAreaModal}
+      />
+    </Tooltip>
+  );
+};
