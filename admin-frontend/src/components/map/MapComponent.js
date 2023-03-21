@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { Fragment, useEffect } from "react";
 import GoogleMapReact from "google-map-react";
 import { Badge, Button, Popover, Tag } from "antd";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,50 +6,48 @@ import { AllArea } from "../../redux/actions/AreaActions";
 
 const AnyReactComponent = ({ area, text }) => (
   <Popover
-    
     content={
       <div>
         <div className="d-flex justify-content-start">
-        <p className="me-2">latitude {area.coordinates.latitude} |</p>
-        <p>longitude {area.coordinates.longitude}</p>
+          <p className="me-2">latitude {area.coordinates.latitude} |</p>
+          <p>longitude {area.coordinates.longitude}</p>
         </div>
         <p
-         style={{
-          maxWidth : '260px'
-        }}
-
-        >gerekli ürünler {area.requrired_products.length == 0 ? "ihtiyac yok" : 
-          <div 
-          className="d-flex flex-wrap justify-content-start"
-          >
-             
-              {
-              area.requrired_products.map((product) => (
+          style={{
+            maxWidth: "260px",
+          }}
+        >
+          gerekli ürünler{" "}
+          {area.requrired_products.length == 0 ? (
+            "ihtiyac yok"
+          ) : (
+            <div className="d-flex flex-wrap justify-content-start">
+              {area.requrired_products.map((product) => (
                 <div className="mt-2 ms-2">
-                <Badge count={product.quantity} className="me-2">
-                <Tag color="#f50">{product.Product.title}</Tag>
-                </Badge>
+                  <Badge count={product.quantity} className="me-2">
+                    <Tag color="#f50">{product.Product.title}</Tag>
+                  </Badge>
                 </div>
-            ))
-            }
-             
-          </div>
-          } </p>
-        <p>gerekli insanlar  :  {area.requrired_products.length == 0 ? "ihtiyac yok" :  <div 
-          className="d-flex flex-wrap justify-content-start"
-          >
-             
-              {
-              area.requrired_people.map((person) => (
+              ))}
+            </div>
+          )}{" "}
+        </p>
+        <p>
+          gerekli insanlar :{" "}
+          {area.requrired_products.length == 0 ? (
+            "ihtiyac yok"
+          ) : (
+            <div className="d-flex flex-wrap justify-content-start">
+              {area.requrired_people.map((person) => (
                 <div className="mt-2 ms-2">
-                <Badge count={person.quantity} className="me-2">
-                <Tag color="#f50">{person.Person.name}</Tag>
-                </Badge>
+                  <Badge count={person.quantity} className="me-2">
+                    <Tag color="#f50">{person.Person.name}</Tag>
+                  </Badge>
                 </div>
-            ))
-            }
-             
-          </div> }</p>
+              ))}
+            </div>
+          )}
+        </p>
       </div>
     }
     title={text}
@@ -75,7 +73,10 @@ export default function SimpleMap() {
 
   return (
     // Important! Always set the container height explicitly
-    <div className="container-fluid"  style={{ height: "100vh" }}>
+<Fragment>
+   
+
+    <div className="container-fluid" style={{ height: "100vh" }}>
       <GoogleMapReact
         bootstrapURLKeys={{ key: "" }}
         defaultCenter={defaultProps.center}
@@ -100,5 +101,6 @@ export default function SimpleMap() {
         )}
       </GoogleMapReact>
     </div>
+    </Fragment>
   );
 }
