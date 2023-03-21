@@ -11,7 +11,8 @@ import PlacesAutocomplete, {
 import SearchMapButton from "./SearchMapButton";
 import FiltersButton from "./FiltersButton";
 import AddAreaModal from "../modal/Area/AddAreaModal";
-import { ADD_AREA_RESET } from "../../redux/constants/AreaConstants";
+import { ADD_AREA_RESET, DELETE_AREA_RESET } from "../../redux/constants/AreaConstants";
+import { toast } from "react-toastify";
 const MarkerComponent = ({ area, text }) => {
 
   const dispatch = useDispatch()
@@ -93,6 +94,7 @@ export default function MapComponent() {
 
   const getAllArea = useSelector((state) => state.getAllArea);
   const addArea = useSelector((state) => state.addArea);
+  const deleteUpdateArea = useSelector((state) => state.deleteUpdateArea)
   const [checkedValues, setCheckedValues] = useState([]);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -101,7 +103,11 @@ export default function MapComponent() {
       setMarker(null);
       dispatch({ type: ADD_AREA_RESET });
     }
-  }, [dispatch, checkedValues.length, addArea.success]);
+    if (deleteUpdateArea.isDeleted) {
+      toast(deleteUpdateArea.message)
+      dispatch({type: DELETE_AREA_RESET})
+    }
+  }, [dispatch, checkedValues.length, addArea.success,deleteUpdateArea.isDeleted]);
   // Filter actions
   const handleCheckboxChange = (value) => {
     if (checkedValues.includes(value)) {
