@@ -25,6 +25,7 @@ import ProductItem from "../components/listitem/ProductItem";
 import { AllPersonType } from "../redux/actions/PersonTypeActions";
 import PersonTypeItem from "../components/listitem/PersonTypeItem";
 import AddedReqPersonItem from "../components/listitem/AddedReqPersonItem";
+import InfoBreadcrumb from "../components/breadcrumb/InfoBreadcrumb";
 
 const { TabPane } = Tabs;
 const AreaDetailsPage = () => {
@@ -120,7 +121,20 @@ const AreaDetailsPage = () => {
   return (
     <MainLayout>
       <h5 className="my-4 text-center">AreaDetailsPage</h5>
-
+      <InfoBreadcrumb
+          items={[
+            {
+              title: "Home",
+            },
+            {
+              title: <a href="/alanlar">Areas</a>,
+            },
+            {
+              title: <a>Area Details</a>
+            },
+            // Area name
+          ]}
+        />
       <Card
         style={{
           width: "100%",
@@ -132,18 +146,13 @@ const AreaDetailsPage = () => {
           <TabPane tab="Add Requrired Products" key="1">
             <div className="row">
               <div className="col-md-12 my-2">
-     
-               
-                    <h4>Ekleme Kısmı</h4>
+                <h4>Ekleme Kısmı</h4>
 
-<div className="my-4 d-flex flex-row flex-wrap justify-content-between">
-  {filteredReqProducts.map((product) => (
-    <ProductItem key={product._id} product={product} />
-  ))}
-</div>
-                  
-            
-                
+                <div className="my-4 d-flex flex-row flex-wrap justify-content-between">
+                  {filteredReqProducts.map((product) => (
+                    <ProductItem key={product._id} product={product} />
+                  ))}
+                </div>
               </div>
             </div>
           </TabPane>
@@ -168,14 +177,16 @@ const AreaDetailsPage = () => {
               ))}
             </div>
           </TabPane>
-          <TabPane tab={
-             <Badge
-             className=""
-             count={getRequriredPeople.requrired_people.length}
-           >
-             <p className="mb-0 mt-1">Requrired People</p>
-           </Badge>
-          }>
+          <TabPane
+            tab={
+              <Badge
+                className=""
+                count={getRequriredPeople.requrired_people.length}
+              >
+                <p className="mb-0 mt-1">Requrired People</p>
+              </Badge>
+            }
+          >
             <div
               className="scrollbar-ripe-malinka"
               style={{ maxHeight: "400px", overflowY: "auto" }}

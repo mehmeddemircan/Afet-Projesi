@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from "react";
 import AddPersonTypeModal from "../modal/PersonType/AddPersonTypeModal";
+import AddButton from "./AddButton";
 
 const AddPersonTypeButton = () => {
   const [showAddPersonModal, setShowAddPersonModal] = useState(false);
@@ -14,17 +15,7 @@ const AddPersonTypeButton = () => {
 
   return (
     <Fragment>
-      <div className="row my-3">
-        <div className="d-flex justify-content-end">
-          <button
-            className="btn btn-outline-primary rounded-3"
-            onClick={handleShowAddPersonModal}
-          >
-            {" "}
-            Add PersonType
-          </button>
-        </div>
-      </div>
+        <AddButton name="Add Person" onClick={handleShowAddPersonModal} />
 
       <AddPersonTypeModal
         showAddPersonModal={showAddPersonModal}

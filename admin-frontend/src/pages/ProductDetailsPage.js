@@ -15,7 +15,7 @@ import {
   GetSingleProdcut,
 } from "../redux/actions/ProductActions";
 import { useDispatch, useSelector } from "react-redux";
-import ProductDetailsBreadcrumb from "../components/breadcrumb/ProductDetailsBreadcrumb";
+import InfoBreadcrumb from "../components/breadcrumb/InfoBreadcrumb";
 import {
   ADD_IMAGE_TO_PRODUCT_RESET,
   UPDATE_PRODUCT_RESET,
@@ -30,6 +30,7 @@ const ProductDetailsPage = () => {
   const [image, setImage] = useState("");
   const { product, loading } = useSelector((state) => state.getSingleProduct);
   const deleteUpdateProduct = useSelector((state) => state.deleteUpdateProduct);
+
   const { id } = useParams();
   const dispatch = useDispatch();
   useEffect(() => {
@@ -113,7 +114,23 @@ const ProductDetailsPage = () => {
   return (
     <MainLayout>
       <Fragment>
-        <ProductDetailsBreadcrumb />
+        <InfoBreadcrumb
+          items={[
+            {
+              title: "Home",
+            },
+            {
+              title: <a href="/urunler">Product</a>,
+            },
+            {
+              title: <a href="">Product Details</a>,
+            },
+            {
+              title: `${product.title}`,
+            },
+          ]}
+        />
+
         {image}
 
         <div className="d-flex flex-wrap flex-row justify-content-center ">

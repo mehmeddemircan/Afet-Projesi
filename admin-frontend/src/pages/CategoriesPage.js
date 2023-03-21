@@ -12,8 +12,9 @@ import {
 } from "../redux/constants/CategoryConstants";
 import { toast } from "react-toastify";
 import CategoryPagination from "../components/pagination/CategoryPagination";
-import { Pagination } from "antd";
+import { Badge, Pagination } from "antd";
 import { AllSubCategory } from "../redux/actions/SubCategoryActions";
+import InfoBreadcrumb from "../components/breadcrumb/InfoBreadcrumb";
 
 const CategoriesPage = () => {
   const addCategory = useSelector((state) => state.addCategory);
@@ -40,10 +41,10 @@ const CategoriesPage = () => {
       }
     }
     if (deleteUpdateCategory.updateSuccess) {
-        dispatch({type : UPDATE_CATEGORY_RESET})
+      dispatch({ type: UPDATE_CATEGORY_RESET });
     }
     if (deleteUpdateCategory.addedSubToCategory) {
-        dispatch({type : ADD_SUB_TO_CATEGORY_RESET})
+      dispatch({ type: ADD_SUB_TO_CATEGORY_RESET });
     }
   }, [
     dispatch,
@@ -53,16 +54,32 @@ const CategoriesPage = () => {
     getAllCategory.totalLength,
     setCurrentPage,
     deleteUpdateCategory.updateSuccess,
-    deleteUpdateCategory.addedSubToCategory
+    deleteUpdateCategory.addedSubToCategory,
   ]);
-  
-    useEffect(() => {
-        dispatch(AllSubCategory())
-    }, [dispatch])
+
+  useEffect(() => {
+    dispatch(AllSubCategory());
+  }, [dispatch]);
 
   return (
     <MainLayout>
       <AddCategoryButton />
+      <InfoBreadcrumb
+        items={[
+          {
+            title: "Home",
+          },
+          {
+            title: (
+              <a href="/kategoriler" onClick={(e) => e.preventDefault()}>
+                Categories
+              </a>
+            ),
+          },
+         
+      
+        ]}
+      />
       <CategoryList />
       <div className="row">
         <div className="d-flex justify-content-end">

@@ -1,16 +1,8 @@
 import React from "react";
+import AddButton from "./AddButton";
 
-const AddProductButton = ({handleShowAddProductModal}) => {
-  return (
-    <div className="row">
-      <div className="d-flex justify-content-end">
-        <button className="btn btn-outline-primary rounded-pill" onClick={handleShowAddProductModal}>
-          {" "}
-          Add Product
-        </button>
-      </div>
-    </div>
-  );
+const AddProductButton = ({ handleShowAddProductModal }) => {
+  return <AddButton name="Add Product" onClick={handleShowAddProductModal} />;
 };
 
 export default AddProductButton;
