@@ -70,6 +70,7 @@ exports.addRequriredProductToRequriment = catchAsyncErrors(async (req, res) => {
     const newRequiredProduct = {
       Product: req.body.Product,
       quantity: req.body.quantity,
+      priorityOrder : req.body.priorityOrder
     };
     // Create a new RequiredProduct document
 
@@ -135,6 +136,8 @@ exports.addRequriredPersonToRequriment = catchAsyncErrors(async (req, res) => {
     const newRequiredPerson = {
       Person: req.body.Person,
       quantity: req.body.quantity,
+      priorityOrder : req.body.priorityOrder
+ 
     };
     // Create a new RequiredProduct document
 

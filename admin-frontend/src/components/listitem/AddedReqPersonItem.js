@@ -39,6 +39,7 @@ const AddedReqPersonItem = ({ reqPerson }) => {
                 {reqPerson.quantity}
               </Tag>
             </p>
+            <p>Aciliyet : {reqPerson.priorityOrder}</p>
           </>
         }
       />

@@ -1,6 +1,9 @@
 //replace modelSchema,ModelName with whatever you want
 var mongoose = require("mongoose");
 const { ObjectId } = mongoose.Schema;
+
+const priorityOptions = ['Cok Acil', 'Acil', 'Normal','Acil Degil'];
+
 var AreaSchema = new mongoose.Schema(
   {
     name: {
@@ -20,8 +23,13 @@ var AreaSchema = new mongoose.Schema(
           type: ObjectId,
           ref: "Product",
         },
-
         quantity: Number,
+        priorityOrder : {
+          type : String,
+          enum : priorityOptions,
+          required : true ,
+          default : "Normal"
+        }
       },
     ],
     requrired_people: [
@@ -31,6 +39,13 @@ var AreaSchema = new mongoose.Schema(
           ref: "Person",
         },
         quantity: Number,
+        priorityOrder : {
+          type : String,
+          enum : priorityOptions,
+          required : true ,
+          default : "Normal"
+        }
+
       },
     ],
   },

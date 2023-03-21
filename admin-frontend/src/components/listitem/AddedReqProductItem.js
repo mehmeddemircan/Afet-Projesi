@@ -46,7 +46,12 @@ const AddedReqProductItem = ({ reqProduct, handleRemoveProductFromArea }) => {
       >
         <Meta
           title={reqProduct.Product.title}
-          description="This is the description"
+          description={
+            <a className="text-dark" style={{ textDecorationLine: "none" }}>
+              Aciliyet :{" "}
+              <a style={{ color: "#1890ff" }}>{reqProduct.priorityOrder}</a>
+            </a>
+          }
         />
       </Card>
     </Fragment>
