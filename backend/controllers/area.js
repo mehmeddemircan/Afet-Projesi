@@ -14,8 +14,8 @@ exports.createArea = catchAsyncErrors(async (req, res) => {
 exports.getAllArea = catchAsyncErrors(async (req, res) => {
   try {
     const areas = await Area.find()
-      .populate("requrired_products.Product")
-      .populate("requrired_people.Person");
+      .populate("requrired_products.Product", "_id title description")
+      .populate("requrired_people.Person", "_id name");
     res.status(200).json(areas);
   } catch (error) {
     res.status(500).json(error);
@@ -25,8 +25,8 @@ exports.getAllArea = catchAsyncErrors(async (req, res) => {
 exports.getSingleArea = catchAsyncErrors(async (req, res) => {
   try {
     const area = await Area.findById(req.params.id)
-      .populate("requrired_products.Product")
-      .populate("requrired_people.Person")
+      .populate("requrired_products.Product", "_id title description")
+      .populate("requrired_people.Person", "_id name")
       .exec();
 
     res.status(200).json(area);
@@ -116,7 +116,8 @@ exports.removeProductFromRequriredProducts = catchAsyncErrors(
 exports.getRequriredProducts = catchAsyncErrors(async (req, res) => {
   try {
     const area = await Area.findById(req.params.id).populate(
-      "requrired_products.Product"
+      "requrired_products.Product",
+      "_id title description"
     );
     const requrired_products = area.requrired_products;
     res.status(200).json(requrired_products);
@@ -182,7 +183,8 @@ exports.removePersonFromRequriredPeople = catchAsyncErrors(
 exports.getRequriredPeople = catchAsyncErrors(async (req, res) => {
   try {
     const area = await Area.findById(req.params.id).populate(
-      "requrired_people.Person"
+      "requrired_people.Person",
+      "_id name"
     );
     const requrired_people = area.requrired_people;
     res.status(200).json(requrired_people);
@@ -197,15 +199,14 @@ exports.getFilterQueryForArea = catchAsyncErrors(async (req, res) => {
   try {
     const priorityOrders = req.query.priorityOrders; // Get an array of priorityOrder values from the query parameter
     const areas = await Area.find()
-      .populate("requrired_products.Product")
-      .populate("requrired_people.Person"); // Retrieve all areas from the database
+      .populate("requrired_products.Product", "_id title description")
+      .populate("requrired_people.Person", "_id name"); // Retrieve all areas from the database
     let filteredAreas = areas;
     if (priorityOrders) {
       filteredAreas = areas.filter((area) => {
         // Filter the required_products array of each area to only include products with priorityOrder values in the priorityOrders array
         area.requrired_products = area.requrired_products.filter((product) =>
-        priorityOrders.includes(product.priorityOrder)
-    
+          priorityOrders.includes(product.priorityOrder)
         );
         return area.requrired_products.length > 0; // Only include areas that have at least one product with a priorityOrder value in the priorityOrders array
       });
@@ -217,19 +218,19 @@ exports.getFilterQueryForArea = catchAsyncErrors(async (req, res) => {
   }
 });
 
-
-exports.getFilterIncludesProductForArea = catchAsyncErrors(async (req,res) => {
+exports.getFilterIncludesProductForArea = catchAsyncErrors(async (req, res) => {
   try {
     const filters = req.query.filters; // Get an array of priorityOrder values from the query parameter
     const areas = await Area.find()
-      .populate("requrired_products.Product")
-
+      .populate("requrired_products.Product", "_id title description")
+      .populate("requrired_people.Person", "_id name");
     let filteredAreas = areas;
     if (filters) {
       filteredAreas = areas.filter((area) => {
         // Filter the required_products array of each area to only include products with priorityOrder values in the priorityOrders array
+
         area.requrired_products = area.requrired_products.filter((product) =>
-        filters.includes(product.Product.title)
+          filters.includes(product.Product.title)
         );
         return area.requrired_products.length > 0; // Only include areas that have at least one product with a priorityOrder value in the priorityOrders array
       });
@@ -239,4 +240,4 @@ exports.getFilterIncludesProductForArea = catchAsyncErrors(async (req,res) => {
     console.error(error);
     return res.status(500).json({ error: "Internal Server Error" }); // Return an error response if there is an issue with the database query
   }
-})
+});

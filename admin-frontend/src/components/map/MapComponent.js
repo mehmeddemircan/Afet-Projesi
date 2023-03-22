@@ -16,6 +16,7 @@ import {
   DELETE_AREA_RESET,
 } from "../../redux/constants/AreaConstants";
 import { toast } from "react-toastify";
+import LoadingSpinner from "../spinner/LoadingSpinner";
 const MarkerComponent = ({ area, text }) => {
   const dispatch = useDispatch();
 
@@ -197,7 +198,7 @@ export default function MapComponent() {
           onClick={onMapClick}
         >
           {!getAllArea.success ? (
-            <h2>loading</h2>
+              <LoadingSpinner />
           ) : (
             getAllArea.areas.map((area) => (
               <MarkerComponent
