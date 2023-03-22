@@ -17,6 +17,8 @@ import {
 } from "../../redux/constants/AreaConstants";
 import { toast } from "react-toastify";
 import LoadingSpinner from "../spinner/LoadingSpinner";
+import ReqProductMapTag from "../tag/ReqProductMapTag";
+import ReqPersonMapTag from "../tag/ReqPersonMapTag";
 const MarkerComponent = ({ area, text }) => {
   const dispatch = useDispatch();
 
@@ -43,11 +45,7 @@ const MarkerComponent = ({ area, text }) => {
             ) : (
               <div className="d-flex flex-wrap justify-content-start">
                 {area.requrired_products.map((product) => (
-                  <div className="mt-2 ms-2">
-                    <Badge count={product.quantity} className="me-2">
-                      <Tag color="#f50">{product.Product.title}</Tag>
-                    </Badge>
-                  </div>
+                  <ReqProductMapTag key={product._id} product={product} />
                 ))}
               </div>
             )}{" "}
@@ -59,11 +57,7 @@ const MarkerComponent = ({ area, text }) => {
             ) : (
               <div className="d-flex flex-wrap justify-content-start">
                 {area.requrired_people.map((person) => (
-                  <div className="mt-2 ms-2">
-                    <Badge count={person.quantity} className="me-2">
-                      <Tag color="#f50">{person.Person.name}</Tag>
-                    </Badge>
-                  </div>
+                 <ReqPersonMapTag person={person} key={person._id} />
                 ))}
               </div>
             )}
