@@ -15,8 +15,11 @@ const AddPersonTypeButton = () => {
 
   return (
     <Fragment>
+        <div className="row my-3">
+        <div className="d-flex justify-content-end">
         <AddButton name="Add Person" onClick={handleShowAddPersonModal} />
-
+        </div>
+        </div>
       <AddPersonTypeModal
         showAddPersonModal={showAddPersonModal}
         handleCloseAddPersonModal={handleCloseAddPersonModal}

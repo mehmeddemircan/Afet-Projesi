@@ -5,12 +5,15 @@ import AreaItem from "../listitem/AreaItem";
 
 const AreaList = () => {
   const getAllArea = useSelector((state) => state.getAllArea);
+  const getAreasByProductTitle = useSelector((state) => state.getAreasByProductTitle)
 
   return (
     <Fragment>
       <div className="row">
         <div className="d-flex flex-wrap justify-content-between">
-          {getAllArea.areas.map((area) => (
+          {getAreasByProductTitle.success ? getAreasByProductTitle.areas.map((area) => (
+            <AreaItem key={area._id} area={area} />
+          )) :  getAllArea.areas.map((area) => (
             <AreaItem key={area._id} area={area} />
           ))}
         </div>

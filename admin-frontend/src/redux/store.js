@@ -7,6 +7,7 @@ import {
   addProductToAreaReducer,
   deleteUpdateAreaReducer,
   getAllAreaReducer,
+  getAreasByProductTitleReducer,
   getRequriredPeopleReducer,
   getRequriredProductsReducer,
   removePersonFromAreaReducer,
@@ -74,7 +75,8 @@ const rootReducer = combineReducers({
   deleteUpdateArea: deleteUpdateAreaReducer,
   addPersonToArea : addPersonToAreaReducer,
   removePersonFromArea : removePersonFromAreaReducer,
-  getRequriredPeople: getRequriredPeopleReducer
+  getRequriredPeople: getRequriredPeopleReducer,
+  getAreasByProductTitle : getAreasByProductTitleReducer
 });
 
 const initialState = {};

@@ -18,6 +18,10 @@ import {
   GET_ALL_AREA_FAIL,
   GET_ALL_AREA_REQUEST,
   GET_ALL_AREA_SUCCESS,
+  GET_AREAS_BY_PRODUCT_TITLE_FAIL,
+  GET_AREAS_BY_PRODUCT_TITLE_REQUEST,
+  GET_AREAS_BY_PRODUCT_TITLE_RESET,
+  GET_AREAS_BY_PRODUCT_TITLE_SUCCESS,
   GET_REQURIRED_PEOPLE_FAIL,
   GET_REQURIRED_PEOPLE_REQUEST,
   GET_REQURIRED_PEOPLE_SUCCESS,
@@ -72,6 +76,36 @@ export const getAllAreaReducer = (
       return state;
   }
 };
+
+export const getAreasByProductTitleReducer = (
+  state = {areas :  []},
+  action
+) => {
+  switch (action.type) {
+    case GET_AREAS_BY_PRODUCT_TITLE_REQUEST:
+      return { ...state, loading: true };
+
+    case GET_AREAS_BY_PRODUCT_TITLE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: true,
+        areas: action.payload,
+      };
+
+    case GET_AREAS_BY_PRODUCT_TITLE_FAIL:
+      return { ...state, loading: false, error: action.payload };
+
+      case GET_AREAS_BY_PRODUCT_TITLE_RESET : 
+        return {
+          ...state ,
+          success : false 
+        }
+    default:
+      return state;
+  }
+};
+
 
 const ADD_AREA_INITIAL_STATE = {
   area: {

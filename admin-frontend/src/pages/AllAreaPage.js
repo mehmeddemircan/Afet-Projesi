@@ -11,24 +11,14 @@ import {
 import { toast } from "react-toastify";
 import InfoBreadcrumb from "../components/breadcrumb/InfoBreadcrumb";
 import { Badge } from "antd";
+import { AllProduct } from "../redux/actions/ProductActions";
 
 const AllAreaPage = () => {
-  const dispatch = useDispatch();
-  const addArea = useSelector((state) => state.addArea);
-  const deleteUpdateArea = useSelector((state) => state.deleteUpdateArea);
-  const getAllArea = useSelector((state) => state.getAllArea);
-  const [priorities, setPriorities] = useState([])
-  useEffect(() => {
-    dispatch(AllArea(priorities));
 
-    if (addArea.success) {
-      dispatch({ type: ADD_AREA_RESET });
-    }
-    if (deleteUpdateArea.isDeleted) {
-      toast(deleteUpdateArea.message);
-      dispatch({ type: DELETE_AREA_RESET });
-    }
-  }, [dispatch, addArea.success, deleteUpdateArea.isDeleted]);
+
+  const getAllArea = useSelector((state) => state.getAllArea);
+
+
 
   return (
     <Fragment>
@@ -39,7 +29,11 @@ const AllAreaPage = () => {
               title: "Home",
             },
             {
-              title: <a href="/alanlar" onClick={(e) => e.preventDefault()}>Areas</a>,
+              title: (
+                <a href="/alanlar" onClick={(e) => e.preventDefault()}>
+                  Areas
+                </a>
+              ),
             },
             {
               title: (
@@ -56,7 +50,10 @@ const AllAreaPage = () => {
             },
           ]}
         />
+      
         <AddAreaButton />
+         
+     
         <AreaList />
       </MainLayout>
     </Fragment>

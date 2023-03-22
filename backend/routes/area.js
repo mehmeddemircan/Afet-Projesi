@@ -12,6 +12,7 @@ const {
   removePersonFromRequriredPeople,
   getRequriredPeople,
   getFilterQueryForArea,
+  getFilterIncludesProductForArea,
 } = require("../controllers/area");
 
 var router = express.Router();
@@ -35,5 +36,8 @@ router
 
 router.route("/areas/:id/requriredProducts").get(getRequriredProducts);
 router.route("/areas/:id/requriredPeople").get(getRequriredPeople);
+//by priority in requrired_products
 router.route('/get-filter-areas').get(getFilterQueryForArea);
+//by products name in requrired_products
+router.route('/get-areas-by-productTitle').get(getFilterIncludesProductForArea)
 module.exports = router;

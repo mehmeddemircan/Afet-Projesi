@@ -15,6 +15,9 @@ import {
   GET_ALL_AREA_FAIL,
   GET_ALL_AREA_REQUEST,
   GET_ALL_AREA_SUCCESS,
+  GET_AREAS_BY_PRODUCT_TITLE_FAIL,
+  GET_AREAS_BY_PRODUCT_TITLE_REQUEST,
+  GET_AREAS_BY_PRODUCT_TITLE_SUCCESS,
   GET_REQURIRED_PEOPLE_FAIL,
   GET_REQURIRED_PEOPLE_REQUEST,
   GET_REQURIRED_PEOPLE_SUCCESS,
@@ -52,6 +55,32 @@ export const AllArea = (priorities) => async (dispatch) => {
     });
   }
 };
+
+export const AllAreaByProductTitle = (filters) => async (dispatch) => {
+  try {
+    dispatch({
+      type: GET_AREAS_BY_PRODUCT_TITLE_REQUEST,
+    });
+
+    const { data } = await axios.get(
+      filters !== []
+        ? `https://afetapi.onrender.com/api/get-areas-by-productTitle?filters=${filters}`
+        : `https://afetapi.onrender.com/api/get-areas-by-productTitle?filters=`
+    );
+
+    dispatch({
+      type: GET_AREAS_BY_PRODUCT_TITLE_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_AREAS_BY_PRODUCT_TITLE_FAIL,
+      error: error.response,
+    });
+  }
+};
+
+
 
 export const AddArea = (area) => async (dispatch) => {
   try {
