@@ -11,77 +11,78 @@ import PlacesAutocomplete, {
 import SearchMapButton from "./SearchMapButton";
 import FiltersButton from "./FiltersButton";
 import AddAreaModal from "../modal/Area/AddAreaModal";
-import { ADD_AREA_RESET, DELETE_AREA_RESET } from "../../redux/constants/AreaConstants";
+import {
+  ADD_AREA_RESET,
+  DELETE_AREA_RESET,
+} from "../../redux/constants/AreaConstants";
 import { toast } from "react-toastify";
 const MarkerComponent = ({ area, text }) => {
+  const dispatch = useDispatch();
 
-  const dispatch = useDispatch()
+  const handleDeleteArea = (id) => {
+    dispatch(DeleteArea(id));
+  };
 
-    const handleDeleteArea = (id) => {
-        dispatch(DeleteArea(id))
-    }
-
-    return (
-      <Popover
-    content={
-      <div>
-        <div className="d-flex justify-content-start">
-          <p className="me-2">latitude {area.coordinates.latitude} |</p>
-          <p>longitude {area.coordinates.longitude}</p>
+  return (
+    <Popover
+      content={
+        <div>
+          <div className="d-flex justify-content-start">
+            <p className="me-2">latitude {area.coordinates.latitude} |</p>
+            <p>longitude {area.coordinates.longitude}</p>
+          </div>
+          <p
+            style={{
+              maxWidth: "260px",
+            }}
+          >
+            gerekli ürünler{" "}
+            {area.requrired_products.length == 0 ? (
+              "ihtiyac yok"
+            ) : (
+              <div className="d-flex flex-wrap justify-content-start">
+                {area.requrired_products.map((product) => (
+                  <div className="mt-2 ms-2">
+                    <Badge count={product.quantity} className="me-2">
+                      <Tag color="#f50">{product.Product.title}</Tag>
+                    </Badge>
+                  </div>
+                ))}
+              </div>
+            )}{" "}
+          </p>
+          <p>
+            gerekli insanlar :{" "}
+            {area.requrired_products.length == 0 ? (
+              "ihtiyac yok"
+            ) : (
+              <div className="d-flex flex-wrap justify-content-start">
+                {area.requrired_people.map((person) => (
+                  <div className="mt-2 ms-2">
+                    <Badge count={person.quantity} className="me-2">
+                      <Tag color="#f50">{person.Person.name}</Tag>
+                    </Badge>
+                  </div>
+                ))}
+              </div>
+            )}
+          </p>
         </div>
-        <p
-          style={{
-            maxWidth: "260px",
-          }}
-        >
-          gerekli ürünler{" "}
-          {area.requrired_products.length == 0 ? (
-            "ihtiyac yok"
-          ) : (
-            <div className="d-flex flex-wrap justify-content-start">
-              {area.requrired_products.map((product) => (
-                <div className="mt-2 ms-2">
-                  <Badge count={product.quantity} className="me-2">
-                    <Tag color="#f50">{product.Product.title}</Tag>
-                  </Badge>
-                </div>
-              ))}
-            </div>
-          )}{" "}
-        </p>
-        <p>
-          gerekli insanlar :{" "}
-          {area.requrired_products.length == 0 ? (
-            "ihtiyac yok"
-          ) : (
-            <div className="d-flex flex-wrap justify-content-start">
-              {area.requrired_people.map((person) => (
-                <div className="mt-2 ms-2">
-                  <Badge count={person.quantity} className="me-2">
-                    <Tag color="#f50">{person.Person.name}</Tag>
-                  </Badge>
-                </div>
-              ))}
-            </div>
-          )}
-        </p>
-      </div>
-    }
-    title={(
-      <div className="d-flex justify-content-between">
+      }
+      title={
+        <div className="d-flex justify-content-between">
           <a>{text}</a>
-          <i class="fa-solid fa-x" onClick={() => handleDeleteArea(area._id)}></i>
-      </div>
-    )}
-  >
-    <Button type="default" icon={<i class="fa-solid fa-hand"></i>}></Button>
-  </Popover>
-    )
-
-}
-
-
-
+          <i
+            class="fa-solid fa-x"
+            onClick={() => handleDeleteArea(area._id)}
+          ></i>
+        </div>
+      }
+    >
+      <Button type="default" icon={<i class="fa-solid fa-hand"></i>}></Button>
+    </Popover>
+  );
+};
 
 export default function MapComponent() {
   const defaultProps = {
@@ -94,7 +95,7 @@ export default function MapComponent() {
 
   const getAllArea = useSelector((state) => state.getAllArea);
   const addArea = useSelector((state) => state.addArea);
-  const deleteUpdateArea = useSelector((state) => state.deleteUpdateArea)
+  const deleteUpdateArea = useSelector((state) => state.deleteUpdateArea);
   const [checkedValues, setCheckedValues] = useState([]);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -104,10 +105,15 @@ export default function MapComponent() {
       dispatch({ type: ADD_AREA_RESET });
     }
     if (deleteUpdateArea.isDeleted) {
-      toast(deleteUpdateArea.message)
-      dispatch({type: DELETE_AREA_RESET})
+      toast(deleteUpdateArea.message);
+      dispatch({ type: DELETE_AREA_RESET });
     }
-  }, [dispatch, checkedValues.length, addArea.success,deleteUpdateArea.isDeleted]);
+  }, [
+    dispatch,
+    checkedValues.length,
+    addArea.success,
+    deleteUpdateArea.isDeleted,
+  ]);
   // Filter actions
   const handleCheckboxChange = (value) => {
     if (checkedValues.includes(value)) {
@@ -132,7 +138,13 @@ export default function MapComponent() {
     console.log(latLng.lng);
     setAddress(value);
     setCenter(latLng);
-    setZoom(10);
+
+    if (address.length > 20) {
+      setZoom(13);
+    } else {
+      setZoom(10);
+    }
+
     mapRef.current.panTo(latLng);
   };
 
@@ -145,7 +157,13 @@ export default function MapComponent() {
 
   const handleMapChange = ({ center }) => {
     setCenter(center);
-    setZoom(address === "" ? defaultProps.zoom : 10);
+
+    if (address&& address.length < 20) {
+      setZoom(13);
+    }
+    if (address.length > 20) {
+      setZoom(15);
+    }
   };
   // onClick
   const [marker, setMarker] = useState(null);
