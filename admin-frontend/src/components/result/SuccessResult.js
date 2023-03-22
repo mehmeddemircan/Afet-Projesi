@@ -1,5 +1,6 @@
 import React, { Fragment } from "react";
 import MainLayout from "../layout/MainLayout";
+import { Button, Result } from "antd";
 
 const SuccessResult = () => {
   return (
@@ -12,7 +13,7 @@ const SuccessResult = () => {
           <Button type="primary" key="console">
             Go Console
           </Button>,
-          <Button key="buy">Buy Again</Button>,
+          <Button key="buy" >Buy Again</Button>,
         ]}
       />
     </Fragment>

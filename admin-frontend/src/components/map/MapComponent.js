@@ -50,6 +50,8 @@ const MarkerComponent = ({ area, text }) => {
               </div>
             )}{" "}
           </p>
+
+          
           <p>
             gerekli insanlar :{" "}
             {area.requrired_products.length == 0 ? (
