@@ -52,7 +52,7 @@ const AllAreaPage = () => {
         />
       
         <AddAreaButton />
-         
+        
      
         <AreaList />
       </MainLayout>

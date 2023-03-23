@@ -1,7 +1,6 @@
 import { FloatButton } from "antd";
 import React, { Fragment } from "react";
-import { CustomerServiceOutlined } from "@ant-design/icons";
-import SimpleMap from "../map/MapComponent";
+
 const ShowMapButton = ({ showMap, handleToggleShowMap }) => {
   return (
     <Fragment>

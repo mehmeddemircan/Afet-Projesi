@@ -26,6 +26,8 @@
           "searchInput": "Type to search..."
           
       },
+      "deletedAreaMessage" : "Successfully deleted area",
+
       "drawer": {
           "morefrom": "More from company",
           "subscriptions": "Subscriptions",

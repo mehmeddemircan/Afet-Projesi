@@ -5,6 +5,7 @@ const connectDB = require("./config/db");
 const fs = require("fs");
 const morgan = require("morgan");
 const cors = require("cors");
+const i18n = require('i18n');
 // Connecting to db
 
 const PORT = process.env.PORT || 5000;
@@ -25,6 +26,9 @@ app.use(express.static("public"));
 fs.readdirSync("./routes").map((r) =>
   app.use("/api", require(`./routes/${r}`))
 );
+
+
+
 // Routes
 app.get("/", (req, res) => {
   res.setHeader("Access-Control-Allow-Credentials","true")

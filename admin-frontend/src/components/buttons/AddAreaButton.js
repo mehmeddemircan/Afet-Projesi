@@ -15,6 +15,7 @@ import {
   GET_AREAS_BY_PRODUCT_TITLE_RESET,
 } from "../../redux/constants/AreaConstants";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 const { Option } = Select;
 const AddAreaButton = () => {
   const [showAddAreaModal, setShowAddAreaModal] = useState(false);
@@ -29,7 +30,7 @@ const AddAreaButton = () => {
 
   const getAllProduct = useSelector((state) => state.getAllProduct);
 
- 
+  const { t } = useTranslation();
 
   const dispatch = useDispatch();
 
@@ -38,35 +39,37 @@ const AddAreaButton = () => {
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [priorities, setPriorities] = useState([]);
   const handleChange = (value) => {
-    
     setSelectedProducts(value);
   };
   useEffect(() => {
-    if (selectedProducts.length == 0 ) {
-      dispatch({type : GET_AREAS_BY_PRODUCT_TITLE_RESET})
+    if (selectedProducts.length == 0) {
+      dispatch({ type: GET_AREAS_BY_PRODUCT_TITLE_RESET });
     }
     if (selectedProducts.length > 0) {
-      dispatch(AllAreaByProductTitle(selectedProducts))
-    }else{
-      dispatch(AllArea(priorities))
+      dispatch(AllAreaByProductTitle(selectedProducts));
+    } else {
+      dispatch(AllArea(priorities));
     }
     if (addArea.success) {
       dispatch({ type: ADD_AREA_RESET });
     }
     if (deleteUpdateArea.isDeleted) {
-      toast(deleteUpdateArea.message);
+      toast(t("deletedAreaMessage"));
       dispatch({ type: DELETE_AREA_RESET });
     }
-  }, [dispatch, addArea.success, deleteUpdateArea.isDeleted,selectedProducts.length]);
+  }, [
+    dispatch,
+    addArea.success,
+    deleteUpdateArea.isDeleted,
+    selectedProducts.length,
+  ]);
 
   useEffect(() => {
     dispatch(AllProduct());
   }, [dispatch]);
 
-
   return (
     <Fragment>
-      
       <div className="row my-3">
         <div className="d-flex justify-content-end">
           <Popover
@@ -86,7 +89,6 @@ const AddAreaButton = () => {
                     }}
                     placeholder="Please select"
                     onChange={handleChange}
-                  
                   >
                     {getAllProduct.products.map((product) => (
                       <Option value={product.title}>{product.title}</Option>

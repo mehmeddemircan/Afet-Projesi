@@ -116,8 +116,8 @@ exports.removeProductFromRequriredProducts = catchAsyncErrors(
 exports.getRequriredProducts = catchAsyncErrors(async (req, res) => {
   try {
     const area = await Area.findById(req.params.id).populate(
-      "requrired_products.Product",
-      "_id title description"
+      "requrired_products.Product"
+      
     );
     const requrired_products = area.requrired_products;
     res.status(200).json(requrired_products);

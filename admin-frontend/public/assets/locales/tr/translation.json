@@ -4,5 +4,6 @@
 
     "header" : {
         "login" : "Giris Yap"
-    }
+    },
+    "deletedAreaMessage" : "Basariyla silindi !"
  }

@@ -93,7 +93,7 @@ export default function MapComponent() {
   const getAllArea = useSelector((state) => state.getAllArea);
   const addArea = useSelector((state) => state.addArea);
   const deleteUpdateArea = useSelector((state) => state.deleteUpdateArea);
-  const [checkedValues, setCheckedValues] = useState([]);
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(AllArea(checkedValues));
@@ -111,6 +111,8 @@ export default function MapComponent() {
     addArea.success,
     deleteUpdateArea.isDeleted,
   ]);
+
+  const [checkedValues, setCheckedValues] = useState([]);
   // Filter actions
   const handleCheckboxChange = (value) => {
     if (checkedValues.includes(value)) {

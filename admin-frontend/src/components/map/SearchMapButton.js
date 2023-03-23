@@ -2,18 +2,14 @@
 import { List, Popover } from 'antd';
 import React, { Fragment } from 'react'
 import PlacesAutocomplete, {
-  geocodeByAddress,
-  getLatLng,
 } from "react-places-autocomplete";
 const SearchMapButton = ({address,handleSelect,setAddress}) => {
   return (
     <Fragment>
         <Popover
        
-       overlayStyle={{
-         width: "512px",
-       }}
-       placement="bottomRight"
+      overlayClassName='col-md-6 col-sm-4 col-lg-4'
+       placement="bottomLeft"
        content={
          <div>
            <PlacesAutocomplete
@@ -27,12 +23,12 @@ const SearchMapButton = ({address,handleSelect,setAddress}) => {
                getSuggestionItemProps,
                loading,
              }) => (
-               <div>
+               <div >
                  <input
                    className="form-control w-100 mb-3"
                    {...getInputProps({ placeholder: "Search places..." })}
                  />
-                 <List>
+                 <List >
                    {loading && <div>Loading...</div>}
                    {suggestions.map((suggestion) => {
                      const style = {
