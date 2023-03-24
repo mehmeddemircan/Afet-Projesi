@@ -5,7 +5,7 @@ const connectDB = require("./config/db");
 const fs = require("fs");
 const morgan = require("morgan");
 const cors = require("cors");
-const i18n = require("i18n");
+
 // Connecting to db
 
 const PORT = process.env.PORT || 5000;

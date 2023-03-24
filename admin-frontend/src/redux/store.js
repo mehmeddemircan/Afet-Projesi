@@ -50,7 +50,7 @@ import {
   getAllFormCategoryReducer,
   getSingleFormCategoryReducer,
 } from "./reducers/FormCategoryReducer";
-import { getFormsByCategoryIdReducer } from "./reducers/FormReducer";
+import { deleteUpdateGetHelpFormReducer, getFormsByCategoryIdReducer } from "./reducers/FormReducer";
 
 const rootReducer = combineReducers({
   getAllArea: getAllAreaReducer,
@@ -85,6 +85,7 @@ const rootReducer = combineReducers({
   getAllFormCategory: getAllFormCategoryReducer,
   getFormsByCategoryId: getFormsByCategoryIdReducer,
   getSingleFormCategory: getSingleFormCategoryReducer,
+  deleteUpdateGetHelpForm : deleteUpdateGetHelpFormReducer
 });
 
 const initialState = {};

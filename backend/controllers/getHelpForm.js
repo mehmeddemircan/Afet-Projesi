@@ -83,3 +83,19 @@ exports.searchForms = catchAsyncErrors(async (req, res) => {
     res.status(500).json(error);
   }
 });
+
+
+exports.deleteHelpForm = catchAsyncErrors(async(req,res) => {
+
+  try {
+      await GetHelpForm.findByIdAndDelete(req.params.id)
+      res.status(200).json({
+        message : "Successfully deleted form"
+      })
+
+  } catch (error) {
+    res.status(500).json(error)
+  }
+
+})
+

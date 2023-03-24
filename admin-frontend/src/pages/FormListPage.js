@@ -3,13 +3,15 @@ import MainLayout from "../components/layout/MainLayout";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AllFormByCategoryId, SearchForms } from "../redux/actions/FormActions";
-import { Badge, Descriptions, List } from "antd";
+import { Badge, Descriptions, List , message } from "antd";
 import InfoBreadcrumb from "../components/breadcrumb/InfoBreadcrumb";
 import FiltersButton from "../components/map/FiltersButton";
 
 import FiltersButtonFormContent from "../components/popover/FiltersButtonFormContent";
 import FormInfoItem from "../components/listitem/FormInfoItem";
 import { GetFormCategory } from "../redux/actions/FormCategoryActions";
+import { toast } from "react-toastify";
+import { DELETE_FORM_RESET } from "../redux/constants/FormConstants";
 
 const FormListPage = () => {
   const { categoryId } = useParams();
@@ -17,6 +19,7 @@ const FormListPage = () => {
   const getFormsByCategoryId = useSelector(
     (state) => state.getFormsByCategoryId
   );
+  const deleteUpdateGetHelpForm = useSelector((state) => state.deleteUpdateGetHelpForm)
   const dispatch = useDispatch();
 
   const getSingleFormCategory = useSelector(
@@ -24,10 +27,16 @@ const FormListPage = () => {
   );
 
   useEffect(() => {
-    dispatch(GetFormCategory(categoryId));
     dispatch(AllFormByCategoryId(categoryId));
-  }, [dispatch]);
 
+    if (deleteUpdateGetHelpForm.isDeleted) {
+      message.success(deleteUpdateGetHelpForm.message)
+      dispatch({type : DELETE_FORM_RESET})
+    }
+  }, [dispatch,deleteUpdateGetHelpForm.isDeleted]);
+  useEffect(() => {
+    dispatch(GetFormCategory(categoryId));
+  }, [dispatch])
 
   const [name, setName] = useState("")
   const [urgencies, setUrgencies] = useState(['Kritik','Orta','Normal'])
@@ -116,7 +125,7 @@ const FormListPage = () => {
 
       <List>
         {getFormsByCategoryId.forms.map((form) => (
-          <FormInfoItem form={form} />
+          <FormInfoItem key={form._id} form={form} />
         ))}
       </List>
     </MainLayout>
