@@ -9,7 +9,7 @@ export const AllFormCategory = () => async (dispatch) => {
       });
   
       const { data } = await axios.get(
-        `http://localhost:5000/api/formCategories`
+        `https://afetapi.onrender.com/api/formCategories`
       
       );
   
@@ -33,7 +33,7 @@ export const AllFormCategory = () => async (dispatch) => {
       });
   
       const { data } = await axios.get(
-        `http://localhost:5000/api/formCategories/${categoryId}`
+        `https://afetapi.onrender.com/api/formCategories/${categoryId}`
       
       );
   

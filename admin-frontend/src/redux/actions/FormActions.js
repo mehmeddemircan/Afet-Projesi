@@ -8,7 +8,7 @@ export const AllFormByCategoryId = (categoryId) => async (dispatch) => {
       });
   
       const { data } = await axios.get(
-            `http://localhost:5000/api/getForms/${categoryId}`
+            `https://afetapi.onrender.com/api/getForms/${categoryId}`
       );
   
       dispatch({
@@ -30,7 +30,7 @@ export const AllFormByCategoryId = (categoryId) => async (dispatch) => {
       });
   
       const { data } = await axios.get(
-            `http://localhost:5000/api/getForms/${categoryId}/search?name=${name}&urgency=${urgency}`
+            `https://afetapi.onrender.com/api/getForms/${categoryId}/search?name=${name}&urgency=${urgency}`
       );
   
       dispatch({
