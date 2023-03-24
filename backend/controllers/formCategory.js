@@ -42,3 +42,13 @@ exports.getSingleFormCategory = catchAsyncErrors(async (req,res) => {
 
 
 // delete update 
+exports.deleteFormCategory = catchAsyncErrors(async(req,res) => {
+  try {
+      await FormCategory.findByIdAndDelete(req.params.id)
+      res.status(200).json({
+        message : "Successfully deleted form category"
+      })
+  } catch (error) {
+      res.status(500).json(error)
+  }
+})

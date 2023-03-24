@@ -53,7 +53,7 @@ export const AllFormByCategoryId = (categoryId) => async (dispatch) => {
       });
   
       const { data } = await axios.delete(
-            `http://localhost:5000/api/getHelpForms/${id}/delete`
+            `https://afetapi.onrender.com/api/getHelpForms/${id}/delete`
       );
   
       dispatch({
