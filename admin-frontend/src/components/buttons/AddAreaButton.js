@@ -16,6 +16,8 @@ import {
 } from "../../redux/constants/AreaConstants";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
+import FiltersButtonAreaContent from "../popover/FiltersButtonAreaContent";
+import FiltersButton from "../map/FiltersButton";
 const { Option } = Select;
 const AddAreaButton = () => {
   const [showAddAreaModal, setShowAddAreaModal] = useState(false);
@@ -27,8 +29,6 @@ const AddAreaButton = () => {
   const handleCloseAddAreaModal = () => {
     setShowAddAreaModal(false);
   };
-
-  const getAllProduct = useSelector((state) => state.getAllProduct);
 
   const { t } = useTranslation();
 
@@ -72,42 +72,10 @@ const AddAreaButton = () => {
     <Fragment>
       <div className="row my-3">
         <div className="d-flex justify-content-end">
-          <Popover
-            content={
-              <>
-                <Space
-                  style={{
-                    width: "300px",
-                  }}
-                  direction="vertical"
-                >
-                  <Select
-                    mode="multiple"
-                    allowClear
-                    style={{
-                      width: "100%",
-                    }}
-                    placeholder="Please select"
-                    onChange={handleChange}
-                  >
-                    {getAllProduct.products.map((product) => (
-                      <Option value={product.title}>{product.title}</Option>
-                    ))}
-                  </Select>
-                </Space>
-              </>
-            }
-            placement="bottom"
-            title="Select products"
-            trigger={"click"}
-          >
-            <button
-              className="btn text-white mx-2 rounded-pill"
-              style={{ background: "#222" }}
-            >
-              Filters
-            </button>
-          </Popover>
+          <FiltersButton
+            content={<FiltersButtonAreaContent handleChange={handleChange} />}
+          />
+
           <AddButton name="Add Area" onClick={handleShowAddAreaModal} />
         </div>
       </div>

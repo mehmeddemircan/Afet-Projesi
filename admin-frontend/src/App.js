@@ -20,6 +20,10 @@ import { isUserLoggedIn } from './redux/actions/AuthActions';
 import { useEffect } from 'react';
 import AntdUploadPage from './pages/AntdUploadPage';
 import ProductDetailsPage from './pages/ProductDetailsPage';
+
+
+import FormListPage from './pages/FormListPage';
+import FormCategoryPage from './pages/FormCategoryPage';
 function App() {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
@@ -45,6 +49,8 @@ function App() {
         <Route path="/urunler/:id" element={<ProductDetailsPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/password/reset/:token" element={<ResetPasswordPage />} />
+        <Route path="/yardım-formları" element={<FormCategoryPage />} />
+        <Route path="/yardım-formları/:categoryId" element={<FormListPage />} />
         <Route path="/upload" element={<AntdUploadPage />} />
         <Route path="/*" element={<NotFoundPage />} />
       </Routes>

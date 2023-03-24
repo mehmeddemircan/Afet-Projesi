@@ -46,6 +46,11 @@ import {
   getAllProductReducer,
   getSingleProductReducer,
 } from "./reducers/ProductReducer";
+import {
+  getAllFormCategoryReducer,
+  getSingleFormCategoryReducer,
+} from "./reducers/FormCategoryReducer";
+import { getFormsByCategoryIdReducer } from "./reducers/FormReducer";
 
 const rootReducer = combineReducers({
   getAllArea: getAllAreaReducer,
@@ -73,10 +78,13 @@ const rootReducer = combineReducers({
   getRequriredProducts: getRequriredProductsReducer,
   removeProductFromArea: removeProductFromAreaReducer,
   deleteUpdateArea: deleteUpdateAreaReducer,
-  addPersonToArea : addPersonToAreaReducer,
-  removePersonFromArea : removePersonFromAreaReducer,
+  addPersonToArea: addPersonToAreaReducer,
+  removePersonFromArea: removePersonFromAreaReducer,
   getRequriredPeople: getRequriredPeopleReducer,
-  getAreasByProductTitle : getAreasByProductTitleReducer
+  getAreasByProductTitle: getAreasByProductTitleReducer,
+  getAllFormCategory: getAllFormCategoryReducer,
+  getFormsByCategoryId: getFormsByCategoryIdReducer,
+  getSingleFormCategory: getSingleFormCategoryReducer,
 });
 
 const initialState = {};

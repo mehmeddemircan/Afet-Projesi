@@ -19,6 +19,8 @@ import { toast } from "react-toastify";
 import LoadingSpinner from "../spinner/LoadingSpinner";
 import ReqProductMapTag from "../tag/ReqProductMapTag";
 import ReqPersonMapTag from "../tag/ReqPersonMapTag";
+
+import FiltersButtonMapContent from "../popover/FiltersButtonMapContent";
 const MarkerComponent = ({ area, text }) => {
   const dispatch = useDispatch();
 
@@ -51,7 +53,6 @@ const MarkerComponent = ({ area, text }) => {
             )}{" "}
           </p>
 
-          
           <p>
             gerekli insanlar :{" "}
             {area.requrired_products.length == 0 ? (
@@ -59,7 +60,7 @@ const MarkerComponent = ({ area, text }) => {
             ) : (
               <div className="d-flex flex-wrap justify-content-start">
                 {area.requrired_people.map((person) => (
-                 <ReqPersonMapTag person={person} key={person._id} />
+                  <ReqPersonMapTag person={person} key={person._id} />
                 ))}
               </div>
             )}
@@ -112,7 +113,6 @@ export default function MapComponent() {
     deleteUpdateArea.isDeleted,
   ]);
 
-
   // Filter actions
   const handleCheckboxChange = (value) => {
     if (checkedValues.includes(value)) {
@@ -157,7 +157,7 @@ export default function MapComponent() {
   const handleMapChange = ({ center }) => {
     setCenter(center);
 
-    if (address&& address.length < 20) {
+    if (address && address.length < 20) {
       setZoom(13);
     }
     if (address.length > 20) {
@@ -184,7 +184,13 @@ export default function MapComponent() {
             setAddress={setAddress}
             handleSelect={handleSelect}
           />
-          <FiltersButton handleCheckboxChange={handleCheckboxChange} />
+          <FiltersButton
+            content={
+              <FiltersButtonMapContent
+                handleCheckboxChange={handleCheckboxChange}
+              />
+            }
+          />
         </div>
       </div>
 
@@ -196,7 +202,7 @@ export default function MapComponent() {
           onClick={onMapClick}
         >
           {!getAllArea.success ? (
-              <LoadingSpinner />
+            <LoadingSpinner />
           ) : (
             getAllArea.areas.map((area) => (
               <MarkerComponent

@@ -28,7 +28,6 @@ const AddProductToAreaModal = ({
     handleCloseAddProductToAreaModal();
   };
 
-  
   const [showPrioritySelect, setShowPrioritySelect] = useState(false);
 
   const handleShowPrioritySelect = () => {
@@ -38,7 +37,6 @@ const AddProductToAreaModal = ({
   const handleClosePrioritySelect = () => {
     setShowPrioritySelect(false);
   };
-
 
   return (
     <Fragment>
@@ -63,44 +61,44 @@ const AddProductToAreaModal = ({
               onChange={(e) => setQuantity(e.target.value)}
             />
             {showPrioritySelect ? (
-            <div>
-              <div className="d-flex justify-content-between align-items-center mt-2">
-                <label for="recipient-name" class="col-form-label">
-                  Priority Order{" "}
-                </label>
-                <button
-                  className="btn btn-light btn-sm"
-                  onClick={handleClosePrioritySelect}
+              <div>
+                <div className="d-flex justify-content-between align-items-center mt-2">
+                  <label for="recipient-name" class="col-form-label">
+                    Priority Order{" "}
+                  </label>
+                  <button
+                    className="btn btn-light btn-sm"
+                    onClick={handleClosePrioritySelect}
+                  >
+                    <i class="fa-solid fa-x"></i>
+                  </button>
+                  <div></div>
+                </div>
+                <select
+                  className="form-control"
+                  style={{ width: 240 }}
+                  placeholder="Select Priority"
+                  value={priorityOrder}
+                  onChange={(e) => setPriorityOrder(e.target.value)}
                 >
-                  <i class="fa-solid fa-x"></i>
-                </button>
-                <div></div>
+                  <option selected>Select priority</option>
+                  {priorityOrders.map((c) => (
+                    <option key={`1-${c}`} value={c}>
+                      {c}
+                    </option>
+                  ))}
+                </select>
               </div>
-              <select
-                className="form-control"
-                style={{ width: 240 }}
-                placeholder="Select Priority"
-                value={priorityOrder}
-                onChange={(e) => setPriorityOrder(e.target.value)}
+            ) : (
+              <button
+                className="btn btn-light btn-sm rounded-3 mt-4"
+                style={{ border: "2px solid rgb(221,221,221)" }}
+                type="button"
+                onClick={handleShowPrioritySelect}
               >
-                <option selected>Select priority</option>
-                {priorityOrders.map((c) => (
-                  <option key={c} value={c}>
-                    {c}
-                  </option>
-                ))}
-              </select>
-            </div>
-          ) : (
-            <button
-              className="btn btn-light btn-sm rounded-3 mt-4"
-              style={{border : '2px solid rgb(221,221,221)'}}
-              type="button"
-              onClick={handleShowPrioritySelect}
-            >
-              Add Priority
-            </button>
-)}
+                Add Priority
+              </button>
+            )}
           </div>
         </form>
       </Modal>
