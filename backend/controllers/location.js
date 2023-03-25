@@ -7,9 +7,19 @@ exports.shareLocation = catchAsyncErrors(async (req, res) => {
   const latitude = req.query.latitude;
   const longitude = req.query.longitude;
 
-  // Save location data to database
-  const location = new Location({ userId, latitude, longitude });
-  await location.save();
+  // Check if location data for the user already exists
+  const existingLocation = await Location.findOne({ userId });
+
+  if (existingLocation) {
+    // Update the existing location data
+    existingLocation.latitude = latitude;
+    existingLocation.longitude = longitude;
+    await existingLocation.save();
+  } else {
+    // Save location data to database
+    const location = new Location({ userId, latitude, longitude });
+    await location.save();
+  }
 
   res.status(200).json({
     message: "Location data saved successfully",

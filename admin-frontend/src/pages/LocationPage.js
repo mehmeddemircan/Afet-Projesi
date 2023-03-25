@@ -29,12 +29,11 @@ const UserMarkerComponent = ({ userLocation, lat, lng }) => {
 };
 
 const LocationPage = () => {
- 
   const auth = useSelector((state) => state.auth);
 
   const [location, setLocation] = useState(null);
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   // Check if user has shared location before
 
   useEffect(() => {
@@ -74,21 +73,23 @@ const LocationPage = () => {
       // Permissions API not supported
       console.log("Permissions API not supported");
     }
-    if (location && auth && auth.token == null) {
-      dispatch(SaveLocation(   auth.user._id,
-        location.latitude,
-        location.longitude))
-    }
+
     const intervalId = setInterval(() => {
-      if (location && auth && auth.user && auth.token != null) {
+      // if (location && auth && auth.user && auth.token != null) {
+      //   dispatch(
+      //     UpdateLiveLocation(
+      //       auth.user._id,
+      //       location.latitude,
+      //       location.longitude
+      //     )
+      //   );
+      // }
+      if (location) {
         dispatch(
-          UpdateLiveLocation(
-            auth.user._id,
-            location.latitude,
-            location.longitude
-          )
+          SaveLocation(auth.user._id, location.latitude, location.longitude)
         );
       }
+
       dispatch(GetAllUserLocations());
     }, 10000);
 
