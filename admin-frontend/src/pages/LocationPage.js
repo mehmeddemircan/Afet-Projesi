@@ -88,7 +88,7 @@ const LocationPage = () => {
       navigator.geolocation.clearWatch(watchId);
       clearInterval(intervalId);
     };
-  }, [auth, dispatch]);
+  }, [auth, dispatch,location]);
 
   const getAllUserLocations = useSelector((state) => state.getAllUserLocations);
 
