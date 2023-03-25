@@ -61,11 +61,9 @@ const LocationPage = () => {
           navigator.geolocation.getCurrentPosition(
             (position) => {
               setLocation(position.coords);
-             
             },
             (error) => console.log(error)
           );
-         
         } else {
           // Permission denied
           console.log("Permission denied");
@@ -75,17 +73,13 @@ const LocationPage = () => {
       // Permissions API not supported
       console.log("Permissions API not supported");
     }
-  
-   
+
     const intervalId = setInterval(() => {
-      if (location && auth && auth.user && auth.token != null) {
+      if ( auth && auth.user && auth.token != null) {
         dispatch(
           SaveLocation(auth.user._id, location.latitude, location.longitude)
         );
-      
-       
       }
-     
 
       dispatch(GetAllUserLocations());
     }, 10000);
@@ -94,7 +88,7 @@ const LocationPage = () => {
       navigator.geolocation.clearWatch(watchId);
       clearInterval(intervalId);
     };
-  }, [auth, dispatch, location]);
+  }, [auth, dispatch]);
 
   const getAllUserLocations = useSelector((state) => state.getAllUserLocations);
 
