@@ -85,7 +85,7 @@ export const UpdateUserRole = (id) => async (dispatch) => {
       });
   
       const { data } = await axios.get(
-        `http://localhost:5000/api/map/users`
+        `https://afetapi.onrender.com/api/map/users`
 
       );
   
@@ -110,7 +110,7 @@ export const UpdateUserRole = (id) => async (dispatch) => {
       };
   
       const { data } = await axios.patch(
-        `http://localhost:5000/api/users/${userId}/location`,
+        `https://afetapi.onrender.com/api/users/${userId}/location`,
         { lat, lng },
         config
       );
