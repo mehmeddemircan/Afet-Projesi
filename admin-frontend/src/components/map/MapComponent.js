@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState, useRef } from "react";
 import GoogleMapReact from "google-map-react";
-
-import { List, Badge, Button, Popover, Tag, Tooltip } from "antd";
+import { UserOutlined } from "@ant-design/icons";
+import { List, Badge, Button, Popover, Tag, Tooltip, Avatar } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { AllArea, DeleteArea } from "../../redux/actions/AreaActions";
 import PlacesAutocomplete, {
@@ -173,6 +173,8 @@ export default function MapComponent() {
       lng: event.lng,
     });
   };
+  // live location
+ 
 
   return (
     // Important! Always set the container height explicitly
@@ -201,6 +203,10 @@ export default function MapComponent() {
           onChange={handleMapChange}
           onClick={onMapClick}
         >
+          {/* <UserMarkerComponent
+            lat={location?.latitude}
+            lng={location?.longitude}
+          /> */}
           {!getAllArea.success ? (
             <LoadingSpinner />
           ) : (

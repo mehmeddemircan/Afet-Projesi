@@ -109,6 +109,7 @@ export const logout = () => async (dispatch) => {
   localStorage.removeItem("user");
   localStorage.removeItem("token");
 
+
   dispatch({ type: LOGOUT_SUCCESS });
 };
 

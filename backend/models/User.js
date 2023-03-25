@@ -37,7 +37,16 @@ const userSchema = new mongoose.Schema(
     },
   
     address: String,
-  
+    location: {
+      lat: {
+        type: String,
+      
+    
+      },
+      lng : {
+        type : String
+      }
+    },
 
     resetPasswordToken: String,
     resetPasswordExpire: Date,
