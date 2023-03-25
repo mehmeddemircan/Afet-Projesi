@@ -29,34 +29,27 @@ const UserMarkerComponent = ({ userLocation, lat, lng }) => {
 };
 
 const LocationPage = () => {
-  const [location, setLocation] = useState(null);
-  const auth = useSelector((state) => state.auth);
  
-  const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth);
+
+  const [location, setLocation] = useState(null);
+
+  const dispatch = useDispatch()
   // Check if user has shared location before
 
   useEffect(() => {
     let watchId;
-
-    const successCallback = (position) => {
-      setLocation(position.coords);
-      const { latitude, longitude } = position.coords;
-      if (auth && auth.user && auth.token != null) {
-        dispatch(UpdateLiveLocation(auth.user._id, latitude, longitude));
-      }
-    };
-
-    const errorCallback = (error) => {
-      console.log(error);
-    };
 
     if ("permissions" in navigator) {
       navigator.permissions.query({ name: "geolocation" }).then((result) => {
         if (result.state === "granted") {
           // Permission already granted
           watchId = navigator.geolocation.watchPosition(
-            successCallback,
-            errorCallback,
+            (position) => {
+              setLocation(position.coords);
+            },
+            (error) => console.log(error),
+
             {
               enableHighAccuracy: true,
               timeout: 10000,
@@ -67,8 +60,10 @@ const LocationPage = () => {
         } else if (result.state === "prompt") {
           // Ask user for permission
           navigator.geolocation.getCurrentPosition(
-            successCallback,
-            errorCallback
+            (position) => {
+              setLocation(position.coords);
+            },
+            (error) => console.log(error)
           );
         } else {
           // Permission denied
@@ -79,7 +74,11 @@ const LocationPage = () => {
       // Permissions API not supported
       console.log("Permissions API not supported");
     }
-
+    if (location && auth && auth.token == null) {
+      dispatch(SaveLocation(   auth.user._id,
+        location.latitude,
+        location.longitude))
+    }
     const intervalId = setInterval(() => {
       if (location && auth && auth.user && auth.token != null) {
         dispatch(
@@ -90,6 +89,7 @@ const LocationPage = () => {
           )
         );
       }
+      dispatch(GetAllUserLocations());
     }, 10000);
 
     return () => {
@@ -99,10 +99,6 @@ const LocationPage = () => {
   }, [auth, dispatch, location]);
 
   const getAllUserLocations = useSelector((state) => state.getAllUserLocations);
-
-  useEffect(() => {
-    dispatch(GetAllUserLocations());
-  }, [dispatch]);
 
   const defaultProps = {
     center: {
