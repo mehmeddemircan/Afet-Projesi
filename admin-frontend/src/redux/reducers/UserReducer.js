@@ -1,3 +1,4 @@
+import { GET_USERS_LOCATIONS_FAIL, GET_USERS_LOCATIONS_REQUEST, GET_USERS_LOCATIONS_SUCCESS } from "../constants/LocationConstants";
 import { GET_ALL_USER_FAIL, GET_ALL_USER_REQUEST, GET_ALL_USER_SUCCESS, SEARCH_USERS_BY_NAME_FAIL, SEARCH_USERS_BY_NAME_REQUEST, SEARCH_USERS_BY_NAME_RESET, SEARCH_USERS_BY_NAME_SUCCESS, UPDATE_USER_ROLE_FAIL, UPDATE_USER_ROLE_REQUEST, UPDATE_USER_ROLE_RESET, UPDATE_USER_ROLE_SUCCESS } from "../constants/UserConstants";
 
 
@@ -118,3 +119,34 @@ const GET_ALL_USER_INITIAL_STATE = {
     }
   };
   
+
+  export const getAllUserLocationsReducer = (
+      state = {
+        userLocations: "",
+      },
+      action
+    ) => {
+      switch (action.type) {
+        case GET_USERS_LOCATIONS_REQUEST:
+          return { ...state, loading: true };
+    
+        case GET_USERS_LOCATIONS_SUCCESS:
+          return {
+            ...state,
+            loading: false,
+            success: true,
+            userLocations: action.payload,
+          };
+    
+        case GET_USERS_LOCATIONS_FAIL:
+          return {
+            ...state,
+            loading: false,
+            success: false,
+            error: action.payload,
+          };
+    
+        default:
+          return state;
+      }
+    };

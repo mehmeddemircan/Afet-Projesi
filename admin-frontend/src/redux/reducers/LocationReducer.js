@@ -44,41 +44,41 @@ export const saveUserLocationReducer = (
   }
 };
 
-export const getAllUserLocationsReducer = (
-  state = {
-    userLocations: "",
-  },
-  action
-) => {
-  switch (action.type) {
-    case GET_USERS_LOCATIONS_REQUEST:
-      return { ...state, loading: true };
+// export const getAllUserLocationsReducer = (
+//   state = {
+//     userLocations: "",
+//   },
+//   action
+// ) => {
+//   switch (action.type) {
+//     case GET_USERS_LOCATIONS_REQUEST:
+//       return { ...state, loading: true };
 
-    case GET_USERS_LOCATIONS_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        success: true,
-        userLocations: action.payload,
-      };
+//     case GET_USERS_LOCATIONS_SUCCESS:
+//       return {
+//         ...state,
+//         loading: false,
+//         success: true,
+//         userLocations: action.payload,
+//       };
 
-    case GET_USERS_LOCATIONS_FAIL:
-      return {
-        ...state,
-        loading: false,
-        success: false,
-        error: action.payload,
-      };
+//     case GET_USERS_LOCATIONS_FAIL:
+//       return {
+//         ...state,
+//         loading: false,
+//         success: false,
+//         error: action.payload,
+//       };
 
-    default:
-      return state;
-  }
-};
+//     default:
+//       return state;
+//   }
+// };
 const UPDATE_USER_LOCATION_INITIAL_STATE ={
     success : false
 }
 export const updateUserLocationReducer = (
-  state =     UPDATE_USER_LOCATION_INITIAL_STATE,
+  state =  UPDATE_USER_LOCATION_INITIAL_STATE,
 
   
   action

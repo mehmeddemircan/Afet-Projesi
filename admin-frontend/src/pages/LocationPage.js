@@ -2,20 +2,20 @@ import React, { useEffect, useState } from "react";
 import MainLayout from "../components/layout/MainLayout";
 import { UserOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  GetAllUserLocations,
-  SaveLocation,
-  UpdateLiveLocation,
-} from "../redux/actions/LocationActions";
+
 import { Avatar, Button, Popover } from "antd";
 import GoogleMapReact from "google-map-react";
-import { UPDATE_LIVE_LOCATION_RESET } from "../redux/constants/LocationConstants";
+import {
+  GetAllUserLocations,
+  UpdateLiveLocation,
+} from "../redux/actions/UserActions";
+
 const UserMarkerComponent = ({ userLocation, lat, lng }) => {
   return (
     <Popover
       content={
         <>
-          <h6>{userLocation.userId.name}</h6>
+          <h6>{userLocation.name}</h6>
           <a>lat : {lat}</a>
           <a>lat : {lng}</a>
         </>
@@ -37,7 +37,7 @@ const LocationPage = () => {
   // Check if user has shared location before
 
   useEffect(() => {
-    let watchId;
+    let watchId = null;
 
     if ("permissions" in navigator) {
       navigator.permissions.query({ name: "geolocation" }).then((result) => {
@@ -75,9 +75,13 @@ const LocationPage = () => {
     }
 
     const intervalId = setInterval(() => {
-      if ( auth && auth.user && auth.token != null) {
+      if (auth && auth.token !== null && location !== null) {
         dispatch(
-          SaveLocation(auth.user._id, location.latitude, location.longitude)
+          UpdateLiveLocation(
+            auth.user._id,
+            location.latitude,
+            location.longitude
+          )
         );
       }
 
@@ -88,7 +92,7 @@ const LocationPage = () => {
       navigator.geolocation.clearWatch(watchId);
       clearInterval(intervalId);
     };
-  }, [auth, dispatch,location]);
+  }, [auth, dispatch, location]);
 
   const getAllUserLocations = useSelector((state) => state.getAllUserLocations);
 
@@ -123,8 +127,8 @@ const LocationPage = () => {
                 <UserMarkerComponent
                   userLocation={userLocation}
                   key={userLocation._id}
-                  lat={userLocation?.latitude}
-                  lng={userLocation?.longitude}
+                  lat={userLocation.location.lat}
+                  lng={userLocation.location.lng}
                 />
               ))
             )}

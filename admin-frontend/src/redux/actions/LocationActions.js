@@ -25,53 +25,53 @@ export const SaveLocation = (userId,latitude,longitude) => async (dispatch) => {
   };
   
 
-  export const GetAllUserLocations = () => async (dispatch) => {
-    try {
-      dispatch({
-        type: GET_USERS_LOCATIONS_REQUEST,
-      });
+  // export const GetAllUserLocations = () => async (dispatch) => {
+  //   try {
+  //     dispatch({
+  //       type: GET_USERS_LOCATIONS_REQUEST,
+  //     });
   
-      const { data } = await axios.get(
-        `https://afetapi.onrender.com/api/users/locations`
+  //     const { data } = await axios.get(
+  //       `https://afetapi.onrender.com/api/users/locations`
 
-      );
+  //     );
   
-      dispatch({
-        type: GET_USERS_LOCATIONS_SUCCESS,
-        payload: data,
-      });
-    } catch (error) {
-      dispatch({
-        type: GET_USERS_LOCATIONS_FAIL,
-        error: error.response,
-      });
-    }
-  };
+  //     dispatch({
+  //       type: GET_USERS_LOCATIONS_SUCCESS,
+  //       payload: data,
+  //     });
+  //   } catch (error) {
+  //     dispatch({
+  //       type: GET_USERS_LOCATIONS_FAIL,
+  //       error: error.response,
+  //     });
+  //   }
+  // };
   
 
   
-export const UpdateLiveLocation = (userId, latitude, longitude) => async (dispatch) => {
-  try {
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
+// export const UpdateLiveLocation = (userId, lat, lng) => async (dispatch) => {
+//   try {
+//     const config = {
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//     };
 
-    const { data } = await axios.put(
-      `https://afetapi.onrender.com/api/users/${userId}/location`,
-      { latitude, longitude },
-      config
-    );
+//     const { data } = await axios.patch(
+//       `http://localhost:5000/api/users/${userId}/location`,
+//       { lat, lng },
+//       config
+//     );
 
-    dispatch({
-      type: UPDATE_LIVE_LOCATION_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: UPDATE_LIVE_LOCATION_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+//     dispatch({
+//       type: UPDATE_LIVE_LOCATION_SUCCESS,
+//       payload: data,
+//     });
+//   } catch (error) {
+//     dispatch({
+//       type: UPDATE_LIVE_LOCATION_FAIL,
+//       payload: error.response.data.message,
+//     });
+//   }
+// };

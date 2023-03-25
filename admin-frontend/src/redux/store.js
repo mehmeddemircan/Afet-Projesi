@@ -31,6 +31,7 @@ import {
   getAllSubCategoryReducer,
 } from "./reducers/SubCategoryReducer";
 import {
+  getAllUserLocationsReducer,
   getAllUserReducer,
   searchUsersReducer,
   updateUserRoleReducer,
@@ -51,7 +52,7 @@ import {
   getSingleFormCategoryReducer,
 } from "./reducers/FormCategoryReducer";
 import { deleteUpdateGetHelpFormReducer, getFormsByCategoryIdReducer } from "./reducers/FormReducer";
-import { getAllUserLocationsReducer, saveUserLocationReducer, updateUserLocationReducer } from "./reducers/LocationReducer";
+import {  saveUserLocationReducer, updateUserLocationReducer } from "./reducers/LocationReducer";
 
 const rootReducer = combineReducers({
   getAllArea: getAllAreaReducer,

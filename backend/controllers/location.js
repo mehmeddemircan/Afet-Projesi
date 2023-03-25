@@ -101,3 +101,14 @@ exports.findLocationsByUserId = async (req, res) => {
     });
   }
 };
+
+exports.deleteLocation = async(req,res) => {
+  try {
+    await Location.findByIdAndDelete(req.params.id)
+    res.status(200).json({
+      message : "Location deleted successfully"
+    })
+  } catch (error) {
+    res.status(500).json(error)
+  }
+}
