@@ -31,7 +31,7 @@ const UserMarkerComponent = ({ userLocation, lat, lng }) => {
 const LocationPage = () => {
   const [location, setLocation] = useState(null);
   const auth = useSelector((state) => state.auth);
-  const updateUserLocation = useSelector((state) => state.updateUserLocation);
+ 
   const dispatch = useDispatch();
   // Check if user has shared location before
 
@@ -102,7 +102,7 @@ const LocationPage = () => {
 
   useEffect(() => {
     dispatch(GetAllUserLocations());
-  }, [dispatch, updateUserLocation]);
+  }, [dispatch]);
 
   const defaultProps = {
     center: {
