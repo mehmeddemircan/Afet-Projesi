@@ -9,6 +9,7 @@ import {
 } from "../redux/actions/LocationActions";
 import { Avatar, Button, Popover } from "antd";
 import GoogleMapReact from "google-map-react";
+import { UPDATE_LIVE_LOCATION_RESET } from "../redux/constants/LocationConstants";
 const UserMarkerComponent = ({ userLocation, lat, lng }) => {
   return (
     <Popover
@@ -30,39 +31,44 @@ const UserMarkerComponent = ({ userLocation, lat, lng }) => {
 const LocationPage = () => {
   const [location, setLocation] = useState(null);
   const auth = useSelector((state) => state.auth);
+  const updateUserLocation = useSelector((state) => state.updateUserLocation);
   const dispatch = useDispatch();
   // Check if user has shared location before
 
   useEffect(() => {
+    let watchId;
 
-  
+    const successCallback = (position) => {
+      setLocation(position.coords);
+      const { latitude, longitude } = position.coords;
+      if (auth && auth.user && auth.token != null) {
+        dispatch(UpdateLiveLocation(auth.user._id, latitude, longitude));
+      }
+    };
+
+    const errorCallback = (error) => {
+      console.log(error);
+    };
+
     if ("permissions" in navigator) {
       navigator.permissions.query({ name: "geolocation" }).then((result) => {
         if (result.state === "granted") {
           // Permission already granted
-          navigator.geolocation.watchPosition(  (position) => {
-            setLocation(position.coords)
-            const { latitude, longitude } = position.coords;
-            if (auth && auth.user && auth.token != null) {
-              dispatch(UpdateLiveLocation(auth.user._id, latitude, longitude));
+          watchId = navigator.geolocation.watchPosition(
+            successCallback,
+            errorCallback,
+            {
+              enableHighAccuracy: true,
+              timeout: 10000,
+              maximumAge: 0,
+              distanceFilter: 10,
             }
-          },
-          (error) => console.log(error),
-          { enableHighAccuracy: true, timeout: 10000, maximumAge: 0, distanceFilter: 10 });
+          );
         } else if (result.state === "prompt") {
           // Ask user for permission
           navigator.geolocation.getCurrentPosition(
-            (position) => {
-              setLocation(position.coords);
-              dispatch(
-                SaveLocation(
-                  auth.user._id,
-                  location.latitude,
-                  location.longitude
-                )
-              );
-            },
-            (error) => console.log(error)
+            successCallback,
+            errorCallback
           );
         } else {
           // Permission denied
@@ -74,14 +80,29 @@ const LocationPage = () => {
       console.log("Permissions API not supported");
     }
 
+    const intervalId = setInterval(() => {
+      if (location && auth && auth.user && auth.token != null) {
+        dispatch(
+          UpdateLiveLocation(
+            auth.user._id,
+            location.latitude,
+            location.longitude
+          )
+        );
+      }
+    }, 10000);
 
-  }, [dispatch, location?.latitude, location?.longitude]);
+    return () => {
+      navigator.geolocation.clearWatch(watchId);
+      clearInterval(intervalId);
+    };
+  }, [auth, dispatch, location]);
 
   const getAllUserLocations = useSelector((state) => state.getAllUserLocations);
 
   useEffect(() => {
     dispatch(GetAllUserLocations());
-  }, [dispatch]);
+  }, [dispatch, updateUserLocation]);
 
   const defaultProps = {
     center: {
