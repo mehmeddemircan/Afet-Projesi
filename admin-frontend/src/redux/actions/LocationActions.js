@@ -8,7 +8,7 @@ export const SaveLocation = (userId,latitude,longitude) => async (dispatch) => {
       });
   
       const { data } = await axios.get(
-        `http://localhost:5000/api/share-location?userId=${userId}&latitude=${latitude}&longitude=${longitude}`
+        `https://afetapi.onrender.com/api/share-location?userId=${userId}&latitude=${latitude}&longitude=${longitude}`
 
       );
   
@@ -32,7 +32,7 @@ export const SaveLocation = (userId,latitude,longitude) => async (dispatch) => {
       });
   
       const { data } = await axios.get(
-        `http://localhost:5000/api/users/locations`
+        `https://afetapi.onrender.com/api/users/locations`
 
       );
   
@@ -59,7 +59,7 @@ export const UpdateLiveLocation = (userId, latitude, longitude) => async (dispat
     };
 
     const { data } = await axios.put(
-      `http://localhost:5000/api/users/${userId}/location`,
+      `https://afetapi.onrender.com/api/users/${userId}/location`,
       { latitude, longitude },
       config
     );
