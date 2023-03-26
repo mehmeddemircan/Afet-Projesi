@@ -46,7 +46,7 @@ exports.getHelpForms = catchAsyncErrors(async (req, res) => {
 
 exports.getFormsByCategoryId = catchAsyncErrors(async (req, res) => {
   try {
-    const results = await GetHelpForm.find({ category: req.params.categoryId, isApproved: false });
+    const results = await GetHelpForm.find({ category: req.params.categoryId });
     res.status(200).json(results);
   } catch (error) {
     res.status(500).json(error);

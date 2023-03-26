@@ -41,10 +41,16 @@ const FormListPage = () => {
   const getSingleFormCategory = useSelector(
     (state) => state.getSingleFormCategory
   );
-
+  // Filter the approved forms and put them into an array
+  const approvedForms = getFormsByCategoryId.forms.filter(
+    (form) => form.isApproved === true
+  );
+  const unApprovedForms = getFormsByCategoryId.forms.filter(
+    (form) => form.isApproved === false
+  );
   useEffect(() => {
     dispatch(AllFormByCategoryId(categoryId));
-    dispatch(AllApprovedFormByCategoryId(categoryId));
+
     if (deleteUpdateGetHelpForm.isDeleted) {
       message.success(deleteUpdateGetHelpForm.message);
       dispatch({ type: DELETE_FORM_RESET });
@@ -169,7 +175,7 @@ const FormListPage = () => {
       <Tabs>
         <TabPane key="1" tab="Un Approved">
           <List>
-            {getFormsByCategoryId.forms.map((form) => (
+            {unApprovedForms.map((form) => (
               <FormInfoItem
                 key={form._id}
                 form={form}
@@ -181,7 +187,7 @@ const FormListPage = () => {
         </TabPane>
         <TabPane key="2" tab="Approved">
           <List>
-            {getApprovedFormsByCategoryId.approvedForms.map((form) => (
+            {approvedForms.map((form) => (
               <ApprovedFormItem
                 key={form._id}
                 form={form}
