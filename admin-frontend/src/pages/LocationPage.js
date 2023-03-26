@@ -46,13 +46,7 @@ const LocationPage = () => {
           watchId = navigator.geolocation.watchPosition(
             (position) => {
               setLocation(position.coords);
-              dispatch(
-                UpdateLiveLocation(
-                  auth.user._id,
-                  location.latitude,
-                  location.longitude
-                )
-              );
+          
   
             },
             (error) => console.log(error),
@@ -82,7 +76,13 @@ const LocationPage = () => {
     }
 
     const intervalId = setInterval(() => {
-  
+      dispatch(
+        UpdateLiveLocation(
+          auth.user._id,
+          location.latitude,
+          location.longitude
+        )
+      );
 
       dispatch(GetAllUserLocations());
     }, 10000);
