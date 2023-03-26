@@ -46,7 +46,16 @@ exports.getHelpForms = catchAsyncErrors(async (req, res) => {
 
 exports.getFormsByCategoryId = catchAsyncErrors(async (req, res) => {
   try {
-    const results = await GetHelpForm.find({ category: req.params.categoryId });
+    const results = await GetHelpForm.find({ category: req.params.categoryId, isApproved: false });
+    res.status(200).json(results);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
+exports.getApprovedFormsByCategoryId = catchAsyncErrors(async (req, res) => {
+  try {
+    const results = await GetHelpForm.find({ category: req.params.categoryId, isApproved: true });
     res.status(200).json(results);
   } catch (error) {
     res.status(500).json(error);
@@ -98,4 +107,32 @@ exports.deleteHelpForm = catchAsyncErrors(async(req,res) => {
   }
 
 })
+
+
+exports.approveHelpForm = catchAsyncErrors(async(req,res) => {
+  try {
+       await GetHelpForm.findByIdAndUpdate(req.params.id, {
+        $set : {
+          isApproved : true ,
+          ...req.body
+        }
+      },
+        {new : true}
+      )
+
+      res.status(200).json({
+      
+        message : "Successfully approved form"
+      })
+
+  } catch (error) {
+    res.status(500).json(error)    
+  }
+})
+
+
+
+
+
+
 

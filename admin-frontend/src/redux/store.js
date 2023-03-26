@@ -23,7 +23,6 @@ import {
   deleteUpdateCategoryReducer,
   getAllCategoryReducer,
   getCategoriesReducer,
-  getSubsOfCategoryReducer,
 } from "./reducers/CategoryReducer";
 import {
   addSubCategoryReducer,
@@ -42,7 +41,6 @@ import {
   forgotResetPasswordReducer,
 } from "./reducers/AuthReducer";
 import {
-  addImageToProductReducer,
   addProductReducer,
   deleteUpdateProductReducer,
   getAllProductReducer,
@@ -54,6 +52,7 @@ import {
 } from "./reducers/FormCategoryReducer";
 import {
   deleteUpdateGetHelpFormReducer,
+  getApprovedFormsByCategoryIdReducer,
   getFormsByCategoryIdReducer,
 } from "./reducers/FormReducer";
 
@@ -94,6 +93,7 @@ const rootReducer = combineReducers({
 
   getAllUserLocations: getAllUserLocationsReducer,
   updateUserLocation: updateUserLocationReducer,
+  getApprovedFormsByCategoryId: getApprovedFormsByCategoryIdReducer,
 });
 
 const initialState = {};

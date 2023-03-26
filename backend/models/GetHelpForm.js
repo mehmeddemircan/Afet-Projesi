@@ -41,6 +41,10 @@ const GetHelpFormSchema = new mongoose.Schema({
     ref: "FormCategory",
     required: true,
   },
+  isApproved: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 module.exports = mongoose.model("GetHelpForm", GetHelpFormSchema);
