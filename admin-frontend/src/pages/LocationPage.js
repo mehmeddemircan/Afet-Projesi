@@ -35,7 +35,7 @@ const LocationPage = () => {
 
   const dispatch = useDispatch();
   // Check if user has shared location before
-
+  const [watchId, setWatchId] = useState(null);
   useEffect(() => {
     let watchId = null;
 
@@ -87,17 +87,27 @@ const LocationPage = () => {
       // Permissions API not supported
       console.log("Permissions API not supported");
     }
+    setWatchId(watchId);
+    
+    return () => {
+      if (watchId) {
+        navigator.geolocation.clearWatch(watchId);
+      }
+    };
+  
+  }, [auth, dispatch, location]);
 
+  useEffect(() => {
     const intervalId = setInterval(() => {
       dispatch(GetAllUserLocations());
     }, 10000);
 
     return () => {
-      navigator.geolocation.clearWatch(watchId);
       clearInterval(intervalId);
-    };
-  }, [auth, dispatch, location]);
-
+    }
+  }, [dispatch]);
+  
+  
   const getAllUserLocations = useSelector((state) => state.getAllUserLocations);
 
   const defaultProps = {
