@@ -5,11 +5,10 @@ const connectDB = require("./config/db");
 const fs = require("fs");
 const morgan = require("morgan");
 const cors = require("cors");
-const WebSocket = require('ws');
-const Location = require("./models/Location");
-// Connecting to db
-
+const WebSocket = require("ws");
+const wss = new WebSocket.Server({ port: 8080 });
 const PORT = process.env.PORT || 5000;
+
 const app = express();
 app.use(express.json());
 // middlewares
@@ -18,16 +17,18 @@ app.use(cors());
 connectDB();
 
 
-// Set up WebSocket server
-const wss = new WebSocket.Server({ port: 8080 });
 
-// Handle WebSocket connections
-wss.on('connection', ws => {
-  console.log('WebSocket connection established');
+wss.on('connection', (ws) => {
+  console.log('WebSocket connected');
 
-  // Send location data to client
-  Location.watch().on('change', change => {
-    ws.send(JSON.stringify(change.fullDocument));
+  ws.on('message', (data) => {
+      // Parse the data as JSON
+      const locationData = JSON.parse(data);
+      console.log(locationData)
+  });
+
+  ws.on('close', () => {
+    console.log('WebSocket disconnected');
   });
 });
 

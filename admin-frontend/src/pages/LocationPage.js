@@ -46,7 +46,14 @@ const LocationPage = () => {
           watchId = navigator.geolocation.watchPosition(
             (position) => {
               setLocation(position.coords);
-              dispatch(auth.user._id,location.latitude,location.longitude)
+              dispatch(
+                UpdateLiveLocation(
+                  auth.user._id,
+                  location.latitude,
+                  location.longitude
+                )
+              );
+  
             },
             (error) => console.log(error),
 
@@ -54,7 +61,6 @@ const LocationPage = () => {
               enableHighAccuracy: true,
               timeout: 5000,
               maximumAge: 0,
-        
             }
           );
         } else if (result.state === "prompt") {
@@ -62,7 +68,6 @@ const LocationPage = () => {
           navigator.geolocation.getCurrentPosition(
             (position) => {
               setLocation(position.coords);
-             
             },
             (error) => console.log(error)
           );
@@ -77,15 +82,7 @@ const LocationPage = () => {
     }
 
     const intervalId = setInterval(() => {
-      if (auth && auth.token !== null && location !== null) {
-        dispatch(
-          UpdateLiveLocation(
-            auth.user._id,
-            location.latitude,
-            location.longitude
-          )
-        );
-      }
+  
 
       dispatch(GetAllUserLocations());
     }, 10000);
@@ -105,12 +102,42 @@ const LocationPage = () => {
     },
     zoom: 6,
   };
+  // butonlu kısım 
+
+    const [permissionGranted, setPermissionGranted] = useState(false);
+  
+    const handlePermissionClick = () => {
+      navigator.permissions.query({ name: "geolocation" }).then((result) => {
+        if (result.state === "granted") {
+          // Permission already granted
+          setPermissionGranted(true);
+        } else if (result.state === "prompt") {
+          // Ask user for permission
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              setPermissionGranted(true);
+              setLocation(position.coords)
+            },
+            (error) => console.log(error)
+          );
+        } else {
+          // Permission denied
+          console.log("Permission denied");
+        }
+      });
+
+    }
 
   return (
     <MainLayout>
       <h2>location page</h2>
       <h2>{auth.user.name}</h2>
       <h2>{auth.user._id}</h2>
+      <div>
+      {!permissionGranted && (
+        <button className="btn btn-primary" onClick={handlePermissionClick}>Allow Location Access</button>
+      )}
+    </div>
       <div>
         {location && (
           <>
