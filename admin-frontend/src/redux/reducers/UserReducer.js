@@ -1,4 +1,4 @@
-import { GET_USERS_LOCATIONS_FAIL, GET_USERS_LOCATIONS_REQUEST, GET_USERS_LOCATIONS_SUCCESS } from "../constants/LocationConstants";
+import { GET_USERS_LOCATIONS_FAIL, GET_USERS_LOCATIONS_REQUEST, GET_USERS_LOCATIONS_SUCCESS, UPDATE_LIVE_LOCATION_FAIL, UPDATE_LIVE_LOCATION_RESET, UPDATE_LIVE_LOCATION_SUCCESS } from "../constants/LocationConstants";
 import { GET_ALL_USER_FAIL, GET_ALL_USER_REQUEST, GET_ALL_USER_SUCCESS, SEARCH_USERS_BY_NAME_FAIL, SEARCH_USERS_BY_NAME_REQUEST, SEARCH_USERS_BY_NAME_RESET, SEARCH_USERS_BY_NAME_SUCCESS, UPDATE_USER_ROLE_FAIL, UPDATE_USER_ROLE_REQUEST, UPDATE_USER_ROLE_RESET, UPDATE_USER_ROLE_SUCCESS } from "../constants/UserConstants";
 
 
@@ -150,3 +150,41 @@ const GET_ALL_USER_INITIAL_STATE = {
           return state;
       }
     };
+
+    const UPDATE_USER_LOCATION_INITIAL_STATE ={
+      success : false
+  }
+
+
+  export const updateUserLocationReducer = (
+    state =  UPDATE_USER_LOCATION_INITIAL_STATE,
+  
+    
+    action
+  ) => {
+    switch (action.type) {
+      case UPDATE_LIVE_LOCATION_SUCCESS : 
+        return {
+          ...state,
+          loading: false,
+          success: true,
+          userLocations: action.payload,
+        };
+  
+      case UPDATE_LIVE_LOCATION_FAIL:
+        return {
+          ...state,
+          loading: false,
+          success: false,
+          error: action.payload,
+        };
+  
+      case UPDATE_LIVE_LOCATION_RESET:
+        return {
+          ...UPDATE_USER_LOCATION_INITIAL_STATE,
+          
+        };
+      default:
+        return state;
+    }
+  };

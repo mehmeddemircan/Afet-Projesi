@@ -46,14 +46,15 @@ const LocationPage = () => {
           watchId = navigator.geolocation.watchPosition(
             (position) => {
               setLocation(position.coords);
+              dispatch(auth.user._id,location.latitude,location.longitude)
             },
             (error) => console.log(error),
 
             {
               enableHighAccuracy: true,
-              timeout: 10000,
+              timeout: 5000,
               maximumAge: 0,
-              distanceFilter: 10,
+        
             }
           );
         } else if (result.state === "prompt") {
@@ -61,6 +62,7 @@ const LocationPage = () => {
           navigator.geolocation.getCurrentPosition(
             (position) => {
               setLocation(position.coords);
+             
             },
             (error) => console.log(error)
           );

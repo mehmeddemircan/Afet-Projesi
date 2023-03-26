@@ -34,6 +34,7 @@ import {
   getAllUserLocationsReducer,
   getAllUserReducer,
   searchUsersReducer,
+  updateUserLocationReducer,
   updateUserRoleReducer,
 } from "./reducers/UserReducer";
 import {
@@ -51,8 +52,10 @@ import {
   getAllFormCategoryReducer,
   getSingleFormCategoryReducer,
 } from "./reducers/FormCategoryReducer";
-import { deleteUpdateGetHelpFormReducer, getFormsByCategoryIdReducer } from "./reducers/FormReducer";
-import {  saveUserLocationReducer, updateUserLocationReducer } from "./reducers/LocationReducer";
+import {
+  deleteUpdateGetHelpFormReducer,
+  getFormsByCategoryIdReducer,
+} from "./reducers/FormReducer";
 
 const rootReducer = combineReducers({
   getAllArea: getAllAreaReducer,
@@ -87,10 +90,10 @@ const rootReducer = combineReducers({
   getAllFormCategory: getAllFormCategoryReducer,
   getFormsByCategoryId: getFormsByCategoryIdReducer,
   getSingleFormCategory: getSingleFormCategoryReducer,
-  deleteUpdateGetHelpForm : deleteUpdateGetHelpFormReducer,
-  saveUserLocation : saveUserLocationReducer,
-  getAllUserLocations : getAllUserLocationsReducer,
-  updateUserLocation : updateUserLocationReducer
+  deleteUpdateGetHelpForm: deleteUpdateGetHelpFormReducer,
+
+  getAllUserLocations: getAllUserLocationsReducer,
+  updateUserLocation: updateUserLocationReducer,
 });
 
 const initialState = {};
