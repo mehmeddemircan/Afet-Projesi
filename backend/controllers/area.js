@@ -55,7 +55,7 @@ exports.updateArea = catchAsyncErrors(async (req, res) => {
     );
 
     res.status(200).json(updatedArea);
-  } catch (error) {
+  } catch (error) { 
     res.status(500).json(error);
   }
 });

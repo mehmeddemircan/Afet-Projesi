@@ -12,7 +12,7 @@ import { ADD_TASK_FAIL, ADD_TASK_REQUEST, ADD_TASK_SUCCESS, GET_ALL_TASK_FAIL, G
       });
   
       const { data } = await axios.get(
-        `http://localhost:5000/api/tasks`
+        `https://afetapi.onrender.com/api/tasks`
       );
   
       dispatch({
@@ -34,7 +34,7 @@ import { ADD_TASK_FAIL, ADD_TASK_REQUEST, ADD_TASK_SUCCESS, GET_ALL_TASK_FAIL, G
       });
   
       const { data } = await axios.post(
-        `http://localhost:5000/api/create-task`,task
+        `https://afetapi.onrender.com/api/create-task`,task
       );
   
       dispatch({

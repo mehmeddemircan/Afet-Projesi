@@ -1,6 +1,6 @@
 import { List } from "antd";
 import React, { Fragment } from "react";
-
+import moment from "moment";
 const TaskItem = ({task}) => {
   return (
     <Fragment>
@@ -12,8 +12,11 @@ const TaskItem = ({task}) => {
         ]}
       >
         <List.Item.Meta
-          title={<a>{task.dueDate}</a>}
-          description={task.text}
+   
+          description={<>
+            <a className="text-dark" style={{textDecorationLine :'none'}}>{task.text}</a>
+            <a>    {moment(task.dueDate).locale("tr").format("MMM Do YY")}  </a>
+          </>}
         />
       </List.Item>
     </Fragment>
