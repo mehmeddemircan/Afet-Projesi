@@ -85,6 +85,18 @@ const items = [
     ),
     key: "6",
   },
+  {
+    label: (
+      <a
+        class="me-2 mt-1 "
+        href="/gorevler"
+        style={{ textDecoration: "none", fontSize: "18px" }}
+      >
+      Görevler
+      </a>
+    ),
+    key: "7",
+  },
 ];
 const HeaderMenuDropDown = () => (
   <Dropdown

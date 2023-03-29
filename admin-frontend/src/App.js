@@ -25,6 +25,7 @@ import ProductDetailsPage from './pages/ProductDetailsPage';
 import FormListPage from './pages/FormListPage';
 import FormCategoryPage from './pages/FormCategoryPage';
 import LocationPage from './pages/LocationPage';
+import TasksPage from './pages/TasksPage';
 
 function App() {
   const dispatch = useDispatch();
@@ -56,6 +57,7 @@ function App() {
         <Route path="/yardım-formları" element={<FormCategoryPage />} />
         <Route path="/yardım-formları/:categoryId" element={<FormListPage />} />
         <Route path="/location" element={<LocationPage />} />
+        <Route path="/gorevler" element={<TasksPage />} />
         <Route path="/upload" element={<AntdUploadPage />} />
         <Route path="/*" element={<NotFoundPage />} />
       </Routes>

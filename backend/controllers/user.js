@@ -1,4 +1,5 @@
 const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
+const Task = require("../models/Task");
 const User = require("../models/User");
 
 exports.getAllUserByPage = catchAsyncErrors(async (req, res) => {
@@ -24,7 +25,6 @@ exports.getAllUserByPage = catchAsyncErrors(async (req, res) => {
   }
 
   try {
-    
     results.users = await User.find().limit(limit).skip(startIndex).exec();
     results.totalLength = (await User.find()).length;
     res.status(200).json(results);
@@ -87,13 +87,12 @@ exports.updateUserLocation = catchAsyncErrors(async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-  // Update the user's location fields
-  user.location.lat = lat;
-  user.location.lng = lng;
+    // Update the user's location fields
+    user.location.lat = lat;
+    user.location.lng = lng;
 
-  // Save the updated user to the database
-  await user.save();
-
+    // Save the updated user to the database
+    await user.save();
 
     res.status(200).json({ message: "Location updated successfully" });
   } catch (error) {
@@ -102,23 +101,83 @@ exports.updateUserLocation = catchAsyncErrors(async (req, res) => {
   }
 });
 
-
-exports.getUserLocationOnMap = catchAsyncErrors(async(req,res) => {
+exports.getUserLocationOnMap = catchAsyncErrors(async (req, res) => {
   try {
-      const users = await User.findById(req.params.id, { name: 1, email: 1, location: 1 })
+    const users = await User.findById(req.params.id, {
+      name: 1,
+      email: 1,
+      location: 1,
+    });
 
-      res.status(200).json(users)
+    res.status(200).json(users);
   } catch (error) {
-    res.status(500).json(error)
+    res.status(500).json(error);
   }
-})
+});
 
-exports.getUsersOnMap = catchAsyncErrors(async(req,res) => {
+exports.getUsersOnMap = catchAsyncErrors(async (req, res) => {
   try {
-      const users = await User.find({ location: { $exists: true }}, { name: 1, email: 1, location: 1 })
+    const users = await User.find(
+      { location: { $exists: true } },
+      { name: 1, email: 1, location: 1 }
+    );
 
-      res.status(200).json(users)
+    res.status(200).json(users);
   } catch (error) {
-    res.status(500).json(error)
+    res.status(500).json(error);
   }
+});
+
+exports.addTaskToUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.userId);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    const { taskId } = req.body;
+
+    user.tasks.push(taskId);
+    await user.save();
+    res.status(200).json({
+      message : "Successfully added task to user"
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+exports.getTasksOfUser = catchAsyncErrors(async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id).populate("tasks");
+    const userTasks = user.tasks;
+    res.status(200).json(userTasks);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
+exports.removeTaskFromUser = catchAsyncErrors(async(req,res) => {
+  try {
+    
+
+      // Delete controller to remove product from required_products array
+
+    
+          const user = await User.findById(req.params.id);
+          if (!user) {
+            return res.status(404).json({ message: "Area not found" });
+          }
+    
+          // Remove product from required_products array
+          user.tasks.pull({ _id: req.params.objectId });
+          await user.save();
+    
+          res.json({ message: "Task removed from user successfully" });
+        } catch (err) {
+          console.error(err);
+          res.status(500).json({ message: "Server Error" });
+        }
+
+
+
 })

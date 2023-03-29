@@ -1,8 +1,20 @@
 import axios from "axios";
 import {
+  ADD_TASK_TO_USER_FAIL,
+  ADD_TASK_TO_USER_REQUEST,
+  ADD_TASK_TO_USER_SUCCESS,
   GET_ALL_USER_FAIL,
   GET_ALL_USER_REQUEST,
   GET_ALL_USER_SUCCESS,
+  GET_NOT_ADDED_TASK_FAIL,
+  GET_NOT_ADDED_TASK_REQUEST,
+  GET_NOT_ADDED_TASK_SUCCESS,
+  GET_USER_TASKS_FAIL,
+  GET_USER_TASKS_REQUEST,
+  GET_USER_TASKS_SUCCESS,
+  REMOVE_TASK_TO_USER_FAIL,
+  REMOVE_TASK_TO_USER_REQUEST,
+  REMOVE_TASK_TO_USER_SUCCESS,
   SEARCH_USERS_BY_NAME_FAIL,
   SEARCH_USERS_BY_NAME_REQUEST,
   SEARCH_USERS_BY_NAME_SUCCESS,
@@ -123,6 +135,94 @@ export const UpdateUserRole = (id) => async (dispatch) => {
       dispatch({
         type: UPDATE_LIVE_LOCATION_FAIL,
         payload: error.response.data.message,
+      });
+    }
+  };
+
+
+  export const AddTaskToUser = (userId,task) => async (dispatch) => {
+    try {
+      dispatch({
+        type: ADD_TASK_TO_USER_REQUEST,
+      });
+  
+      const { data } = await axios.post(
+        `http://localhost:5000/api/users/${userId}/add-task`,task
+      );
+  
+      dispatch({
+        type: ADD_TASK_TO_USER_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: ADD_TASK_TO_USER_FAIL,
+        error: error.response,
+      });
+    }
+  };
+  
+
+  export const RemoveTaskFromUser = (userId,taskId) => async (dispatch) => {
+    try {
+      dispatch({
+        type: REMOVE_TASK_TO_USER_REQUEST,
+      });
+  
+      const { data } = await axios.delete(
+        `http://localhost:5000/api/users/${userId}/tasks/${taskId}/remove`
+      );
+  
+      dispatch({
+        type: REMOVE_TASK_TO_USER_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: REMOVE_TASK_TO_USER_FAIL,
+        error: error.response,
+      });
+    }
+  };
+
+  export const GetUserTasks = (userId) => async (dispatch) => {
+    try {
+      dispatch({
+        type: GET_USER_TASKS_REQUEST,
+      });
+  
+      const { data } = await axios.get(`http://localhost:5000/api/users/${userId}/tasks`);
+  
+      dispatch({
+        type: GET_USER_TASKS_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: GET_USER_TASKS_FAIL,
+        error: error.response,
+      });
+    }
+  };
+
+  export const GetAllTaskNotAdded =  (userId) => async (dispatch) => {
+    try {
+      dispatch({
+        type: GET_NOT_ADDED_TASK_REQUEST,
+      });
+  
+      const { data } = await axios.get(
+        `http://localhost:5000/api/users/${userId}/not-added-tasks`
+      );
+  
+      dispatch({
+        type: GET_NOT_ADDED_TASK_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: GET_NOT_ADDED_TASK_FAIL,
+        error: error.response,
       });
     }
   };

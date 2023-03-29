@@ -30,8 +30,12 @@ import {
   getAllSubCategoryReducer,
 } from "./reducers/SubCategoryReducer";
 import {
+  addRemoveTaskToUserReducer,
+  addTaskToUserReducer,
   getAllUserLocationsReducer,
   getAllUserReducer,
+  getNotAddedTasksReducer,
+  getUserTasksReducer,
   searchUsersReducer,
   updateUserLocationReducer,
   updateUserRoleReducer,
@@ -55,6 +59,7 @@ import {
   getApprovedFormsByCategoryIdReducer,
   getFormsByCategoryIdReducer,
 } from "./reducers/FormReducer";
+import { addNewTaskReducer, getAllTaskReducer } from "./reducers/TaskReducer";
 
 const rootReducer = combineReducers({
   getAllArea: getAllAreaReducer,
@@ -94,6 +99,12 @@ const rootReducer = combineReducers({
   getAllUserLocations: getAllUserLocationsReducer,
   updateUserLocation: updateUserLocationReducer,
   getApprovedFormsByCategoryId: getApprovedFormsByCategoryIdReducer,
+  addRemoveTaskToUser:addRemoveTaskToUserReducer,
+  getNotAddedTasks: getNotAddedTasksReducer,
+  getUserTasks : getUserTasksReducer,
+  getAllTask : getAllTaskReducer,
+  addNewTask : addNewTaskReducer 
+
 });
 
 const initialState = {};

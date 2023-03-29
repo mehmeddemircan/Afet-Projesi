@@ -31,6 +31,14 @@ const GetHelpFormSchema = new mongoose.Schema({
     required: true,
     default: "Normal",
   },
+  location: {
+    lat: {
+      type: String,
+    },
+    lng: {
+      type: String,
+    },
+  },
   infoAboutPhysical: {
     type: String,
   },
@@ -45,6 +53,7 @@ const GetHelpFormSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+
 });
 
 module.exports = mongoose.model("GetHelpForm", GetHelpFormSchema);

@@ -47,7 +47,12 @@ const userSchema = new mongoose.Schema(
         type : String
       }
     },
-
+    tasks: [
+      {
+        type: ObjectId,
+        ref: 'Task',
+      },
+    ],
     resetPasswordToken: String,
     resetPasswordExpire: Date,
   },

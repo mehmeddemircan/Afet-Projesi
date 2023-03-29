@@ -30,6 +30,8 @@ const UsersPage = () => {
 
   }, [dispatch, limit, currentPage,updateUserRole.success]);
 
+  
+
   return (
     <MainLayout>
       <h5 className="my-3 text-center">UsersPage</h5>

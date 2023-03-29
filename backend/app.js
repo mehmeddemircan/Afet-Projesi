@@ -16,19 +16,17 @@ app.use(cors());
 
 connectDB();
 
+wss.on("connection", (ws) => {
+  console.log("WebSocket connected");
 
-
-wss.on('connection', (ws) => {
-  console.log('WebSocket connected');
-
-  ws.on('message', (data) => {
-      // Parse the data as JSON
-      const locationData = JSON.parse(data);
-      console.log(locationData)
+  ws.on("message", (data) => {
+    // Parse the data as JSON
+    const locationData = JSON.parse(data);
+    console.log(locationData);
   });
 
-  ws.on('close', () => {
-    console.log('WebSocket disconnected');
+  ws.on("close", () => {
+    console.log("WebSocket disconnected");
   });
 });
 

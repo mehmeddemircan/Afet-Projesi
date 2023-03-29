@@ -2,13 +2,13 @@ const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
 const Area = require("../models/Area");
 
 exports.createArea = catchAsyncErrors(async (req, res) => {
-  const newArea = new Area(req.body);
-  try {
-    const savedArea = await newArea.save();
-    res.status(200).json(savedArea);
-  } catch (error) {
-    res.status(500).json(error);
-  }
+    const newArea = new Area(req.body);
+    try {
+      const savedArea = await newArea.save();
+      res.status(200).json(savedArea);
+    } catch (error) {
+      res.status(500).json(error);
+    }
 });
 
 exports.getAllArea = catchAsyncErrors(async (req, res) => {
