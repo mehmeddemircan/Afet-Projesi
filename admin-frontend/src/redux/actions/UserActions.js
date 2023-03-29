@@ -147,7 +147,7 @@ export const UpdateUserRole = (id) => async (dispatch) => {
       });
   
       const { data } = await axios.post(
-        `https://afetapi.onrender.com/api/users/${userId}/add-task`,task
+        `http://localhost:5000/api/users/${userId}/add-task`,task
       );
   
       dispatch({
@@ -170,7 +170,7 @@ export const UpdateUserRole = (id) => async (dispatch) => {
       });
   
       const { data } = await axios.delete(
-        `https://afetapi.onrender.com/api/users/${userId}/tasks/${taskId}/remove`
+        `http://localhost:5000/api/users/${userId}/tasks/${taskId}/remove`
       );
   
       dispatch({
@@ -191,7 +191,7 @@ export const UpdateUserRole = (id) => async (dispatch) => {
         type: GET_USER_TASKS_REQUEST,
       });
   
-      const { data } = await axios.get(`https://afetapi.onrender.com/api/users/${userId}/tasks`);
+      const { data } = await axios.get(`http://localhost:5000/api/users/${userId}/tasks`);
   
       dispatch({
         type: GET_USER_TASKS_SUCCESS,

@@ -27,6 +27,7 @@ import FormCategoryPage from './pages/FormCategoryPage';
 import LocationPage from './pages/LocationPage';
 import TasksPage from './pages/TasksPage';
 
+
 function App() {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
@@ -50,6 +51,7 @@ function App() {
         <Route path="/kategoriler" element={<CategoriesPage />} />
         <Route path="/altkategoriler" element={<SubCategoriesPage />} />
         <Route path="/kullanicilar" element={<UsersPage />} />
+
         <Route path="/urunler" element={<ProductsPage />} />
         <Route path="/urunler/:id" element={<ProductDetailsPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />

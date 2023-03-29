@@ -27,7 +27,7 @@ const UserTaskItem = ({user,userTask , addedTask }) => {
       <List.Item.Meta
         title={
           <div className="d-flex justify-content-between">
-            <a>dsadsa </a>{" "}
+            <a>{userTask.text} </a>{" "} 
             <div className="d-inline-flex align-items-center">
               {userTask.text.length > 40 ? (
                 <Tooltip placement="topLeft" title={<a>More</a>}>

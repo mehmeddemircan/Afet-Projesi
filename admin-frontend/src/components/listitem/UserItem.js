@@ -5,9 +5,10 @@ import { GetUserTasks, UpdateUserRole } from "../../redux/actions/UserActions";
 import TaskDrawer from "../drawer/TaskDrawer";
 import { GetAllTaskNotAdded } from "../../redux/actions/UserActions";
 import { ADD_TASK_TO_USER_RESET, REMOVE_TASK_TO_USER_RESET } from "../../redux/constants/UserConstants";
-
+import { useNavigate } from "react-router-dom";
 const UserItem = ({ user }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleMakeAdmin = () => {
     dispatch(UpdateUserRole(user._id));
@@ -15,22 +16,24 @@ const UserItem = ({ user }) => {
 
   const [openDrawer, setOpenDrawer] = useState(false);
   const { loading } = useSelector((state) => state.getUserTasks);
-  const addRemoveTaskToUser = useSelector((state) => state.addRemoveTaskToUser);
+  const [userId, setUserId] = useState("")
+  // const addRemoveTaskToUser = useSelector((state) => state.addRemoveTaskToUser);
 
-  useEffect(() => {
-    dispatch(GetUserTasks(user._id));
-    dispatch(GetAllTaskNotAdded(user._id));
-    if (addRemoveTaskToUser.isAdded) {
-      message.success(addRemoveTaskToUser.message);
-      dispatch({ type: ADD_TASK_TO_USER_RESET });
-    }
-    if (addRemoveTaskToUser.isRemoved) {
-      message.success(addRemoveTaskToUser.message)
-      dispatch({type : REMOVE_TASK_TO_USER_RESET})
-    }
-  }, [dispatch, user._id, addRemoveTaskToUser.isAdded,addRemoveTaskToUser.isRemoved]);
+  // useEffect(() => {
+  //   dispatch(GetUserTasks(user._id));
+  //   dispatch(GetAllTaskNotAdded(user._id));
+  //   if (addRemoveTaskToUser.isAdded) {
+  //     message.success(addRemoveTaskToUser.message);
+  //     dispatch({ type: ADD_TASK_TO_USER_RESET });
+  //   }
+  //   if (addRemoveTaskToUser.isRemoved) {
+  //     message.success(addRemoveTaskToUser.message)
+  //     dispatch({type : REMOVE_TASK_TO_USER_RESET})
+  //   }
+  // }, [user,dispatch, addRemoveTaskToUser.isAdded,addRemoveTaskToUser.isRemoved]);
 
-  const handleOpenDrawer = () => {
+  const handleOpenDrawer = (id) => {
+    setUserId(id)
     setOpenDrawer(true);
   };
 
@@ -53,19 +56,28 @@ const UserItem = ({ user }) => {
           </button>
           <button
             className="btn btn-sm btn-light text-white rounded-pill"
-            onClick={handleOpenDrawer}
+            onClick={() => handleOpenDrawer(user._id)}
             style={{ background: "#222" }}
+            // onClickCapture={() => navigate(`/kullanicilar/${user._id}/gorevler`)}
           >
             Add Task{" "}
           </button>
+
+          {
+            openDrawer && (
+              <TaskDrawer
+              userId ={userId}
+              key={user._id}
+              user={user}
+              openDrawer={openDrawer}
+              handleCloseDrawer={handleCloseDrawer}
+            />
+            )
+          }
         </>,
       ]}
     >
-      <TaskDrawer
-        user={user}
-        openDrawer={openDrawer}
-        handleCloseDrawer={handleCloseDrawer}
-      />
+      
       <List.Item.Meta
         title={<a>{user.name}</a>}
         description="Ant Design, a design language for background applications, is refined by Ant UED Team"
