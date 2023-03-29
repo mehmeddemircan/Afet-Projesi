@@ -1,7 +1,8 @@
 import { List } from "antd";
 import React, { Fragment } from "react";
-import TaskItem from "../listitem/TaskItem";
+
 import { useSelector } from "react-redux";
+import UserTaskItem from "../listitem/UserTaskItem";
 
 const TaskList = () => {
   const getAllTask = useSelector((state) => state.getAllTask);
@@ -10,7 +11,7 @@ const TaskList = () => {
     <Fragment>
       <List className="my-4" itemLayout="horizontal">
         {getAllTask.tasks.map((task) => (
-          <TaskItem key={task._id} task={task} />
+          <UserTaskItem key={task._id} userTask={task} />
         ))}
       </List>
     </Fragment>

@@ -48,7 +48,7 @@ const AddTaskModal = ({ handleCloseAddTaskModal, showAddTaskModal }) => {
             <label className="col-form-label">Due Date</label>
             <div>
               <Space direction="vertical">
-                <DatePicker  onChange={handleDateChange} />
+                <DatePicker onChange={handleDateChange} />
               </Space>
             </div>
           </div>
