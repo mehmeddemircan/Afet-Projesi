@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 
 const TaskList = () => {
   const getAllTask = useSelector((state) => state.getAllTask);
-
+  
   return (
     <Fragment>
       <List className="my-4" itemLayout="horizontal">

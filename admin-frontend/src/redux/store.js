@@ -59,7 +59,7 @@ import {
   getApprovedFormsByCategoryIdReducer,
   getFormsByCategoryIdReducer,
 } from "./reducers/FormReducer";
-import { addNewTaskReducer, getAllTaskReducer } from "./reducers/TaskReducer";
+import { addNewTaskReducer, getAllTaskReducer, updateTaskReducer } from "./reducers/TaskReducer";
 
 const rootReducer = combineReducers({
   getAllArea: getAllAreaReducer,
@@ -103,7 +103,8 @@ const rootReducer = combineReducers({
   getNotAddedTasks: getNotAddedTasksReducer,
   getUserTasks : getUserTasksReducer,
   getAllTask : getAllTaskReducer,
-  addNewTask : addNewTaskReducer 
+  addNewTask : addNewTaskReducer ,
+  updateTask : updateTaskReducer
 
 });
 

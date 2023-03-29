@@ -5,7 +5,7 @@ import TaskList from "../components/list/TaskList";
 import { useDispatch, useSelector } from "react-redux";
 import { GetAllTask } from "../redux/actions/TaskActions";
 import { message } from "antd";
-import { ADD_TASK_RESET } from "../redux/constants/TaskConstants";
+import { ADD_TASK_RESET, UPDATE_TASK_RESET } from "../redux/constants/TaskConstants";
 
 const TasksPage = () => {
   const [showAddTaskModal, setShowAddTaskModal] = useState(false);
@@ -17,19 +17,22 @@ const TasksPage = () => {
   const handleCloseAddTaskModal = () => {
     setShowAddTaskModal(false);
   };
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const addNewTask = useSelector((state) => state.addNewTask)
-
+  const addNewTask = useSelector((state) => state.addNewTask);
+  const updateTask = useSelector((state) => state.updateTask)
 
   useEffect(() => {
-      dispatch(GetAllTask())
-      if (addNewTask.success) {
-        message.success("Successfully added task")
-        dispatch({type  :ADD_TASK_RESET})
-      }
-
-  }, [dispatch,addNewTask.success])
+    dispatch(GetAllTask());
+    if (addNewTask.success) {
+      message.success("Successfully added task");
+      dispatch({ type: ADD_TASK_RESET });
+    }
+    if (updateTask.isUpdated) {
+      message.success(updateTask.message)
+      dispatch({type : UPDATE_TASK_RESET})
+    }
+  }, [dispatch, addNewTask.success,updateTask.isUpdated]);
 
   return (
     <Fragment>
