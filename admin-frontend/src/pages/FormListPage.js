@@ -177,18 +177,20 @@ const FormListPage = () => {
           <List>
             {unApprovedForms.map((form) => (
               <FormInfoItem
+                isApproved={false}
                 key={form._id}
                 form={form}
                 handleDeleteForm={handleDeleteForm}
                 handleApproveForm={handleApproveForm}
               />
             ))}
-          </List>
+          </List> 
         </TabPane>
         <TabPane key="2" tab="Approved">
           <List>
             {approvedForms.map((form) => (
-              <ApprovedFormItem
+              <FormInfoItem
+                isApproved={true}
                 key={form._id}
                 form={form}
                 handleDeleteForm={handleDeleteForm}

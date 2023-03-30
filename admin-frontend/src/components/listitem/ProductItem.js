@@ -9,7 +9,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { DeleteProduct } from "../../redux/actions/ProductActions";
 import AddProductToAreaModal from "../modal/Area/AddProductToAreaModal";
 const { Meta } = Card;
-const ProductItem = ({ product }) => {
+const ProductItem = ({
+  handleRemoveProductFromArea,
+  reqProduct,
+  isReqProductItem,
+  product,
+}) => {
   const { requrired_products, success } = useSelector(
     (state) => state.getRequriredProducts
   );
@@ -49,7 +54,11 @@ const ProductItem = ({ product }) => {
               <Image
                 alt="example"
                 src={
-                  product.images.length == 0
+                  isReqProductItem
+                    ? reqProduct.Product.images.length == 0
+                      ? "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+                      : reqProduct.Product.images[0].url
+                    : product.images.length == 0
                     ? "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
                     : product.images[0].url
                 }
@@ -58,7 +67,17 @@ const ProductItem = ({ product }) => {
                 style={{ objectFit: "cover" }}
               />
             </Image.PreviewGroup>
-            {!success ? (
+            {isReqProductItem ? (
+              <Tooltip placement="topLeft" title="Remove ">
+                <button
+                  className="btn btn-sm "
+                  style={{ position: "absolute", top: 0, right: 0 }}
+                  onClick={() => handleRemoveProductFromArea(reqProduct._id)}
+                >
+                  <i class="fa-solid fa-x"></i>
+                </button>
+              </Tooltip>
+            ) : !success ? (
               <Tooltip placement="topLeft" title="Delete">
                 <button
                   className="btn btn-sm "
@@ -79,32 +98,48 @@ const ProductItem = ({ product }) => {
                 <EllipsisOutlined key="ellipsis" />,
               ]
             : [
-                <button
-                  className="btn btn-light btn-sm w-100 "
-                  onClick={handleShowAddProductToAreaModal}
-                >
-                  <i class="fa-solid fa-plus"></i> Add{" "}
-                </button>,
+                isReqProductItem ? null : (
+                  <button
+                    className="btn btn-light btn-sm w-100 "
+                    onClick={handleShowAddProductToAreaModal}
+                  >
+                    <i class="fa-solid fa-plus"></i> Add{" "}
+                  </button>
+                ),
               ]
         }
       >
-        <AddProductToAreaModal
-          product={product}
-          handleCloseAddProductToAreaModal={handleCloseAddProductToAreaModal}
-          showAddProductToAreaModal={showAddProductToAreaModal}
-        />
-        <a
-          style={{
-            textDecoration: "none",
-          }}
-          href={`/urunler/${product._id}`}
-        >
-          <Meta
-            avatar={<Avatar src="https://joesch.moe/api/v1/random" />}
-            title={product.title}
-            description="This is the description"
+        {isReqProductItem ? null : (
+          <AddProductToAreaModal
+            product={product}
+            handleCloseAddProductToAreaModal={handleCloseAddProductToAreaModal}
+            showAddProductToAreaModal={showAddProductToAreaModal}
           />
-        </a>
+        )}
+        {isReqProductItem ? (
+          <Meta
+            title={reqProduct.Product.title}
+            description={
+              <a className="text-dark" style={{ textDecorationLine: "none" }}>
+                Aciliyet :{" "}
+                <a style={{ color: "#1890ff" }}>{reqProduct.priorityOrder}</a>
+              </a>
+            }
+          />
+        ) : (
+          <a
+            style={{
+              textDecoration: "none",
+            }}
+            href={`/urunler/${product._id}`}
+          >
+            <Meta
+              avatar={<Avatar src="https://joesch.moe/api/v1/random" />}
+              title={product.title}
+              description="This is the description"
+            />
+          </a>
+        )}
       </Card>
     </Fragment>
   );

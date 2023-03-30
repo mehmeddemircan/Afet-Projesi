@@ -1,4 +1,4 @@
-import { List } from "antd";
+import { List, Tag } from "antd";
 import React, { useState } from "react";
 import DeletePersonTypeButton from "../buttons/DeletePersonTypeButton";
 import EditPersonTypeButton from "../buttons/EditPersonTypeButton";
@@ -8,7 +8,7 @@ import { DeletePersonType } from "../../redux/actions/PersonTypeActions";
 import { AddPersonToArea } from "../../redux/actions/AreaActions";
 import AddPersonToAreaModal from "../modal/Area/AddPersonToAreaModal";
 
-const PersonTypeItem = ({ personType }) => {
+const PersonTypeItem = ({ isReqPersonItem,reqPerson,handleRemovePersonFromArea, personType }) => {
   const [showEditPersonModal, setShowEditPersonModal] = useState(false);
 
   const handleShowEditPersonModal = () => {
@@ -56,25 +56,52 @@ const PersonTypeItem = ({ personType }) => {
            personType={personType}
          /> </>
 
-          ):  <button
+          ): isReqPersonItem ? (
+            <button
+            className="btn btn-danger btn-sm w-100 rounded-pill "
+            onClick={() => handleRemovePersonFromArea(reqPerson._id)}
+          >
+            Remove
+          </button>
+          ) :( <button
           className="btn btn-light btn-sm w-100 "
           onClick={handleShowAddPersonToAreaModal}
         >
           <i class="fa-solid fa-plus"></i> Add{" "}
-        </button> }
+        </button> ) }
         </>,
       ]}
     > 
 
-    <AddPersonToAreaModal
-      personType={personType}
-      showAddPersonToAreaModal={showAddPersonToAreaModal}
-      handleClosePersonToAreaModal={handleClosePersonToAreaModal}
-    />
+      {isReqPersonItem ?  null : (
+          <AddPersonToAreaModal
+          personType={personType}
+          showAddPersonToAreaModal={showAddPersonToAreaModal}
+          handleClosePersonToAreaModal={handleClosePersonToAreaModal}
+        />
+      )}
       <List.Item.Meta
-        title={<a>{personType.name}</a>}
-        description="Ant Design, a design language for background applications, is refined by Ant UED Team"
-      />
+        title={<a>{isReqPersonItem ? reqPerson.Person.name  : personType.name}</a>}
+        description={
+                isReqPersonItem ? (
+                  <>
+                  <p>
+                    Adet :{" "}
+                    <Tag color="#108ee9" className="ms-2">
+                      {" "}
+                      {reqPerson.quantity}
+                    </Tag>
+                  </p>
+                  <p>Aciliyet : {reqPerson.priorityOrder}</p>
+                </>
+                )
+
+                 : "Ant Design, a design language for background applications, is refined by Ant UED Team"
+               
+
+        }
+
+        />
     </List.Item>
   );
 };

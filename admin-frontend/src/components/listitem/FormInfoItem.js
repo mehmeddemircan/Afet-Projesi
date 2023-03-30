@@ -6,7 +6,7 @@ import {
   DeleteGetHelpForm,
 } from "../../redux/actions/FormActions";
 
-const FormInfoItem = ({ form, handleApproveForm, handleDeleteForm }) => {
+const FormInfoItem = ({isApproved, form, handleApproveForm, handleDeleteForm }) => {
   return (
     <Fragment>
       <List.Item key={form._id} className="card my-3 px-2">
@@ -15,12 +15,12 @@ const FormInfoItem = ({ form, handleApproveForm, handleDeleteForm }) => {
             <div className="d-flex justify-content-between">
               <a>User Info</a>{" "}
               <div>
-                <button
+                  {isApproved ? null : <button
                   className="btn btn-outline-success rounded-pill"
                   onClick={() => handleApproveForm(form._id)}
                 >
                   Approve
-                </button>
+                </button>}
 
                 <Tooltip title="Delete">
                   <button

@@ -12,13 +12,7 @@ const AddSubCategoryForm = () => {
             setName("")
             
     }
-    // const handleAddSubCategoryEnter =(e) => {
-    //         if (e.key == "Enter") {
-    //             dispatch(AddSubCategory({name}))
-            
-    //             setName("")
-    //         }
-    // }
+ 
   return (
     <Fragment>
       <form>
@@ -34,7 +28,7 @@ const AddSubCategoryForm = () => {
             
               value={name}
               onChange={(e) => setName(e.target.value)}
-            //    onKeyDown={handleAddSubCategoryEnter}
+         
             />
             <div class="input-group-append">
               <button class="btn btn-secondary ms-1" type="button"

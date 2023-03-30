@@ -16,6 +16,7 @@ import { toast } from "react-toastify";
 import {
   GetRequriredPeople,
   GetRequriredProducts,
+  RemovePersonFromArea,
   RemoveProductFromArea,
 } from "../redux/actions/AreaActions";
 import { useParams } from "react-router-dom";
@@ -118,6 +119,12 @@ const AreaDetailsPage = () => {
   useEffect(() => {
     filterReqPeople();
   }, [filteredReqPeople]);
+
+  const handleRemovePersonFromArea = (personId) => {
+    dispatch(RemovePersonFromArea(id, personId));
+  };
+
+
   return (
     <MainLayout>
       <h5 className="my-4 text-center">AreaDetailsPage</h5>
@@ -169,7 +176,8 @@ const AreaDetailsPage = () => {
           >
             <div className="my-4 d-flex flex-row flex-wrap justify-content-between">
               {getRequriredProducts.requrired_products.map((reqProduct) => (
-                <AddedReqProductItem
+                <ProductItem
+                  isReqProductItem = {true}
                   key={reqProduct._id}
                   reqProduct={reqProduct}
                   handleRemoveProductFromArea={handleRemoveProductFromArea}
@@ -194,6 +202,7 @@ const AreaDetailsPage = () => {
               <List className="my-4" itemLayout="horizontal">
                 {filteredReqPeople.map((personType) => (
                   <PersonTypeItem
+                    isReqPersonItem={false}
                     key={personType._id}
                     personType={personType}
                   />
@@ -207,7 +216,9 @@ const AreaDetailsPage = () => {
             >
               <List className="my-4" itemLayout="horizontal">
                 {getRequriredPeople.requrired_people.map((reqPerson) => (
-                  <AddedReqPersonItem
+                  <PersonTypeItem
+                    handleRemovePersonFromArea={handleRemovePersonFromArea}
+                    isReqPersonItem = {true}
                     key={reqPerson._id}
                     reqPerson={reqPerson}
                   />

@@ -9,7 +9,7 @@ import EditTaskModal from "../modal/Task/EditTaskModal";
 import moment from "moment";
 
 const UserTaskItem = ({ user, userTask, addedTask }) => {
-  const { success } = useSelector((state) => state.getAllTask);
+
   const [showMore, setShowMore] = useState(false);
   const handleShowMore = () => {
     setShowMore((prev) => !prev);
@@ -25,15 +25,7 @@ const UserTaskItem = ({ user, userTask, addedTask }) => {
     dispatch(RemoveTaskFromUser(user._id, userTask._id));
   };
 
-  const [showEditTaskModal, setShowEditTaskModal] = useState(false);
-
-  const handleShowEditTaskModal = () => {
-    setShowEditTaskModal(true);
-  };
-
-  const handleCloseEditTaskModal = () => {
-    setShowEditTaskModal(false);
-  };
+ 
 
   return (
     <List.Item>
@@ -49,8 +41,11 @@ const UserTaskItem = ({ user, userTask, addedTask }) => {
                   ) : (
                     <>{userTask.text.length < 40 ? "" : <>...</>}</>
                   )}
-                  <p className="d-inline-block ms-2">({moment(userTask.dueDate).locale("tr").format("MMM Do YY")})</p>  
-                                                </p>
+                  <p className="d-inline-block ms-2">
+                    ({moment(userTask.dueDate).locale("tr").format("MMM Do YY")}
+                    )
+                  </p>
+                </p>
                 <a>
                   {userTask.text.length > 40 ? (
                     <Tooltip placement="topLeft" title={<a>More</a>}>
@@ -66,7 +61,8 @@ const UserTaskItem = ({ user, userTask, addedTask }) => {
                 </a>
               </div>
               <div className="d-inline-flex align-items-start justify-content-between">
-                {!success ? (
+              
+                {
                   addedTask ? (
                     <button
                       className="btn btn-light btn-sm w-100  ms-4"
@@ -82,24 +78,8 @@ const UserTaskItem = ({ user, userTask, addedTask }) => {
                       <i class="fa-solid fa-plus"></i> Add
                     </button>
                   )
-                ) : (
-                  <>
-                    <button
-                      className="btn btn-light btn-sm w-100 text-white rounded-3"
-                      style={{ backgroundColor: "#108ee9" }}
-                      onClick={handleShowEditTaskModal}
-                    >
-                      Edit{" "}
-                    </button>
-                    <EditTaskModal
-                      task={userTask}
-                      showEditTaskModal={showEditTaskModal}
-                      handleCloseEditTaskModal={handleCloseEditTaskModal}
-                    />
-                  </>
-                )}
-
-                {}
+                 
+                }
               </div>
             </div>
           </>
