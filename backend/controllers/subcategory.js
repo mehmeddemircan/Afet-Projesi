@@ -1,4 +1,5 @@
 const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
+const Category = require("../models/Category");
 const SubCategory = require("../models/SubCategory");
 const slugify = require("slugify");
 exports.createNewSubCategory = catchAsyncErrors(async (req, res, next) => {
@@ -74,8 +75,9 @@ exports.createNewSubCategory = catchAsyncErrors(async (req, res, next) => {
   });
   exports.deleteSubCategory = catchAsyncErrors(async (req, res, next) => {
     await SubCategory.findByIdAndDelete(req.params.id);
-  
+ 
     res.status(200).json({
       message :  "Successfully deleted subcategory"
     });
   });
+

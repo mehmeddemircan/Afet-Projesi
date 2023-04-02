@@ -20,11 +20,16 @@ const CategorySchema = new mongoose.Schema(
 
     subs: [
       {
-        sub: {
-          type: ObjectId,
-          ref: "SubCategory",
-        },
+        type: ObjectId,
+        ref: "SubCategory",
       },
+      // {
+      //   sub: {
+      //     type: ObjectId,
+      //     ref: "SubCategory",
+      //   },
+       
+      // },
     ],
   },
   { timestamps: true }

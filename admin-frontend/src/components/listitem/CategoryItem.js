@@ -86,7 +86,7 @@ const CategoryItem = ({ category }) => {
               <div className="d-flex justify-content-start">
                 <Space size={[0, 4]} wrap>
                   {category.subs.map((item) => (
-                    <Tag key={item.sub._id}>{item.sub.name}</Tag>
+                    <Tag key={item._id}>{item.name}</Tag>
                   ))}
                 </Space>
               </div>

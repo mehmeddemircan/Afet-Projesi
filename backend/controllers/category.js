@@ -55,7 +55,7 @@ exports.getAllCategoryByPage = catchAsyncErrors(async (req, res, next) => {
 
   try {
     results.categories = await Category.find()
-      .populate("subs.sub")
+      .populate("subs")
       .limit(limit)
       .skip(startIndex)
       .exec();
@@ -111,9 +111,9 @@ exports.getSubs = catchAsyncErrors(async (req, res, next) => {
 });
 
 exports.addSubToCategory = catchAsyncErrors(async (req, res) => {
-  const subOfCategory = {
-    sub: req.body.sub,
-  };
+  const subOfCategory = 
+    req.body
+  
 
   try {
     const category = await Category.findById(req.params.id);
@@ -122,7 +122,7 @@ exports.addSubToCategory = catchAsyncErrors(async (req, res) => {
       return res.status(404).json({ error: "Category not found" });
     }
 
-    const subcategory = await SubCategory.findById(subOfCategory.sub);
+    const subcategory = await SubCategory.findById(subOfCategory);
 
     if (!subcategory) {
       return res.status(404).json({ error: "Subcategory not found" });
