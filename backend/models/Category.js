@@ -1,5 +1,6 @@
 //replace modelSchema,ModelName with whatever you want
 var mongoose = require("mongoose");
+
 const { ObjectId } = mongoose.Schema;
 const CategorySchema = new mongoose.Schema(
   {
@@ -28,11 +29,12 @@ const CategorySchema = new mongoose.Schema(
       //     type: ObjectId,
       //     ref: "SubCategory",
       //   },
-       
+
       // },
     ],
   },
   { timestamps: true }
 );
 var Category = mongoose.model("Category", CategorySchema);
+
 module.exports = Category;

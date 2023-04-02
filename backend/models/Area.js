@@ -2,7 +2,7 @@
 var mongoose = require("mongoose");
 const { ObjectId } = mongoose.Schema;
 
-const priorityOptions = ['Cok Acil', 'Acil', 'Normal','Acil Degil'];
+const priorityOptions = ["Cok Acil", "Acil", "Normal", "Acil Degil"];
 
 var AreaSchema = new mongoose.Schema(
   {
@@ -24,12 +24,12 @@ var AreaSchema = new mongoose.Schema(
           ref: "Product",
         },
         quantity: Number,
-        priorityOrder : {
-          type : String,
-          enum : priorityOptions,
-          required : true ,
-          default : "Normal"
-        }
+        priorityOrder: {
+          type: String,
+          enum: priorityOptions,
+          required: true,
+          default: "Normal",
+        },
       },
     ],
     requrired_people: [
@@ -39,13 +39,12 @@ var AreaSchema = new mongoose.Schema(
           ref: "Person",
         },
         quantity: Number,
-        priorityOrder : {
-          type : String,
-          enum : priorityOptions,
-          required : true ,
-          default : "Normal"
-        }
-
+        priorityOrder: {
+          type: String,
+          enum: priorityOptions,
+          required: true,
+          default: "Normal",
+        },
       },
     ],
   },

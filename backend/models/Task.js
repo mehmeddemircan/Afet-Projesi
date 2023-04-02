@@ -1,5 +1,6 @@
 //replace modelSchema,ModelName with whatever you want
 var mongoose = require("mongoose");
+const User = require("./User");
 const { ObjectId } = mongoose.Schema;
 var taskSchema = new mongoose.Schema(
   {
@@ -33,4 +34,5 @@ var taskSchema = new mongoose.Schema(
 );
 
 var Task = mongoose.model("Task", taskSchema);
+
 module.exports = Task;

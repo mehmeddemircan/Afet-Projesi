@@ -4,6 +4,9 @@ import React, { Fragment, useState } from "react";
 import { useDispatch } from "react-redux";
 import dayjs from "dayjs";
 import { EditTask } from "../../../redux/actions/TaskActions";
+import TaskAddLocationSearch from "../../search/TaskAddLocationSearch";
+
+import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 const EditTaskModal = ({
   task,
   showEditTaskModal,
@@ -13,6 +16,11 @@ const EditTaskModal = ({
 
   var taskDate = moment(task.dueDate).format("YYYY/MM/DD").toString();
   const [dueDate, setDueDate] = useState(taskDate);
+  const [address, setAddress] = useState(task.address);
+  const [location, setLocation] = useState({
+    lat: task.location.lat,
+    lng: task.location.lng,
+  });
   const handleDateChange = (date, dateString) => {
     setDueDate(dateString);
   };
@@ -20,8 +28,20 @@ const EditTaskModal = ({
   const dispatch = useDispatch();
 
   const handleEditTask = () => {
-    dispatch(EditTask(task._id, { text, dueDate }));
+    dispatch(EditTask(task._id, { text, dueDate, location }));
     handleCloseEditTaskModal();
+  };
+
+  const handleSelect = async (value) => {
+    const results = await geocodeByAddress(value);
+    const latLng = await getLatLng(results[0]);
+
+    setLocation({
+      lat: latLng.lat,
+      lng: latLng.lng,
+    });
+
+    setAddress(value);
   };
 
   return (
@@ -56,6 +76,13 @@ const EditTaskModal = ({
                   />
                 </Space>
               </div>
+            </div>
+            <div className="mt-3">
+              <TaskAddLocationSearch
+                address={address}
+                setAddress={setAddress}
+                handleSelect={handleSelect}
+              />
             </div>
           </div>
         </form>

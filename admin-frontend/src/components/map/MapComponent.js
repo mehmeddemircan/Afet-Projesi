@@ -21,6 +21,7 @@ import ReqProductMapTag from "../tag/ReqProductMapTag";
 import ReqPersonMapTag from "../tag/ReqPersonMapTag";
 
 import FiltersButtonMapContent from "../popover/FiltersButtonMapContent";
+
 const MarkerComponent = ({ area, text }) => {
   const dispatch = useDispatch();
 
@@ -174,7 +175,6 @@ export default function MapComponent() {
     });
   };
   // live location
- 
 
   return (
     // Important! Always set the container height explicitly
