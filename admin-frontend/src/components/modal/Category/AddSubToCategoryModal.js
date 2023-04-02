@@ -13,18 +13,18 @@ const AddSubToCategoryModal = ({
   const deleteUpdateCategory = useSelector(
     (state) => state.category.deleteUpdateCategory
   );
-  const [sub, setSub] = useState("");
+  const [_id, setId] = useState("");
   const dispatch = useDispatch();
 
   const handleAddSubToCategory = (subParam) => {
-    setSub(subParam);
+    setId(subParam);
 
-    dispatch(AddSubToCategory(category._id, { sub }));
+    dispatch(AddSubToCategory(category._id, { _id }));
   };
 
   useEffect(() => {
     if (deleteUpdateCategory.addedSubToCategory) {
-      setSub("");
+      setId("");
       handleCloseAddSubToCategoryModal();
     }
   }, [deleteUpdateCategory.addedSubToCategory]);
