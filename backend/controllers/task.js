@@ -74,3 +74,28 @@ exports.updateTask = catchAsyncErrors(async (req, res) => {
     res.status(500).json(error);
   }
 });
+
+
+exports.searchTasks = async (req, res) => {
+  try {
+    const { text, dueDate } = req.query;
+
+    let query = {};
+
+    if (text) {
+      query.text = { $regex: new RegExp(text, "i") };
+    }
+
+    if (dueDate) {
+      query.dueDate = { $lte: new Date(dueDate) };
+    }
+
+    const tasks = await Task.find(query);
+
+    res.status(200).json(tasks);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Internal server error" });
+  }
+
+};

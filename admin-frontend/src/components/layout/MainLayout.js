@@ -1,11 +1,10 @@
-import React, { Fragment, useState , useRef} from "react";
+import React, { Fragment, useState, useRef } from "react";
 import Header from "../header/Header";
 import Footer from "../footer/Footer";
 import MainFooter from "../footer/MainFooter";
 
 import BackTopButton from "../backtop/BackTop";
 import ShowMapButton from "../floatbutton/ShowMapButton";
-
 
 import MapComponent from "../map/MapComponent";
 
@@ -15,15 +14,13 @@ const MainLayout = (props) => {
   const handleToggleShowMap = () => {
     setShowMap((prev) => !prev);
   };
- 
 
   return (
     <Fragment>
       <Header />
       {showMap ? (
         <>
-        
-          <MapComponent   />
+          <MapComponent />
         </>
       ) : (
         <div className="container">{props.children}</div>

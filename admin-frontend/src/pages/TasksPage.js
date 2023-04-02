@@ -9,6 +9,7 @@ import {
   ADD_TASK_RESET,
   UPDATE_TASK_RESET,
 } from "../redux/constants/TaskConstants";
+import SearchTask from "../components/search/SearchTask";
 
 const TasksPage = () => {
   const [showAddTaskModal, setShowAddTaskModal] = useState(false);
@@ -25,8 +26,11 @@ const TasksPage = () => {
   const addNewTask = useSelector((state) => state.task.addNewTask);
   const updateTask = useSelector((state) => state.task.updateTask);
 
+  const [text, setText] = useState("")
+  const [dueDate, setDueDate] = useState("")
+
   useEffect(() => {
-    dispatch(GetAllTask());
+    dispatch(GetAllTask(text,dueDate));
     if (addNewTask.success) {
       message.success("Successfully added task");
       dispatch({ type: ADD_TASK_RESET });
@@ -35,12 +39,16 @@ const TasksPage = () => {
       message.success(updateTask.message);
       dispatch({ type: UPDATE_TASK_RESET });
     }
-  }, [dispatch, addNewTask.success, updateTask.isUpdated]);
+  }, [dispatch, addNewTask.success, updateTask.isUpdated,text,dueDate]);
 
+  const handleDateChange = (date, dateString) => {
+    setDueDate(dateString);
+  };
   return (
     <Fragment>
       <MainLayout>
-        <h2>Görevler sayfası</h2>
+        <SearchTask text={text}  setText={setText} handleDateChange={handleDateChange} dueDate={dueDate} />
+        
         <div className="row my-3">
           <div className="d-flex justify-content-end">
             <button
