@@ -34,8 +34,8 @@ const AddAreaButton = () => {
 
   const dispatch = useDispatch();
 
-  const addArea = useSelector((state) => state.addArea);
-  const deleteUpdateArea = useSelector((state) => state.deleteUpdateArea);
+  const addArea = useSelector((state) => state.area.addArea);
+  const deleteUpdateArea = useSelector((state) => state.area.deleteUpdateArea);
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [priorities, setPriorities] = useState([]);
   const handleChange = (value) => {

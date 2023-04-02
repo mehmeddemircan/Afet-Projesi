@@ -9,9 +9,9 @@ const AddSubToCategoryModal = ({
   showAddSubToCategoryModal,
   handleCloseAddSubToCategoryModal,
 }) => {
-  const getAllSubCategory = useSelector((state) => state.getAllSubCategory);
+  const getAllSubCategory = useSelector((state) => state.subcategory.getAllSubCategory);
   const deleteUpdateCategory = useSelector(
-    (state) => state.deleteUpdateCategory
+    (state) => state.category.deleteUpdateCategory
   );
   const [sub, setSub] = useState("");
   const dispatch = useDispatch();

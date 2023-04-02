@@ -11,9 +11,9 @@ import { useParams } from "react-router-dom";
 
 const ProductDetailsDesc = () => {
   const { id } = useParams();
-  const { product, loading } = useSelector((state) => state.getSingleProduct);
-  const deleteUpdateProduct = useSelector((state) => state.deleteUpdateProduct);
-  const getCategories = useSelector((state) => state.getCategories);
+  const { product, loading } = useSelector((state) => state.product.getSingleProduct);
+  const deleteUpdateProduct = useSelector((state) => state.product.deleteUpdateProduct);
+  const getCategories = useSelector((state) => state.category.getCategories);
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");

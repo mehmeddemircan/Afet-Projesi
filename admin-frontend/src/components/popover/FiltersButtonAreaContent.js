@@ -5,7 +5,7 @@ const {Option} = Select
 const FiltersButtonAreaContent = ({handleChange}) => {
 
     
-    const getAllProduct = useSelector((state) => state.getAllProduct)
+    const getAllProduct = useSelector((state) => state.product.getAllProduct)
 
   return (
     <Fragment>

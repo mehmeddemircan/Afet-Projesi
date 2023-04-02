@@ -16,7 +16,7 @@ import { AllProduct } from "../redux/actions/ProductActions";
 const AllAreaPage = () => {
 
 
-  const getAllArea = useSelector((state) => state.getAllArea);
+  const getAllArea = useSelector((state) => state.area.getAllArea);
 
 
 

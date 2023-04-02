@@ -16,7 +16,7 @@ const ProductItem = ({
   product,
 }) => {
   const { requrired_products, success } = useSelector(
-    (state) => state.getRequriredProducts
+    (state) => state.area.getRequriredProducts
   );
 
   const dispatch = useDispatch();

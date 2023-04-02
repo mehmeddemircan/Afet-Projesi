@@ -10,8 +10,8 @@ const AddProductModal = ({showAddProductModal,handleCloseAddProductModal}) => {
     const [category, setCategory] = useState("")
 
 
-    const getCategories = useSelector((state) => state.getCategories)
-    const addProduct = useSelector((state) => state.addProduct)
+    const getCategories = useSelector((state) => state.category.getCategories)
+    const addProduct = useSelector((state) => state.product.addProduct)
     const dispatch = useDispatch()
     const handleAddProduct = () => {
         dispatch(AddProduct({title,description,category}))

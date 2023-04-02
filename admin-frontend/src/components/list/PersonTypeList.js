@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import PersonTypeItem from "../listitem/PersonTypeItem";
 
 const PersonTypeList = () => {
-  const getAllPersonType = useSelector((state) => state.getAllPersonType);
+  const getAllPersonType = useSelector((state) => state.personType.getAllPersonType);
 
   return (
     <Fragment>

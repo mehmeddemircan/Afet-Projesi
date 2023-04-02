@@ -28,8 +28,12 @@ const ProductDetailsPage = () => {
   const [images, setImages] = useState([]);
 
   const [image, setImage] = useState("");
-  const { product, loading } = useSelector((state) => state.getSingleProduct);
-  const deleteUpdateProduct = useSelector((state) => state.deleteUpdateProduct);
+  const { product, loading } = useSelector(
+    (state) => state.product.getSingleProduct
+  );
+  const deleteUpdateProduct = useSelector(
+    (state) => state.product.deleteUpdateProduct
+  );
 
   const { id } = useParams();
   const dispatch = useDispatch();

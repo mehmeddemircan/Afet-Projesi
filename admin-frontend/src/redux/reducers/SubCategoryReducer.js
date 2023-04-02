@@ -1,5 +1,5 @@
 import { ADD_SUBCATEGORY_FAIL, ADD_SUBCATEGORY_REQUEST, ADD_SUBCATEGORY_RESET, ADD_SUBCATEGORY_SUCCESS, DELETE_SUBCATEGORY_FAIL, DELETE_SUBCATEGORY_REQUEST, DELETE_SUBCATEGORY_RESET, DELETE_SUBCATEGORY_SUCCESS, GET_ALL_SUBCATEGORY_FAIL, GET_ALL_SUBCATEGORY_REQUEST, GET_ALL_SUBCATEGORY_SUCCESS, UPDATE_SUBCATEGORY_FAIL, UPDATE_SUBCATEGORY_REQUEST, UPDATE_SUBCATEGORY_RESET, UPDATE_SUBCATEGORY_SUCCESS } from "../constants/SubCategoryConstants";
-
+import { combineReducers } from "redux";
 
 const GET_ALL_SUBCATEGORY_INITIAL_STATE = {
     subs: [
@@ -123,3 +123,11 @@ const GET_ALL_SUBCATEGORY_INITIAL_STATE = {
         return state;
     }
   };
+
+  const subCategoryReducer = combineReducers({
+    getAllSubCategory: getAllSubCategoryReducer,
+  addSubCategory: addSubCategoryReducer,
+  deleteUpdateSubCategory: deleteUpdateSubCategoryReducer,
+  });
+  
+  export default subCategoryReducer

@@ -17,13 +17,13 @@ import { AllSubCategory } from "../redux/actions/SubCategoryActions";
 import InfoBreadcrumb from "../components/breadcrumb/InfoBreadcrumb";
 
 const CategoriesPage = () => {
-  const addCategory = useSelector((state) => state.addCategory);
-  const getAllCategory = useSelector((state) => state.getAllCategory);
+  const addCategory = useSelector((state) => state.category.addCategory);
+  const getAllCategory = useSelector((state) => state.category.getAllCategory);
   const [limit, setLimit] = useState(4);
   const [currentPage, setCurrentPage] = useState(1);
 
   const deleteUpdateCategory = useSelector(
-    (state) => state.deleteUpdateCategory
+    (state) => state.category.deleteUpdateCategory
   );
 
   const dispatch = useDispatch();

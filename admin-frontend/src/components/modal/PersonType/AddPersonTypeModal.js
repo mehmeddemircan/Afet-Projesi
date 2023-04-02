@@ -6,7 +6,7 @@ import { AddPersonType } from '../../../redux/actions/PersonTypeActions'
 const AddPersonTypeModal = ({showAddPersonModal,handleCloseAddPersonModal}) => {
 
   const [name, setName] = useState("")
-  const addPersonType = useSelector((state) => state.addPersonType)
+  const addPersonType = useSelector((state) => state.personType.addPersonType)
   const dispatch = useDispatch()
   const handleAddPersonType = () => {
     dispatch(AddPersonType({name}))

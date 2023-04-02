@@ -5,7 +5,7 @@ import { UpdateCategory } from '../../../redux/actions/CategoryActions'
 
 const EditCategoryModal = ({category,showEditCategoryModal,handleCloseEditCategoryModal}) => {
 
-    const deleteUpdateCategory =useSelector((state) => state.deleteUpdateCategory)
+    const deleteUpdateCategory =useSelector((state) => state.category.deleteUpdateCategory)
     const [name, setName] = useState(category.name)
     const dispatch = useDispatch()
     const handleUpdateCategory = () => {

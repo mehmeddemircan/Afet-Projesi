@@ -6,7 +6,7 @@ import { AllFormByCategoryId } from "../redux/actions/FormActions";
 import { useNavigate } from "react-router-dom";
 
 const FormCategoryPage = () => {
-  const getAllFormCategory = useSelector((state) => state.getAllFormCategory);
+  const getAllFormCategory = useSelector((state) => state.formCategory.getAllFormCategory);
   const dispatch = useDispatch();
 
   useEffect(() => {

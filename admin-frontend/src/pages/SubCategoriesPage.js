@@ -10,8 +10,8 @@ import { toast } from 'react-toastify'
 const SubCategoriesPage = () => {
 
 
-    const addSubCategory  = useSelector((state) => state.addSubCategory)
-    const deleteUpdateSubCategory  = useSelector((state) => state.deleteUpdateSubCategory)
+    const addSubCategory  = useSelector((state) => state.subcategory.addSubCategory)
+    const deleteUpdateSubCategory  = useSelector((state) => state.subcategory.deleteUpdateSubCategory)
     const dispatch= useDispatch()
 
     useEffect(() => {

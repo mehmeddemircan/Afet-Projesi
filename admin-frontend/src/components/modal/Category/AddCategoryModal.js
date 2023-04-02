@@ -8,7 +8,7 @@ const AddCategoryModal = ({
   showAddCategoryModal,
   handleCloseAddCategoryModal,
 }) => {
-  const addCategory = useSelector((state) => state.addCategory);
+  const addCategory = useSelector((state) => state.category.addCategory);
   const [name, setName] = useState("");
   const dispatch = useDispatch();
   const handleAddCategory = () => {

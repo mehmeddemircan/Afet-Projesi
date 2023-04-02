@@ -4,7 +4,7 @@ import { List } from "antd";
 import { useSelector } from "react-redux";
 
 const CategoryList = () => {
-  const getAllCategory = useSelector((state) => state.getAllCategory);
+  const getAllCategory = useSelector((state) => state.category.getAllCategory);
   
   return (
     <Fragment>

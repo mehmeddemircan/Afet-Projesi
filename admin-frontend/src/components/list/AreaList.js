@@ -4,8 +4,8 @@ import { useSelector } from "react-redux";
 import AreaItem from "../listitem/AreaItem";
 
 const AreaList = () => {
-  const getAllArea = useSelector((state) => state.getAllArea);
-  const getAreasByProductTitle = useSelector((state) => state.getAreasByProductTitle)
+  const getAllArea = useSelector((state) => state.area.getAllArea);
+  const getAreasByProductTitle = useSelector((state) => state.area.getAreasByProductTitle)
 
   return (
     <Fragment>

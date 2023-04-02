@@ -1,5 +1,5 @@
 import { ADD_TASK_FAIL, ADD_TASK_REQUEST, ADD_TASK_RESET, ADD_TASK_SUCCESS, GET_ALL_TASK_FAIL, GET_ALL_TASK_REQUEST, GET_ALL_TASK_SUCCESS, UPDATE_TASK_FAIL, UPDATE_TASK_REQUEST, UPDATE_TASK_RESET, UPDATE_TASK_SUCCESS } from "../constants/TaskConstants";
-
+import { combineReducers } from "redux";
 export const getAllTaskReducer = (
     state = {
         tasks : []
@@ -91,4 +91,12 @@ export const getAllTaskReducer = (
         return state;
     }
   };
+  const taskReducer = combineReducers({
+   
+
+  getAllTask: getAllTaskReducer,
+  addNewTask: addNewTaskReducer,
+  updateTask: updateTaskReducer,
+  });
   
+  export default taskReducer

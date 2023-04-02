@@ -7,8 +7,8 @@ import { ADD_TASK_TO_USER_RESET } from '../../redux/constants/UserConstants'
 
 const UserList = ({name}) => {
 
-    const getAllUser = useSelector((state) => state.getAllUser)
-    const searchUsers = useSelector((state) => state.searchUsers)
+    const getAllUser = useSelector((state) => state.user.getAllUser)
+    const searchUsers = useSelector((state) => state.user.searchUsers)
  
 
     

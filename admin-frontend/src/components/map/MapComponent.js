@@ -91,9 +91,9 @@ export default function MapComponent() {
     zoom: 6,
   };
 
-  const getAllArea = useSelector((state) => state.getAllArea);
-  const addArea = useSelector((state) => state.addArea);
-  const deleteUpdateArea = useSelector((state) => state.deleteUpdateArea);
+  const getAllArea = useSelector((state) => state.area.getAllArea);
+  const addArea = useSelector((state) => state.area.addArea);
+  const deleteUpdateArea = useSelector((state) => state.area.deleteUpdateArea);
   const [checkedValues, setCheckedValues] = useState([]);
   const dispatch = useDispatch();
   useEffect(() => {

@@ -5,8 +5,8 @@ import { useSelector } from "react-redux";
 import EmptyComponent from "../empty/EmptyComponent";
 
 const UserTaskList = ({ user }) => {
-  const { userTasks } = useSelector((state) => state.getUserTasks);
-  const getNotAddedTasks = useSelector((state) => state.getNotAddedTasks);
+  const { userTasks } = useSelector((state) => state.user.getUserTasks);
+  const getNotAddedTasks = useSelector((state) => state.user.getNotAddedTasks);
 
   return (
     <Fragment>

@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import TaskItem from "../listitem/TaskItem";
 
 const TaskList = () => {
-  const getAllTask = useSelector((state) => state.getAllTask);
+  const getAllTask = useSelector((state) => state.task.getAllTask);
   
   return (
     <Fragment>

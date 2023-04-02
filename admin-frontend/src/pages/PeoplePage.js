@@ -12,11 +12,11 @@ import {
 import InfoBreadcrumb from "../components/breadcrumb/InfoBreadcrumb";
 import { Badge } from "antd";
 const PeoplePage = () => {
-  const addPersonType = useSelector((state) => state.addPersonType);
+  const addPersonType = useSelector((state) => state.personType.addPersonType);
   const deleteUpdatePersonType = useSelector(
-    (state) => state.deleteUpdatePersonType
+    (state) => state.personType.deleteUpdatePersonType
   );
-  const getAllPersonType = useSelector((state) => state.getAllPersonType);
+  const getAllPersonType = useSelector((state) => state.personType.getAllPersonType);
   const dispatch = useDispatch();
 
   useEffect(() => {

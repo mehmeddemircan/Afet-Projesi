@@ -28,18 +28,18 @@ const FormListPage = () => {
   const { categoryId } = useParams();
   const navigate = useNavigate();
   const getFormsByCategoryId = useSelector(
-    (state) => state.getFormsByCategoryId
+    (state) => state.form.getFormsByCategoryId
   );
   const deleteUpdateGetHelpForm = useSelector(
-    (state) => state.deleteUpdateGetHelpForm
+    (state) => state.form.deleteUpdateGetHelpForm
   );
   const getApprovedFormsByCategoryId = useSelector(
-    (state) => state.getApprovedFormsByCategoryId
+    (state) => state.form.getApprovedFormsByCategoryId
   );
   const dispatch = useDispatch();
 
   const getSingleFormCategory = useSelector(
-    (state) => state.getSingleFormCategory
+    (state) => state.formCategory.getSingleFormCategory
   );
   // Filter the approved forms and put them into an array
   const approvedForms = getFormsByCategoryId.forms.filter(
@@ -184,7 +184,7 @@ const FormListPage = () => {
                 handleApproveForm={handleApproveForm}
               />
             ))}
-          </List> 
+          </List>
         </TabPane>
         <TabPane key="2" tab="Approved">
           <List>

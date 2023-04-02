@@ -18,7 +18,7 @@ const AddTaskModal = ({ handleCloseAddTaskModal, showAddTaskModal }) => {
     setDueDate(dateString);
   };
   const dispatch = useDispatch();
-  const addNewTask = useSelector((state) => state.addNewTask);
+  const addNewTask = useSelector((state) => state.task.addNewTask);
   const handleAddNewTask = () => {
     dispatch(AddNewTask({ text, dueDate ,location}));
     handleCloseAddTaskModal();

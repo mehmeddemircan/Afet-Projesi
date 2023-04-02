@@ -12,7 +12,7 @@ import {
 } from "../../redux/constants/UserConstants";
 
 const TaskDrawer = ({ userId, user, handleCloseDrawer, openDrawer }) => {
-  const addRemoveTaskToUser = useSelector((state) => state.addRemoveTaskToUser);
+  const addRemoveTaskToUser = useSelector((state) => state.user.addRemoveTaskToUser);
   const dispatch = useDispatch();
   useEffect(() => {
     if (userId == user._id) {

@@ -15,9 +15,9 @@ import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const ProductsPage = () => {
-  const addProduct = useSelector((state) => state.addProduct);
-  const getAllProduct = useSelector((state) => state.getAllProduct);
-  const deleteUpdateProduct = useSelector((state) => state.deleteUpdateProduct);
+  const addProduct = useSelector((state) => state.product.addProduct);
+  const getAllProduct = useSelector((state) => state.product.getAllProduct);
+  const deleteUpdateProduct = useSelector((state) => state.product.deleteUpdateProduct);
 
   const [showAddProductModal, setShowAddProductModal] = useState(false);
 

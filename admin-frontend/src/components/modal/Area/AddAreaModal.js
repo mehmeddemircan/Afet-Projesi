@@ -5,7 +5,7 @@ import { AddArea } from "../../../redux/actions/AreaActions";
 import { toast } from "react-toastify";
 
 const AddAreaModal = ({ lat,lng, showAddAreaModal, handleCloseAddAreaModal }) => {
-  const addArea = useSelector((state) => state.addArea);
+  const addArea = useSelector((state) => state.area.addArea);
   const [name, setName] = useState("");
   const [coordinates, setCoordinates] = useState({
     longitude: 0,

@@ -15,7 +15,7 @@ import {
   UPDATE_PERSONTYPE_RESET,
   UPDATE_PERSONTYPE_SUCCESS,
 } from "../constants/PersonTypeConstants";
-
+import { combineReducers } from "redux";
 const GET_ALL_PERSONTYPE_INITIAL_STATE = {
   personTypes: [
     {
@@ -135,3 +135,13 @@ export const deleteUpdatePersonTypeReducer = (
       return state;
   }
 };
+
+
+
+const personTypeReducer = combineReducers({
+  getAllPersonType: getAllPersonTypeReducer,
+  addPersonType: addPersonTypeReducer,
+  deleteUpdatePersonType: deleteUpdatePersonTypeReducer,
+});
+
+export default personTypeReducer

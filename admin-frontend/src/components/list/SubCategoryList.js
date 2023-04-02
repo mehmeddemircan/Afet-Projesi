@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux'
 import '../scrollbar/SubCategoryScroll.css'
 const SubCategoryList = () => {
 
-    const getAllSubCategory = useSelector((state) => state.getAllSubCategory)
+    const getAllSubCategory = useSelector((state) => state.subcategory.getAllSubCategory)
 
   return (
     <Fragment>

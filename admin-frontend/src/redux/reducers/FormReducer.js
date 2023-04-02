@@ -22,6 +22,8 @@ import {
   UPDATE_FORM_RESET,
   UPDATE_FORM_SUCCESS,
 } from "../constants/FormConstants";
+import { combineReducers } from "redux";
+
 
 export const getFormsByCategoryIdReducer = (state = { forms: [] }, action) => {
   switch (action.type) {
@@ -135,3 +137,10 @@ export const getApprovedFormsByCategoryIdReducer = (state = { approvedForms: [] 
 };
 
 
+const formReducer = combineReducers({
+  getFormsByCategoryId: getFormsByCategoryIdReducer,
+  deleteUpdateGetHelpForm: deleteUpdateGetHelpFormReducer,
+  getApprovedFormsByCategoryId: getApprovedFormsByCategoryIdReducer,
+})
+
+export default formReducer

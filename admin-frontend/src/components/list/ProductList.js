@@ -4,7 +4,7 @@ import { List } from "antd";
 import { useSelector } from "react-redux";
 
 const ProductList = () => {
-  const getAllProduct = useSelector((state) => state.getAllProduct);
+  const getAllProduct = useSelector((state) => state.product.getAllProduct);
 
   return (
     <Fragment>

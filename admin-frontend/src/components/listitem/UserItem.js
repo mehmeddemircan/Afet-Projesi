@@ -15,7 +15,7 @@ const UserItem = ({ user }) => {
   };
 
   const [openDrawer, setOpenDrawer] = useState(false);
-  const { loading } = useSelector((state) => state.getUserTasks);
+  const { loading } = useSelector((state) => state.user.getUserTasks);
   const [userId, setUserId] = useState("")
   // const addRemoveTaskToUser = useSelector((state) => state.addRemoveTaskToUser);
 

@@ -22,8 +22,8 @@ const TasksPage = () => {
   };
   const dispatch = useDispatch();
 
-  const addNewTask = useSelector((state) => state.addNewTask);
-  const updateTask = useSelector((state) => state.updateTask);
+  const addNewTask = useSelector((state) => state.task.addNewTask);
+  const updateTask = useSelector((state) => state.task.updateTask);
 
   useEffect(() => {
     dispatch(GetAllTask());

@@ -1,5 +1,5 @@
 import { GET_FORM_CATEGORIES_FAIL, GET_FORM_CATEGORIES_REQUEST, GET_FORM_CATEGORIES_SUCCESS, GET_SINGLE_FORM_CATEGORY_FAIL, GET_SINGLE_FORM_CATEGORY_REQUEST, GET_SINGLE_FORM_CATEGORY_SUCCESS } from "../constants/FormCategoryContants";
-
+import { combineReducers } from "redux";
 
 export const getAllFormCategoryReducer = (
     state = { results : []},
@@ -45,3 +45,11 @@ export const getAllFormCategoryReducer = (
         return state;
     }
   };
+
+  const formCategoryReducer = combineReducers({
+    getAllFormCategory: getAllFormCategoryReducer,
+
+    getSingleFormCategory: getSingleFormCategoryReducer,
+  })
+
+  export default formCategoryReducer

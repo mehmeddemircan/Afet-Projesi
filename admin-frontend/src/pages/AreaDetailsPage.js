@@ -32,19 +32,19 @@ const { TabPane } = Tabs;
 const AreaDetailsPage = () => {
   const { id } = useParams();
 
-  const getAllProduct = useSelector((state) => state.getAllProduct);
-  const addProductToArea = useSelector((state) => state.addProductToArea);
+  const getAllProduct = useSelector((state) => state.product.getAllProduct);
+  const addProductToArea = useSelector((state) => state.area.addProductToArea);
   const removeProductFromArea = useSelector(
-    (state) => state.removeProductFromArea
+    (state) => state.area.removeProductFromArea
   );
   const getRequriredProducts = useSelector(
-    (state) => state.getRequriredProducts
+    (state) => state.area.getRequriredProducts
   );
-  const getAllPersonType = useSelector((state) => state.getAllPersonType);
-  const addPersonToArea = useSelector((state) => state.addPersonToArea);
-  const getRequriredPeople = useSelector((state) => state.getRequriredPeople);
+  const getAllPersonType = useSelector((state) => state.personType.getAllPersonType);
+  const addPersonToArea = useSelector((state) => state.area.addPersonToArea);
+  const getRequriredPeople = useSelector((state) => state.area.getRequriredPeople);
   const removePersonFromArea = useSelector(
-    (state) => state.removePersonFromArea
+    (state) => state.area.removePersonFromArea
   );
 
   const dispatch = useDispatch();

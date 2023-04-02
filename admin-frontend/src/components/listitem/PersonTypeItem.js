@@ -23,7 +23,7 @@ const PersonTypeItem = ({ isReqPersonItem,reqPerson,handleRemovePersonFromArea, 
     dispatch(DeletePersonType(id));
   };
 
-  const {success} = useSelector((state) => state.getRequriredPeople)
+  const {success} = useSelector((state) => state.area.getRequriredPeople)
 
 
   const [showAddPersonToAreaModal, setShowAddPersonToAreaModal] = useState(false)

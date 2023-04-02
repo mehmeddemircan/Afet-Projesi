@@ -9,8 +9,8 @@ import {  UPDATE_USER_ROLE_RESET } from "../redux/constants/UserConstants";
 import {toast} from 'react-toastify'
 import UserFilterButtons from "../components/buttons/UserFilterButtons";
 const UsersPage = () => {
-  const getAllUser = useSelector((state) => state.getAllUser);
-  const updateUserRole = useSelector((state) => state.updateUserRole);
+  const getAllUser = useSelector((state) => state.user.getAllUser);
+  const updateUserRole = useSelector((state) => state.user.updateUserRole);
   
 
   const [name, setName] = useState("")

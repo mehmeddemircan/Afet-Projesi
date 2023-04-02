@@ -24,7 +24,7 @@ import {
   UPDATE_CATEGORY_RESET,
   UPDATE_CATEGORY_SUCCESS,
 } from "../constants/CategoryConstants";
-
+import { combineReducers } from "redux";
 const GET_ALL_CATEGORY_INITIAL_STATE = {
   categories: [
     {
@@ -204,3 +204,13 @@ export const getCategoriesReducer = (
       return state;
   }
 };
+
+
+const categoryReducer = combineReducers({
+  getAllCategory: getAllCategoryReducer,
+  addCategory: addCategoryReducer,
+  deleteUpdateCategory: deleteUpdateCategoryReducer,
+  getCategories: getCategoriesReducer,
+});
+
+export default categoryReducer;

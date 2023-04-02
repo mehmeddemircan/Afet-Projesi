@@ -1,3 +1,4 @@
+import { combineReducers } from "redux";
 import {
   ADD_AREA_FAIL,
   ADD_AREA_REQUEST,
@@ -54,10 +55,7 @@ const GET_ALL_AREA_INITIAL_STATE = {
   ],
 };
 
-export const getAllAreaReducer = (
-  state = GET_ALL_AREA_INITIAL_STATE,
-  action
-) => {
+export const getAllAreaReducer = (state = GET_ALL_AREA_INITIAL_STATE, action) => {
   switch (action.type) {
     case GET_ALL_AREA_REQUEST:
       return { ...state, loading: true };
@@ -78,7 +76,7 @@ export const getAllAreaReducer = (
 };
 
 export const getAreasByProductTitleReducer = (
-  state = {areas :  []},
+  state = { areas: [] },
   action
 ) => {
   switch (action.type) {
@@ -96,16 +94,15 @@ export const getAreasByProductTitleReducer = (
     case GET_AREAS_BY_PRODUCT_TITLE_FAIL:
       return { ...state, loading: false, error: action.payload };
 
-      case GET_AREAS_BY_PRODUCT_TITLE_RESET : 
-        return {
-          ...state ,
-          success : false 
-        }
+    case GET_AREAS_BY_PRODUCT_TITLE_RESET:
+      return {
+        ...state,
+        success: false,
+      };
     default:
       return state;
   }
 };
-
 
 const ADD_AREA_INITIAL_STATE = {
   area: {
@@ -375,3 +372,18 @@ export const getRequriredPeopleReducer = (
       return state;
   }
 };
+
+const areaReducer = combineReducers({
+  getAllArea: getAllAreaReducer,
+  addArea: addAreaReducer,
+  addProductToArea: addProductToAreaReducer,
+  deleteUpdateArea: deleteUpdateAreaReducer,
+  addPersonToArea: addPersonToAreaReducer,
+  getRequriredProducts: getRequriredProductsReducer,
+  removeProductFromArea: removeProductFromAreaReducer,
+  getRequriredPeople: getRequriredPeopleReducer,
+  getAreasByProductTitle: getAreasByProductTitleReducer,
+  removePersonFromArea: removePersonFromAreaReducer,
+});
+
+export default areaReducer;

@@ -12,7 +12,7 @@ const EditPersonTypeModal = ({
   const dispatch = useDispatch();
   const [name, setName] = useState(personType.name);
   const deleteUpdatePersonType = useSelector(
-    (state) => state.deleteUpdatePersonType
+    (state) => state.personType.deleteUpdatePersonType
   );
   const handleEditPersonTpe = () => {
     dispatch(UpdatePersonType(personType._id, { name }));
