@@ -73,8 +73,11 @@ const AddAreaButton = () => {
       <div className="row my-3">
         <div className="d-flex justify-content-end">
           <FiltersButton
+            title="Filters Area"
             content={<FiltersButtonAreaContent handleChange={handleChange} />}
-          />
+          >
+            Filters
+          </FiltersButton>
 
           <AddButton name="Add Area" onClick={handleShowAddAreaModal} />
         </div>

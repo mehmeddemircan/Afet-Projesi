@@ -26,6 +26,7 @@ import FormListPage from './pages/FormListPage';
 import FormCategoryPage from './pages/FormCategoryPage';
 import LocationPage from './pages/LocationPage';
 import TasksPage from './pages/TasksPage';
+import CityCountryPage from './pages/CityCountryPage';
 
 
 function App() {
@@ -60,6 +61,7 @@ function App() {
         <Route path="/yardım-formları/:categoryId" element={<FormListPage />} />
         <Route path="/location" element={<LocationPage />} />
         <Route path="/gorevler" element={<TasksPage />} />
+        <Route path='/sehir-ulke' element={<CityCountryPage />} />
         <Route path="/upload" element={<AntdUploadPage />} />
         <Route path="/*" element={<NotFoundPage />} />
       </Routes>

@@ -21,6 +21,7 @@ import ReqProductMapTag from "../tag/ReqProductMapTag";
 import ReqPersonMapTag from "../tag/ReqPersonMapTag";
 
 import FiltersButtonMapContent from "../popover/FiltersButtonMapContent";
+import FiltersButtonTaskContent from "../popover/FiltersButtonTaskContent";
 
 const MarkerComponent = ({ area, text }) => {
   const dispatch = useDispatch();
@@ -186,13 +187,27 @@ export default function MapComponent() {
             setAddress={setAddress}
             handleSelect={handleSelect}
           />
+
           <FiltersButton
+            title={"Filters by Priority Order"}
             content={
               <FiltersButtonMapContent
                 handleCheckboxChange={handleCheckboxChange}
               />
             }
-          />
+          >
+            Filters
+          </FiltersButton>
+          <FiltersButton
+            title={"Filters by "}
+            content={
+              <FiltersButtonTaskContent
+                handleCheckboxChange={handleCheckboxChange}
+              />
+            }
+          >
+            Task Filters
+          </FiltersButton>
         </div>
       </div>
 

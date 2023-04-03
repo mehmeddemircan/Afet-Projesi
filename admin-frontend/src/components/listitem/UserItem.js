@@ -17,20 +17,7 @@ const UserItem = ({ user }) => {
   const [openDrawer, setOpenDrawer] = useState(false);
   const { loading } = useSelector((state) => state.user.getUserTasks);
   const [userId, setUserId] = useState("")
-  // const addRemoveTaskToUser = useSelector((state) => state.addRemoveTaskToUser);
 
-  // useEffect(() => {
-  //   dispatch(GetUserTasks(user._id));
-  //   dispatch(GetAllTaskNotAdded(user._id));
-  //   if (addRemoveTaskToUser.isAdded) {
-  //     message.success(addRemoveTaskToUser.message);
-  //     dispatch({ type: ADD_TASK_TO_USER_RESET });
-  //   }
-  //   if (addRemoveTaskToUser.isRemoved) {
-  //     message.success(addRemoveTaskToUser.message)
-  //     dispatch({type : REMOVE_TASK_TO_USER_RESET})
-  //   }
-  // }, [user,dispatch, addRemoveTaskToUser.isAdded,addRemoveTaskToUser.isRemoved]);
 
   const handleOpenDrawer = (id) => {
     setUserId(id)

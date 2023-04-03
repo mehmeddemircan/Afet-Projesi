@@ -75,7 +75,6 @@ exports.updateTask = catchAsyncErrors(async (req, res) => {
   }
 });
 
-
 exports.searchTasks = async (req, res) => {
   try {
     const { text, dueDate } = req.query;
@@ -97,5 +96,4 @@ exports.searchTasks = async (req, res) => {
     console.error(err);
     res.status(500).json({ message: "Internal server error" });
   }
-
 };
