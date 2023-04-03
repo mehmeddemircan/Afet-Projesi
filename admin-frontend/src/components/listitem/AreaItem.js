@@ -11,13 +11,11 @@ import { useDispatch } from "react-redux";
 import { DeleteArea } from "../../redux/actions/AreaActions";
 const { Meta } = Card;
 const AreaItem = ({ area }) => {
-
-  
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const handleDeleteArea = () => {
-    dispatch(DeleteArea(area._id))
-  }
+    dispatch(DeleteArea(area._id));
+  };
 
   return (
     <Fragment>
@@ -25,18 +23,20 @@ const AreaItem = ({ area }) => {
         hoverable
         style={{
           width: 350,
-          border : '1px solid rgb(221,221,221)'
+          border: "1px solid rgb(221,221,221)",
         }}
         title={area.name}
-        extra={  <Tooltip placement="topLeft" title="Delete">
-        <button
-          className="btn btn-sm "
-          style={{ position: "absolute", top: 0, right: 0 }}
-          onClick={handleDeleteArea}
-        >
-          <i class="fa-solid fa-x"></i>
-        </button>
-      </Tooltip>}
+        extra={
+          <Tooltip placement="topLeft" title="Delete">
+            <button
+              className="btn btn-sm "
+              style={{ position: "absolute", top: 0, right: 0 }}
+              onClick={handleDeleteArea}
+            >
+              <i class="fa-solid fa-x"></i>
+            </button>
+          </Tooltip>
+        }
         className="my-3"
         actions={[
           <SettingOutlined key="setting" />,
@@ -51,9 +51,7 @@ const AreaItem = ({ area }) => {
           href={`/alanlar/${area._id}`}
         >
           <Meta
-            description={
-                <AlanCardDescription key={area._id} area={area}/>
-            }
+            description={<AlanCardDescription key={area._id} area={area} />}
           />
         </a>
       </Card>

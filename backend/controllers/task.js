@@ -5,11 +5,12 @@ const User = require("../models/User");
 // Define task controller functionse
 exports.createTask = catchAsyncErrors(async (req, res) => {
   try {
-    const { text, dueDate, location } = req.body;
+    const { text, dueDate, location, city } = req.body;
     const task = new Task({
       text,
 
       dueDate,
+      city,
       location,
     });
     await task.save();
@@ -40,7 +41,7 @@ exports.getTasksNotAssigned = catchAsyncErrors(async (req, res) => {
 
 exports.getAllTask = catchAsyncErrors(async (req, res) => {
   try {
-    const tasks = await Task.find();
+    const tasks = await Task.find().populate("city");
 
     res.status(200).json(tasks);
   } catch (error) {
@@ -95,5 +96,25 @@ exports.searchTasks = async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+exports.getTasksByCityIds = async (req, res) => {
+  try {
+    const { cityIds } = req.query;
+
+    // If no cityIds parameter is provided, return all tasks
+    if (!cityIds) {
+      const tasks = await Task.find();
+      res.status(200).json(tasks);
+      return;
+    }
+
+    const cityIdsArray = cityIds.split(",");
+    const tasks = await Task.find({ city: { $in: cityIdsArray } });
+    res.status(200).json(tasks);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
   }
 };

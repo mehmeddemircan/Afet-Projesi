@@ -21,6 +21,10 @@ var taskSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    city: {
+      type : ObjectId,
+      ref : 'City'
+    },
     location: {
       lat: {
         type: String,

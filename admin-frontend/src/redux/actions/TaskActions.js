@@ -6,6 +6,9 @@ import {
   GET_ALL_TASK_FAIL,
   GET_ALL_TASK_REQUEST,
   GET_ALL_TASK_SUCCESS,
+  GET_TASKS_BY_CITY_FAIL,
+  GET_TASKS_BY_CITY_REQUEST,
+  GET_TASKS_BY_CITY_SUCCESS,
   UPDATE_TASK_FAIL,
   UPDATE_TASK_REQUEST,
   UPDATE_TASK_SUCCESS,
@@ -76,6 +79,29 @@ export const EditTask = (taskId, task) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: UPDATE_TASK_FAIL,
+      error: error.response,
+    });
+  }
+};
+
+
+export const GetTaskByCityId = (cityIds) => async (dispatch) => {
+  try {
+    dispatch({
+      type: GET_TASKS_BY_CITY_REQUEST,
+    });
+
+    const { data } = await axios.get(
+      `https://afetapi.onrender.com/api/get-tasks-by-city?cityIds=${cityIds}`
+    );
+
+    dispatch({
+      type: GET_TASKS_BY_CITY_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_TASKS_BY_CITY_FAIL,
       error: error.response,
     });
   }

@@ -1,5 +1,5 @@
 var express = require('express');
-const { createTask, getTasksNotAssigned, deleteTask, updateTask, getAllTask, searchTasks } = require('../controllers/task');
+const { createTask, getTasksNotAssigned, deleteTask, updateTask, getAllTask, searchTasks, getTasksByCityIds } = require('../controllers/task');
 // modelName should be replaced here with your choice
 
 
@@ -11,4 +11,5 @@ router.route('/users/:userId/not-added-tasks').get(getTasksNotAssigned)
 router.route('/tasks/:id/delete').delete(deleteTask)
 router.route('/tasks/:id/update').put(updateTask)
 router.route('/tasks').get(searchTasks)
+router.route('/get-tasks-by-city').get(getTasksByCityIds)
 module.exports = router;

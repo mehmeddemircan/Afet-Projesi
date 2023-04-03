@@ -6,6 +6,7 @@ const FiltersButton = ({content,title,children}) => {
    <Fragment>
       <Popover
             placement="bottom"
+              
             content={
               content
             }

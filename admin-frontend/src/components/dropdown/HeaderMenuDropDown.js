@@ -1,5 +1,5 @@
 import { DownOutlined } from "@ant-design/icons";
-import { Dropdown, Space } from "antd";
+import { Badge, Dropdown, Space } from "antd";
 const items = [
   {
     label: (
@@ -99,6 +99,7 @@ const items = [
   },
   {
     label: (
+      <Badge.Ribbon text="New">
       <a
         class="me-2 mt-1 "
         href="/sehir-ulke"
@@ -106,6 +107,7 @@ const items = [
       >
         Sehir Ulke
       </a>
+      </Badge.Ribbon>
     ),
     key: "8",
   },

@@ -22,6 +22,23 @@ import ReqPersonMapTag from "../tag/ReqPersonMapTag";
 
 import FiltersButtonMapContent from "../popover/FiltersButtonMapContent";
 import FiltersButtonTaskContent from "../popover/FiltersButtonTaskContent";
+import { AllCountry } from "../../redux/actions/CountryActions";
+import { GetAllTask, GetTaskByCityId } from "../../redux/actions/TaskActions";
+import { AllCity } from "../../redux/actions/CityActions";
+
+const TaskMarkerComponent = ({ task }) => {
+  return (
+    <Popover
+      overlayStyle={{
+        maxWidth: "300px",
+      }}
+      trigger={"hover"}
+      title={<h6>{task.text}</h6>}
+    >
+      <Button type="default" icon={<i class="fa-solid fa-check"></i>} />
+    </Popover>
+  );
+};
 
 const MarkerComponent = ({ area, text }) => {
   const dispatch = useDispatch();
@@ -177,6 +194,37 @@ export default function MapComponent() {
   };
   // live location
 
+  const [showTaskFilter, setShowTaskFilter] = useState(false);
+
+  const handleToggleShowTaskFilter = () => {
+    setShowTaskFilter((prev) => !prev);
+  };
+
+  const [text, setText] = useState("");
+  const [dueDate, setDueDate] = useState("");
+
+  const getAllTask = useSelector((state) => state.task.getAllTask);
+  const getTaskByCity = useSelector((state) => state.task.getTaskByCity);
+  const [selectedCities, setSelectedCities] = useState([]);
+
+  useEffect(() => {
+    if (showTaskFilter) {
+      dispatch(AllCountry());
+      dispatch(GetTaskByCityId(selectedCities));
+    }
+  }, [dispatch, showTaskFilter, text, dueDate]);
+
+  const handleAddCityChange = (value) => {
+    setSelectedCities(value);
+  };
+
+  const handleCountryChange = (value) => {
+    dispatch(AllCity(value));
+  };
+
+  useEffect(() => {
+    dispatch(GetTaskByCityId(selectedCities));
+  }, [dispatch, selectedCities]);
   return (
     // Important! Always set the container height explicitly
     <Fragment>
@@ -187,26 +235,35 @@ export default function MapComponent() {
             setAddress={setAddress}
             handleSelect={handleSelect}
           />
-
+          <Badge.Ribbon text="New">
+            <button
+              className="btn btn-outline-primary rounded-pill "
+              onClick={handleToggleShowTaskFilter}
+            >
+              {showTaskFilter ? "Show Areas" : "Show Tasks"}
+            </button>
+          </Badge.Ribbon>
           <FiltersButton
-            title={"Filters by Priority Order"}
+            title={
+              showTaskFilter
+                ? "Filters tasks by city"
+                : "Filters areas by Priority order"
+            }
             content={
-              <FiltersButtonMapContent
-                handleCheckboxChange={handleCheckboxChange}
-              />
+              showTaskFilter ? (
+                <FiltersButtonTaskContent
+                  selectedCities={selectedCities}
+                  handleAddCityChange={handleAddCityChange}
+                  handleCountryChange={handleCountryChange}
+                />
+              ) : (
+                <FiltersButtonMapContent
+                  handleCheckboxChange={handleCheckboxChange}
+                />
+              )
             }
           >
-            Filters
-          </FiltersButton>
-          <FiltersButton
-            title={"Filters by "}
-            content={
-              <FiltersButtonTaskContent
-                handleCheckboxChange={handleCheckboxChange}
-              />
-            }
-          >
-            Task Filters
+            {showTaskFilter ? "Filters Task" : "Filters Area"}
           </FiltersButton>
         </div>
       </div>
@@ -222,7 +279,21 @@ export default function MapComponent() {
             lat={location?.latitude}
             lng={location?.longitude}
           /> */}
-          {!getAllArea.success ? (
+
+          {showTaskFilter ? (
+            !getTaskByCity.success ? (
+              <LoadingSpinner />
+            ) : (
+              getTaskByCity.tasks.map((task) => (
+                <TaskMarkerComponent
+                  key={task._id}
+                  task={task}
+                  lat={task.location.lat}
+                  lng={task.location.lng}
+                />
+              ))
+            )
+          ) : !getAllArea.success ? (
             <LoadingSpinner />
           ) : (
             getAllArea.areas.map((area) => (
@@ -239,6 +310,7 @@ export default function MapComponent() {
               />
             ))
           )}
+
           {marker && <Marker lat={marker.lat} lng={marker.lng} />}
         </GoogleMapReact>
       </div>
