@@ -3,6 +3,7 @@ import React, { Fragment, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { AddCategory } from "../../../redux/actions/CategoryActions";
+import AddEditCategoryForm from "../../form/AddEditCategoryForm";
 
 const AddCategoryModal = ({
   showAddCategoryModal,
@@ -28,21 +29,7 @@ const AddCategoryModal = ({
         onOk={handleAddCategory}
         onCancel={handleCloseAddCategoryModal}
       >
-        <form>
-          <div class="form-group">
-            <h4 class="text-center">New Category </h4>
-            <label for="recipient-name" class="col-form-label">
-              Category Name
-            </label>
-            <input
-              type="text"
-              class="form-control "
-              id="person-name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-          </div>
-        </form>
+        <AddEditCategoryForm  name={name} setName={setName}/>
       </Modal>
     </Fragment>
   );

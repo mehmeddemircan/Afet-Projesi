@@ -1,6 +1,4 @@
 import React, { Fragment, useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { AddCategory } from '../../redux/actions/CategoryActions'
 import AddCategoryModal from '../modal/Category/AddCategoryModal'
 import AddButton from './AddButton'
 

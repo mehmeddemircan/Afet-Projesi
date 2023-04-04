@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { AddProductToArea } from "../../../redux/actions/AreaActions";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import AddReqToAreaForm from "../../form/AddReqToAreaForm";
 const { Option } = Select;
 const AddProductToAreaModal = ({
   product,
@@ -45,62 +46,14 @@ const AddProductToAreaModal = ({
         open={showAddProductToAreaModal}
         onOk={handleAddProductToArea}
         onCancel={handleCloseAddProductToAreaModal}
+        title={<h3>{product.title}</h3>}
       >
-        <form>
-          <div class="form-group">
-            <h3>{product.title}</h3>
-            <p>{/* {product.title} {product._id} */}</p>
-            <label for="recipient-name" class="col-form-label">
-              Quantity{" "}
-            </label>
-            <input
-              type="number"
-              class="form-control "
-              id="person-name"
-              value={quantity}
-              onChange={(e) => setQuantity(e.target.value)}
-            />
-            {showPrioritySelect ? (
-              <div>
-                <div className="d-flex justify-content-between align-items-center mt-2">
-                  <label for="recipient-name" class="col-form-label">
-                    Priority Order{" "}
-                  </label>
-                  <button
-                    className="btn btn-light btn-sm"
-                    onClick={handleClosePrioritySelect}
-                  >
-                    <i class="fa-solid fa-x"></i>
-                  </button>
-                  <div></div>
-                </div>
-                <select
-                  className="form-control"
-                  style={{ width: 240 }}
-                  placeholder="Select Priority"
-                  value={priorityOrder}
-                  onChange={(e) => setPriorityOrder(e.target.value)}
-                >
-                  <option selected>Select priority</option>
-                  {priorityOrders.map((c) => (
-                    <option key={`1-${c}`} value={c}>
-                      {c}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            ) : (
-              <button
-                className="btn btn-light btn-sm rounded-3 mt-4"
-                style={{ border: "2px solid rgb(221,221,221)" }}
-                type="button"
-                onClick={handleShowPrioritySelect}
-              >
-                Add Priority
-              </button>
-            )}
-          </div>
-        </form>
+        <AddReqToAreaForm
+          quantity={quantity}
+          setQuantity={setQuantity}
+          priorityOrder={priorityOrder}
+          setPriorityOrder={setPriorityOrder}
+        />
       </Modal>
     </Fragment>
   );

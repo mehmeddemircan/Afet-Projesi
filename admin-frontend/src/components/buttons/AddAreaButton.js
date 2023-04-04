@@ -1,8 +1,8 @@
 import React, { Fragment, useEffect, useState } from "react";
 import AddAreaModal from "../modal/Area/AddAreaModal";
 import AddButton from "./AddButton";
-import { Popover } from "antd";
-import { Select, Space } from "antd";
+
+import { Select } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { AllProduct } from "../../redux/actions/ProductActions";
 import {
@@ -18,7 +18,7 @@ import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 import FiltersButtonAreaContent from "../popover/FiltersButtonAreaContent";
 import FiltersButton from "../map/FiltersButton";
-const { Option } = Select;
+
 const AddAreaButton = () => {
   const [showAddAreaModal, setShowAddAreaModal] = useState(false);
 

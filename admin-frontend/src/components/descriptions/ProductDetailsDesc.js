@@ -3,10 +3,10 @@ import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { GetCategories } from "../../redux/actions/CategoryActions";
 import {
-  GetSingleProdcut,
+
   UpdateProduct,
 } from "../../redux/actions/ProductActions";
-import { UPDATE_PRODUCT_RESET } from "../../redux/constants/ProductConstants";
+
 import { useParams } from "react-router-dom";
 
 const ProductDetailsDesc = () => {

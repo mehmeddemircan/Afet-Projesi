@@ -1,6 +1,6 @@
 import { List } from 'antd'
-import React, { Fragment } from 'react'
-import { useSelector } from 'react-redux'
+import React from 'react'
+
 import CityItem from '../listitem/CityItem'
 
 const CityList = ({countryItem}) => {

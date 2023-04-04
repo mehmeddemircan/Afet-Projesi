@@ -1,6 +1,5 @@
 import React, { Fragment } from "react";
 import CategoryItem from "../listitem/CategoryItem";
-import { List } from "antd";
 import { useSelector } from "react-redux";
 
 const CategoryList = () => {
