@@ -34,12 +34,13 @@ const FormInfoItem = ({isApproved, form, handleApproveForm, handleDeleteForm }) 
             </div>
           }
         >
-          <Descriptions.Item label="UserName">{form.name}</Descriptions.Item>
-          <Descriptions.Item label="Telephone">1810000000</Descriptions.Item>
-          <Descriptions.Item label="Live">Hangzhou, Zhejiang</Descriptions.Item>
-          <Descriptions.Item label="Remark">empty</Descriptions.Item>
+          <Descriptions.Item label="Name">{form.name}</Descriptions.Item>
+          <Descriptions.Item label="Telephone">{form.phoneNumber}</Descriptions.Item>
+          <Descriptions.Item label="Email">{form.email}</Descriptions.Item>
+          <Descriptions.Item label="Urgency">{form.urgency}</Descriptions.Item>
+          <Descriptions.Item label="Number of Person">{form.numberOfPerson}</Descriptions.Item>
           <Descriptions.Item label="Address">
-            No. 18, Wantang Road, Xihu District, Hangzhou, Zhejiang, China
+            {form.address}
           </Descriptions.Item>
         </Descriptions>
       </List.Item>

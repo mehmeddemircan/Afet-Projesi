@@ -20,6 +20,8 @@ const TaskItem = ({ task }) => {
     setShowMore((prev) => !prev);
   };
 
+
+  
   return (
     <List.Item className="d-flex justify-content-between">
       <div className="col-md-8">
@@ -48,6 +50,7 @@ const TaskItem = ({ task }) => {
             ) : null}
           </a>
         </p>
+       
         <div>
           <button
             className=" btn btn-light btn-sm  text-white rounded-3"
@@ -65,7 +68,7 @@ const TaskItem = ({ task }) => {
       </div>
 
       <div className="col-md-3 ">
-                    <TaskMapDiv task={task} />
+        <TaskMapDiv task={task} />
       </div>
     </List.Item>
   );

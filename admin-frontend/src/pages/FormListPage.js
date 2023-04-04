@@ -16,12 +16,12 @@ import FiltersButton from "../components/map/FiltersButton";
 import FiltersButtonFormContent from "../components/popover/FiltersButtonFormContent";
 import FormInfoItem from "../components/listitem/FormInfoItem";
 import { GetFormCategory } from "../redux/actions/FormCategoryActions";
-import { toast } from "react-toastify";
+
 import {
   DELETE_FORM_RESET,
   UPDATE_FORM_RESET,
 } from "../redux/constants/FormConstants";
-import ApprovedFormItem from "../components/listitem/ApprovedFormItem";
+
 
 const { TabPane } = Tabs;
 const FormListPage = () => {
@@ -124,10 +124,12 @@ const FormListPage = () => {
         >
           <i class="fa-solid fa-angle-left"></i> Geri
         </button>
-        <FiltersButton content={<FiltersButtonFormContent />} />
+        <FiltersButton content={<FiltersButtonFormContent />}>
+          Filters Form
+        </FiltersButton>
       </div>
       {/* search input */}
-      {urgency}
+     
       <form className="my-4">
         <div class="d-flex justify-content-between flex-row align-items-center">
           <div className="col-md-3">

@@ -1,12 +1,15 @@
 import { DatePicker, Modal, Space } from "antd";
 import moment from "moment";
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import dayjs from "dayjs";
 import { EditTask } from "../../../redux/actions/TaskActions";
 import TaskAddLocationSearch from "../../search/TaskAddLocationSearch";
 
 import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
+import CityCountrySelect from "../../select/CityCountrySelect";
+import { AllCity } from "../../../redux/actions/CityActions";
+import { AllCountry } from "../../../redux/actions/CountryActions";
 const EditTaskModal = ({
   task,
   showEditTaskModal,
@@ -43,6 +46,17 @@ const EditTaskModal = ({
 
     setAddress(value);
   };
+  const [city, setCity] = useState("")
+  const handleCountryChange = (value) => {
+    dispatch(AllCity(value));
+  };
+  useEffect(() => {
+    dispatch(AllCountry());
+  }, [dispatch]);
+
+  const handleCityChange = (value) => {
+    setCity(value);
+  };
 
   return (
     <Fragment>
@@ -77,6 +91,11 @@ const EditTaskModal = ({
                 </Space>
               </div>
             </div>
+            {/* <CityCountrySelect 
+              isMultipleSelect={false}
+              handleCityChange={handleCityChange}
+              handleCountryChange={handleCountryChange}
+            /> */}
             <div className="mt-3">
               <TaskAddLocationSearch
                 address={address}

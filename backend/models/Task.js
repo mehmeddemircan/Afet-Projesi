@@ -22,8 +22,8 @@ var taskSchema = new mongoose.Schema(
       default: false,
     },
     city: {
-      type : ObjectId,
-      ref : 'City'
+      type: ObjectId,
+      ref: "City",
     },
     location: {
       lat: {

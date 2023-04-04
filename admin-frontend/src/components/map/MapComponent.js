@@ -25,6 +25,7 @@ import FiltersButtonTaskContent from "../popover/FiltersButtonTaskContent";
 import { AllCountry } from "../../redux/actions/CountryActions";
 import { GetAllTask, GetTaskByCityId } from "../../redux/actions/TaskActions";
 import { AllCity } from "../../redux/actions/CityActions";
+import { GetAllUserLocations } from "../../redux/actions/UserActions";
 
 const TaskMarkerComponent = ({ task }) => {
   return (
@@ -208,11 +209,12 @@ export default function MapComponent() {
   const [selectedCities, setSelectedCities] = useState([]);
 
   useEffect(() => {
+   
     if (showTaskFilter) {
       dispatch(AllCountry());
       dispatch(GetTaskByCityId(selectedCities));
     }
-  }, [dispatch, showTaskFilter, text, dueDate]);
+  }, [dispatch,showTaskFilter, text, dueDate]);
 
   const handleAddCityChange = (value) => {
     setSelectedCities(value);
@@ -225,6 +227,14 @@ export default function MapComponent() {
   useEffect(() => {
     dispatch(GetTaskByCityId(selectedCities));
   }, [dispatch, selectedCities]);
+
+
+  const [showLiveLocation, setShowLiveLocation] = useState(false)
+  const handleToogleLiveLocation = () => {
+    setShowLiveLocation((prev) => !prev)
+  }
+
+
   return (
     // Important! Always set the container height explicitly
     <Fragment>
@@ -235,14 +245,15 @@ export default function MapComponent() {
             setAddress={setAddress}
             handleSelect={handleSelect}
           />
-          <Badge.Ribbon text="New">
-            <button
-              className="btn btn-outline-primary rounded-pill "
-              onClick={handleToggleShowTaskFilter}
-            >
-              {showTaskFilter ? "Show Areas" : "Show Tasks"}
-            </button>
-          </Badge.Ribbon>
+          <button className="btn btn-outline-primary rounded-pill me-2 " onClick={handleToogleLiveLocation}>
+            Live Location
+          </button>
+          <button
+            className="btn btn-outline-primary rounded-pill "
+            onClick={handleToggleShowTaskFilter}
+          >
+            {showTaskFilter ? "Show Areas" : "Show Tasks"}
+          </button>
           <FiltersButton
             title={
               showTaskFilter

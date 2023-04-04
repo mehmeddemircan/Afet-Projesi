@@ -4,8 +4,10 @@ const Country = require("../models/Country");
 exports.createCountry = catchAsyncErrors(async (req, res) => {
   const newCountry = new Country(req.body);
   try {
-    const savedCountry = await newCountry.save();
-    res.status(200).json(savedCountry);
+     await newCountry.save();
+    res.status(200).json({
+      message : "Successfully added country"
+    });
   } catch (error) {
     res.status(500).json(error);
   }

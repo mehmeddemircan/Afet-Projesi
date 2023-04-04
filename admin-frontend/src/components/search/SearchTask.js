@@ -1,7 +1,29 @@
-import { DatePicker, Space } from "antd";
+import { Button, DatePicker, Popover, Select, Space } from "antd";
 import React, { Fragment } from "react";
-
+import CityCountrySelect from "../select/CityCountrySelect";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { AllCity } from "../../redux/actions/CityActions";
+import { AllCountry } from "../../redux/actions/CountryActions";
+import { useEffect } from "react";
+const { Option } = Select;
 const SearchTask = ({ text, setText, handleDateChange, dueDate }) => {
+  const dispatch = useDispatch();
+
+  const [country, setCountry] = useState("");
+  const [city, setCity] = useState("");
+  const handleCountryChange = (value) => {
+    setCountry(value);
+    dispatch(AllCity(value));
+  };
+  useEffect(() => {
+    dispatch(AllCountry());
+  }, [dispatch]);
+
+  const handleCityChange = (value) => {
+    setCity(value);
+  };
+  const getAllCountry = useSelector((state) => state.country.getAllCountry);
   return (
     <Fragment>
       <h5 className="my-4">Search Task </h5>
@@ -44,8 +66,7 @@ const SearchTask = ({ text, setText, handleDateChange, dueDate }) => {
             onChange={handleDateChange}
           />
         </div>
-
-        <input
+        <div
           className="form-control"
           style={{
             border: "none",
@@ -53,8 +74,28 @@ const SearchTask = ({ text, setText, handleDateChange, dueDate }) => {
             marginRight: "10px",
             flex: 1,
           }}
-          placeholder="location"
-        />
+        >
+          <Popover
+            title="Select country- city"
+            content={
+              <CityCountrySelect
+                isMultipleSelect={false}
+                handleCityChange={handleCityChange}
+                handleCountryChange={handleCountryChange}
+              />
+            }
+            placement="bottomLeft"
+            trigger={"click"}
+          >
+            <Button
+              className="text-start w-100 "
+              type="text"
+              icon={<i class="fa-solid fa-location-dot float-end mt-1"></i>}
+            >
+              Select City
+            </Button>
+          </Popover>
+        </div>
       </div>
     </Fragment>
   );

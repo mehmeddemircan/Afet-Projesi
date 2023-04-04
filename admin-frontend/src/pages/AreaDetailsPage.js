@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import MainLayout from "../components/layout/MainLayout";
-import ProductList from "../components/list/ProductList";
-import { Badge, Card, Empty, List, Tabs } from "antd";
+
+import { Badge, Card,  List, Tabs } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { AllProduct } from "../redux/actions/ProductActions";
-import AddProductToAreaModal from "../components/modal/Area/AddProductToAreaModal";
-import AreaProductItem from "../components/listitem/AreaProductItem";
+
 import {
   ADD_REQUIRED_PRODUCT_TO_AREA_RESET,
   ADD_REQURIRED_PERSON_TO_AREA_RESET,
@@ -21,11 +20,11 @@ import {
 } from "../redux/actions/AreaActions";
 import { useParams } from "react-router-dom";
 
-import AddedReqProductItem from "../components/listitem/AddedReqProductItem";
+
 import ProductItem from "../components/listitem/ProductItem";
 import { AllPersonType } from "../redux/actions/PersonTypeActions";
 import PersonTypeItem from "../components/listitem/PersonTypeItem";
-import AddedReqPersonItem from "../components/listitem/AddedReqPersonItem";
+
 import InfoBreadcrumb from "../components/breadcrumb/InfoBreadcrumb";
 
 const { TabPane } = Tabs;

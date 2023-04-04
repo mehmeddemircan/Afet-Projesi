@@ -38,7 +38,7 @@ export const getAllCountryReducer = (state = { countries: [] }, action) => {
   }
 };
 
-export const addNewCountryReducer = (state = { country: {} }, action) => {
+export const addNewCountryReducer = (state = { message: "" }, action) => {
   switch (action.type) {
     case ADD_COUNTRY_REQUEST:
       return { ...state, loading: true };
@@ -48,7 +48,7 @@ export const addNewCountryReducer = (state = { country: {} }, action) => {
         ...state,
         loading: false,
         success: true,
-        country: action.payload,
+        message: action.payload.message,
       };
 
     case ADD_COUNTRY_FAIL:

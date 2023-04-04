@@ -9,7 +9,7 @@ const SearchMapButton = ({address,handleSelect,setAddress}) => {
         <Popover
        
       overlayClassName='col-md-6 col-sm-4 col-lg-4'
-       placement="bottomLeft"
+       placement="bottomRight"
        content={
          <div>
            <PlacesAutocomplete

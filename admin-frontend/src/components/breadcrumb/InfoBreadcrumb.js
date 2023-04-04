@@ -5,7 +5,7 @@ const InfoBreadcrumb = (props) => {
 
    
       <Breadcrumb
-        className='my-4 ms-3'
+        className='my-4 '
         items={props.items}
       />
     );

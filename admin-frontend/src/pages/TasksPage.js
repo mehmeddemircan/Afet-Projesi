@@ -26,11 +26,11 @@ const TasksPage = () => {
   const addNewTask = useSelector((state) => state.task.addNewTask);
   const updateTask = useSelector((state) => state.task.updateTask);
 
-  const [text, setText] = useState("")
-  const [dueDate, setDueDate] = useState("")
+  const [text, setText] = useState("");
+  const [dueDate, setDueDate] = useState("");
 
   useEffect(() => {
-    dispatch(GetAllTask(text,dueDate));
+    dispatch(GetAllTask(text, dueDate));
     if (addNewTask.success) {
       message.success("Successfully added task");
       dispatch({ type: ADD_TASK_RESET });
@@ -39,7 +39,7 @@ const TasksPage = () => {
       message.success(updateTask.message);
       dispatch({ type: UPDATE_TASK_RESET });
     }
-  }, [dispatch, addNewTask.success, updateTask.isUpdated,text,dueDate]);
+  }, [dispatch, addNewTask.success, updateTask.isUpdated, text, dueDate]);
 
   const handleDateChange = (date, dateString) => {
     setDueDate(dateString);
@@ -47,8 +47,13 @@ const TasksPage = () => {
   return (
     <Fragment>
       <MainLayout>
-        <SearchTask text={text}  setText={setText} handleDateChange={handleDateChange} dueDate={dueDate} />
-        
+        <SearchTask
+          text={text}
+          setText={setText}
+          handleDateChange={handleDateChange}
+          dueDate={dueDate}
+        />
+
         <div className="row my-3">
           <div className="d-flex justify-content-end">
             <button
