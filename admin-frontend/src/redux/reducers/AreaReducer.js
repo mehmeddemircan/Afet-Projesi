@@ -29,6 +29,9 @@ import {
   GET_REQURIRED_PRODUCTS_FAIL,
   GET_REQURIRED_PRODUCTS_REQUEST,
   GET_REQURIRED_PRODUCTS_SUCCESS,
+  GET_SINGLE_AREA_FAIL,
+  GET_SINGLE_AREA_REQUEST,
+  GET_SINGLE_AREA_SUCCESS,
   REMOVE_REQURIRED_PERSON_TO_AREA_FAIL,
   REMOVE_REQURIRED_PERSON_TO_AREA_REQUEST,
   REMOVE_REQURIRED_PERSON_TO_AREA_RESET,
@@ -373,8 +376,32 @@ export const getRequriredPeopleReducer = (
   }
 };
 
+export const getSingleAreaReducer = (
+  state = { area: {} },
+  action
+) => {
+  switch (action.type) {
+    case GET_SINGLE_AREA_REQUEST:
+      return { ...state, loading: true };
+
+    case GET_SINGLE_AREA_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: true,
+        area: action.payload,
+      };
+
+    case GET_SINGLE_AREA_FAIL:
+      return { ...state, loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
 const areaReducer = combineReducers({
   getAllArea: getAllAreaReducer,
+  getSingleArea : getSingleAreaReducer ,
   addArea: addAreaReducer,
   addProductToArea: addProductToAreaReducer,
   deleteUpdateArea: deleteUpdateAreaReducer,

@@ -24,6 +24,9 @@ import {
   GET_REQURIRED_PRODUCTS_FAIL,
   GET_REQURIRED_PRODUCTS_REQUEST,
   GET_REQURIRED_PRODUCTS_SUCCESS,
+  GET_SINGLE_AREA_FAIL,
+  GET_SINGLE_AREA_REQUEST,
+  GET_SINGLE_AREA_SUCCESS,
   REMOVE_REQURIRED_PERSON_TO_AREA_FAIL,
   REMOVE_REQURIRED_PERSON_TO_AREA_REQUEST,
   REMOVE_REQURIRED_PERSON_TO_AREA_SUCCESS,
@@ -55,6 +58,29 @@ export const AllArea = (priorities) => async (dispatch) => {
     });
   }
 };
+
+export const GetSingleArea = (areaId) => async (dispatch) => {
+  try {
+    dispatch({
+      type: GET_SINGLE_AREA_REQUEST,
+    });
+
+    const { data } = await axios.get(
+        `http://localhost:5000/api/areas/${areaId}`
+    );
+
+    dispatch({
+      type: GET_SINGLE_AREA_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_SINGLE_AREA_FAIL,
+      error: error.response,
+    });
+  }
+};
+
 
 export const AllAreaByProductTitle = (filters) => async (dispatch) => {
   try {
@@ -89,7 +115,7 @@ export const AddArea = (area) => async (dispatch) => {
     });
 
     const { data } = await axios.post(
-      `https://afetapi.onrender.com/api/create-area`,
+      `http://localhost:5000/api/create-area`,
       area
     );
 
@@ -261,3 +287,6 @@ export const GetRequriredPeople = (id) => async (dispatch) => {
     });
   }
 };
+
+
+

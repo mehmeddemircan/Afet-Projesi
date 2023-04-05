@@ -4,24 +4,30 @@ import { useDispatch, useSelector } from "react-redux";
 import { AddArea } from "../../../redux/actions/AreaActions";
 import { toast } from "react-toastify";
 
-const AddAreaModal = ({ lat,lng, showAddAreaModal, handleCloseAddAreaModal }) => {
+const AddAreaModal = ({
+  lat,
+  lng,
+  showAddAreaModal,
+  handleCloseAddAreaModal,
+}) => {
   const addArea = useSelector((state) => state.area.addArea);
   const [name, setName] = useState("");
   const [coordinates, setCoordinates] = useState({
     longitude: 0,
     latitude: 0,
   });
+  const [disaster_type, setDisaster_type] = useState("")
   const [longitude, setLongitude] = useState(0);
   const [latitude, setLatitude] = useState(0);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setLatitude(lat)
-    setLongitude(lng)
-  }, [lat,lng])
+    setLatitude(lat.toFixed(6));
+    setLongitude(lng.toFixed(6));
+  }, [lat, lng]);
 
   const handleAddNewArea = () => {
-    dispatch(AddArea({ name, coordinates }));
+    dispatch(AddArea({ name,disaster_type, coordinates }));
 
     if (!addArea.success) {
       handleCloseAddAreaModal();
@@ -35,6 +41,15 @@ const AddAreaModal = ({ lat,lng, showAddAreaModal, handleCloseAddAreaModal }) =>
       latitude: latitude,
     });
   }, [setCoordinates, longitude, latitude]);
+
+  const [disasterTypes, setDisasterTypes] = useState([
+    "Deprem",
+    "Sel",
+    "Heyelan",
+    "Tsunami",
+  ]); 
+
+
 
   return (
     <Fragment>
@@ -59,8 +74,25 @@ const AddAreaModal = ({ lat,lng, showAddAreaModal, handleCloseAddAreaModal }) =>
                 onChange={(e) => setName(e.target.value)}
               />
             </div>
+
+            <div>
+              <label for="recipient-name" class="col-form-label">
+                Disaster Type 
+              </label>
+              <select
+                class="form-select"
+                aria-label="Default select example"
+                value={disaster_type}
+                onChange={(e) => setDisaster_type(e.target.value)}
+              >
+             
+                <option selected>Open this select menu</option>
+                {disasterTypes.map((disasterType) => (
+                  <option key={disasterType} value={disasterType}>{disasterType}</option>
+                ))}
+              </select>
+            </div>
             <div className="d-flex">
-              
               <div className="me-4 col-5">
                 <label for="recipient-name" class="col-form-label">
                   Latitude
@@ -89,9 +121,7 @@ const AddAreaModal = ({ lat,lng, showAddAreaModal, handleCloseAddAreaModal }) =>
             <div
               className="my-4"
               style={{ maxHeight: "200px", overflowY: "auto" }}
-            >
-             
-            </div>
+            ></div>
           </div>
         </form>
       </Modal>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import MainLayout from "../components/layout/MainLayout";
 
-import { Badge, Card,  List, Tabs } from "antd";
+import { Badge, Card, List, Tabs } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { AllProduct } from "../redux/actions/ProductActions";
 
@@ -19,7 +19,6 @@ import {
   RemoveProductFromArea,
 } from "../redux/actions/AreaActions";
 import { useParams } from "react-router-dom";
-
 
 import ProductItem from "../components/listitem/ProductItem";
 import { AllPersonType } from "../redux/actions/PersonTypeActions";
@@ -39,9 +38,13 @@ const AreaDetailsPage = () => {
   const getRequriredProducts = useSelector(
     (state) => state.area.getRequriredProducts
   );
-  const getAllPersonType = useSelector((state) => state.personType.getAllPersonType);
+  const getAllPersonType = useSelector(
+    (state) => state.personType.getAllPersonType
+  );
   const addPersonToArea = useSelector((state) => state.area.addPersonToArea);
-  const getRequriredPeople = useSelector((state) => state.area.getRequriredPeople);
+  const getRequriredPeople = useSelector(
+    (state) => state.area.getRequriredPeople
+  );
   const removePersonFromArea = useSelector(
     (state) => state.area.removePersonFromArea
   );
@@ -123,24 +126,23 @@ const AreaDetailsPage = () => {
     dispatch(RemovePersonFromArea(id, personId));
   };
 
-
   return (
     <MainLayout>
       <h5 className="my-4 text-center">AreaDetailsPage</h5>
       <InfoBreadcrumb
-          items={[
-            {
-              title: "Home",
-            },
-            {
-              title: <a href="/alanlar">Areas</a>,
-            },
-            {
-              title: <a>Area Details</a>
-            },
-            // Area name
-          ]}
-        />
+        items={[
+          {
+            title: "Home",
+          },
+          {
+            title: <a href="/alanlar">Areas</a>,
+          },
+          {
+            title: <a>Area Details</a>,
+          },
+          // Area name
+        ]}
+      />
       <Card
         style={{
           width: "100%",
@@ -176,7 +178,7 @@ const AreaDetailsPage = () => {
             <div className="my-4 d-flex flex-row flex-wrap justify-content-between">
               {getRequriredProducts.requrired_products.map((reqProduct) => (
                 <ProductItem
-                  isReqProductItem = {true}
+                  isReqProductItem={true}
                   key={reqProduct._id}
                   reqProduct={reqProduct}
                   handleRemoveProductFromArea={handleRemoveProductFromArea}
@@ -217,7 +219,7 @@ const AreaDetailsPage = () => {
                 {getRequriredPeople.requrired_people.map((reqPerson) => (
                   <PersonTypeItem
                     handleRemovePersonFromArea={handleRemovePersonFromArea}
-                    isReqPersonItem = {true}
+                    isReqPersonItem={true}
                     key={reqPerson._id}
                     reqPerson={reqPerson}
                   />

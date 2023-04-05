@@ -3,12 +3,18 @@ var mongoose = require("mongoose");
 const { ObjectId } = mongoose.Schema;
 
 const priorityOptions = ["Cok Acil", "Acil", "Normal", "Acil Degil"];
-
+const disasterTypes = ["Deprem","Sel","Heyelan","Tsunami"]
 var AreaSchema = new mongoose.Schema(
   {
     name: {
       type: String,
       required: true,
+    },
+    disaster_type : {
+      type : String,
+      enum : disasterTypes,
+      requrired : true ,
+      default : "Deprem"
     },
     location: {
       type: String,

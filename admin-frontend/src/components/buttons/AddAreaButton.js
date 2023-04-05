@@ -83,6 +83,8 @@ const AddAreaButton = () => {
         </div>
       </div>
       <AddAreaModal
+        lat={0}
+        lng={0}
         showAddAreaModal={showAddAreaModal}
         handleCloseAddAreaModal={handleCloseAddAreaModal}
       />

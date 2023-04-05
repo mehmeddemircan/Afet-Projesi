@@ -1,124 +1,26 @@
 import React, { Fragment, useEffect, useState, useRef } from "react";
 import GoogleMapReact from "google-map-react";
-import { UserOutlined } from "@ant-design/icons";
-import { List, Badge, Button, Popover, Tag, Tooltip, Avatar } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { AllArea, DeleteArea } from "../../redux/actions/AreaActions";
-import PlacesAutocomplete, {
-  geocodeByAddress,
-  getLatLng,
-} from "react-places-autocomplete";
+import { AllArea } from "../../redux/actions/AreaActions";
+import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 import SearchMapButton from "./SearchMapButton";
 import FiltersButton from "./FiltersButton";
-import AddAreaModal from "../modal/Area/AddAreaModal";
 import {
   ADD_AREA_RESET,
   DELETE_AREA_RESET,
 } from "../../redux/constants/AreaConstants";
 import { toast } from "react-toastify";
 import LoadingSpinner from "../spinner/LoadingSpinner";
-import ReqProductMapTag from "../tag/ReqProductMapTag";
-import ReqPersonMapTag from "../tag/ReqPersonMapTag";
-
 import FiltersButtonMapContent from "../popover/FiltersButtonMapContent";
 import FiltersButtonTaskContent from "../popover/FiltersButtonTaskContent";
 import { AllCountry } from "../../redux/actions/CountryActions";
-import { GetAllTask, GetTaskByCityId } from "../../redux/actions/TaskActions";
+import { GetTaskByCityId } from "../../redux/actions/TaskActions";
 import { AllCity } from "../../redux/actions/CityActions";
 import { GetAllUserLocations } from "../../redux/actions/UserActions";
-
-const UserMarkerComponent = ({ userLocation, lat, lng }) => {
-  return (
-    <Popover
-      content={
-        <>
-          <h6>{userLocation.name}</h6>
-          <a>lat : {lat}</a>
-          <a>lat : {lng}</a>
-        </>
-      }
-    >
-      <Button type="link">
-        <Avatar icon={<UserOutlined />} />
-      </Button>
-    </Popover>
-  );
-};
-
-const TaskMarkerComponent = ({ task }) => {
-  return (
-    <Popover
-      overlayStyle={{
-        maxWidth: "300px",
-      }}
-      trigger={"hover"}
-      title={<h6>{task.text}</h6>}
-    >
-      <Button type="default" icon={<i class="fa-solid fa-check"></i>} />
-    </Popover>
-  );
-};
-
-const MarkerComponent = ({ area, text }) => {
-  const dispatch = useDispatch();
-
-  const handleDeleteArea = (id) => {
-    dispatch(DeleteArea(id));
-  };
-
-  return (
-    <Popover
-      content={
-        <div>
-          <div className="d-flex justify-content-start">
-            <p className="me-2">latitude {area.coordinates.latitude} |</p>
-            <p>longitude {area.coordinates.longitude}</p>
-          </div>
-          <p
-            style={{
-              maxWidth: "260px",
-            }}
-          >
-            gerekli ürünler{" "}
-            {area.requrired_products.length == 0 ? (
-              "ihtiyac yok"
-            ) : (
-              <div className="d-flex flex-wrap justify-content-start">
-                {area.requrired_products.map((product) => (
-                  <ReqProductMapTag key={product._id} product={product} />
-                ))}
-              </div>
-            )}{" "}
-          </p>
-
-          <p>
-            gerekli insanlar :{" "}
-            {area.requrired_products.length == 0 ? (
-              "ihtiyac yok"
-            ) : (
-              <div className="d-flex flex-wrap justify-content-start">
-                {area.requrired_people.map((person) => (
-                  <ReqPersonMapTag person={person} key={person._id} />
-                ))}
-              </div>
-            )}
-          </p>
-        </div>
-      }
-      title={
-        <div className="d-flex justify-content-between">
-          <a>{text}</a>
-          <i
-            class="fa-solid fa-x"
-            onClick={() => handleDeleteArea(area._id)}
-          ></i>
-        </div>
-      }
-    >
-      <Button type="default" icon={<i class="fa-solid fa-hand"></i>}></Button>
-    </Popover>
-  );
-};
+import CreateAreaMarker from "./markers/CreateAreaMarker";
+import AreaMarker from "./markers/AreaMarker";
+import TaskMarker from "./markers/TaskMarker";
+import UserMarker from "./markers/UserMarker";
 
 export default function MapComponent() {
   const defaultProps = {
@@ -222,7 +124,6 @@ export default function MapComponent() {
   const [text, setText] = useState("");
   const [dueDate, setDueDate] = useState("");
 
-  const getAllTask = useSelector((state) => state.task.getAllTask);
   const getTaskByCity = useSelector((state) => state.task.getTaskByCity);
   const [selectedCities, setSelectedCities] = useState([]);
 
@@ -330,7 +231,7 @@ export default function MapComponent() {
             ) : (
               getAllUserLocations.userLocations &&
               getAllUserLocations.userLocations.map((userLocation) => (
-                <UserMarkerComponent
+                <UserMarker
                   userLocation={userLocation}
                   key={userLocation._id}
                   lat={userLocation.location.lat}
@@ -343,7 +244,7 @@ export default function MapComponent() {
               <LoadingSpinner />
             ) : (
               getTaskByCity.tasks.map((task) => (
-                <TaskMarkerComponent
+                <TaskMarker
                   key={task._id}
                   task={task}
                   lat={task.location.lat}
@@ -355,7 +256,7 @@ export default function MapComponent() {
             <LoadingSpinner />
           ) : (
             getAllArea.areas.map((area) => (
-              <MarkerComponent
+              <AreaMarker
                 area={area}
                 key={area._id}
                 lat={area.coordinates.latitude}
@@ -368,44 +269,10 @@ export default function MapComponent() {
               />
             ))
           )}
-          {/* {} */}
 
-          {marker && <Marker lat={marker.lat} lng={marker.lng} />}
+          {marker && <CreateAreaMarker lat={marker.lat} lng={marker.lng} />}
         </GoogleMapReact>
       </div>
     </Fragment>
   );
 }
-
-const Marker = ({ lat, lng, marker }) => {
-  const [showAddAreaModal, setShowAddAreaModal] = useState(false);
-
-  const handleShowAddAreaModal = () => {
-    setShowAddAreaModal(true);
-  };
-
-  const handleCloseAddAreaModal = () => {
-    setShowAddAreaModal(false);
-  };
-
-  return (
-    <Tooltip placement="topLeft" title={showAddAreaModal ? "" : "Add Area"}>
-      <Button
-        style={{ position: "fixed" }}
-        type="ghost"
-        icon={
-          <i class="fa-sharp fa-solid fa-location-dot text-danger fs-4"></i>
-        }
-        onClick={handleShowAddAreaModal}
-      ></Button>
-
-      <AddAreaModal
-        marker={marker}
-        lat={lat}
-        lng={lng}
-        showAddAreaModal={showAddAreaModal}
-        handleCloseAddAreaModal={handleCloseAddAreaModal}
-      />
-    </Tooltip>
-  );
-};
