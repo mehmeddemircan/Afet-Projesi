@@ -27,6 +27,24 @@ import { GetAllTask, GetTaskByCityId } from "../../redux/actions/TaskActions";
 import { AllCity } from "../../redux/actions/CityActions";
 import { GetAllUserLocations } from "../../redux/actions/UserActions";
 
+const UserMarkerComponent = ({ userLocation, lat, lng }) => {
+  return (
+    <Popover
+      content={
+        <>
+          <h6>{userLocation.name}</h6>
+          <a>lat : {lat}</a>
+          <a>lat : {lng}</a>
+        </>
+      }
+    >
+      <Button type="link">
+        <Avatar icon={<UserOutlined />} />
+      </Button>
+    </Popover>
+  );
+};
+
 const TaskMarkerComponent = ({ task }) => {
   return (
     <Popover
@@ -209,12 +227,11 @@ export default function MapComponent() {
   const [selectedCities, setSelectedCities] = useState([]);
 
   useEffect(() => {
-   
     if (showTaskFilter) {
       dispatch(AllCountry());
       dispatch(GetTaskByCityId(selectedCities));
     }
-  }, [dispatch,showTaskFilter, text, dueDate]);
+  }, [dispatch, showTaskFilter, text, dueDate]);
 
   const handleAddCityChange = (value) => {
     setSelectedCities(value);
@@ -228,12 +245,26 @@ export default function MapComponent() {
     dispatch(GetTaskByCityId(selectedCities));
   }, [dispatch, selectedCities]);
 
-
-  const [showLiveLocation, setShowLiveLocation] = useState(false)
+  //Live location
+  const getAllUserLocations = useSelector((state) => state.getAllUserLocations);
+  const [showLiveLocation, setShowLiveLocation] = useState(false);
   const handleToogleLiveLocation = () => {
-    setShowLiveLocation((prev) => !prev)
-  }
+    setShowLiveLocation((prev) => !prev);
+    if (showTaskFilter) {
+      setShowTaskFilter(false);
+    }
+  };
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      if (showLiveLocation) {
+        dispatch(GetAllUserLocations());
+      }
+    }, 10000);
 
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [dispatch, showLiveLocation]);
 
   return (
     // Important! Always set the container height explicitly
@@ -245,7 +276,14 @@ export default function MapComponent() {
             setAddress={setAddress}
             handleSelect={handleSelect}
           />
-          <button className="btn btn-outline-primary rounded-pill me-2 " onClick={handleToogleLiveLocation}>
+          <button
+            className={
+              showLiveLocation
+                ? "btn btn-primary rounded-pill me-2"
+                : "btn  btn-outline-primary rounded-pill me-2"
+            }
+            onClick={handleToogleLiveLocation}
+          >
             Live Location
           </button>
           <button
@@ -286,12 +324,21 @@ export default function MapComponent() {
           onChange={handleMapChange}
           onClick={onMapClick}
         >
-          {/* <UserMarkerComponent
-            lat={location?.latitude}
-            lng={location?.longitude}
-          /> */}
-
-          {showTaskFilter ? (
+          {showLiveLocation ? (
+            !getAllUserLocations.success ? (
+              <LoadingSpinner />
+            ) : (
+              getAllUserLocations.userLocations &&
+              getAllUserLocations.userLocations.map((userLocation) => (
+                <UserMarkerComponent
+                  userLocation={userLocation}
+                  key={userLocation._id}
+                  lat={userLocation.location.lat}
+                  lng={userLocation.location.lng}
+                />
+              ))
+            )
+          ) : showTaskFilter ? (
             !getTaskByCity.success ? (
               <LoadingSpinner />
             ) : (
@@ -321,6 +368,7 @@ export default function MapComponent() {
               />
             ))
           )}
+          {/* {} */}
 
           {marker && <Marker lat={marker.lat} lng={marker.lng} />}
         </GoogleMapReact>

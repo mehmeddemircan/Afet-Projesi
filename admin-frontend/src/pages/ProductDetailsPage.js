@@ -70,7 +70,7 @@ const ProductDetailsPage = () => {
             console.log(uri);
 
             axios
-              .post("/api/uploadimages", { image: uri })
+              .post("https://afetapi.onrender.com/api/uploadimages", { image: uri })
               .then((res) => {
                 console.log("IMAGE UPLOAD RES DATA", res);
                 allUploadedFiles.push(res.data);
@@ -92,7 +92,7 @@ const ProductDetailsPage = () => {
     console.log("remove img", public_id);
     setImage("");
     axios
-      .post("/api/removeimage", { public_id })
+      .post("https://afetapi.onrender.com/api/removeimage", { public_id })
       .then((res) => {
         let filteredImages = images.filter((item) => {
           return item.public_id !== public_id;
