@@ -33,9 +33,9 @@ const Header = () => {
             <a class="navbar-brand" href="/">
               Deprem
             </a>
-            <a class="navbar-brand" href="/location">
+            {/* <a class="navbar-brand" href="/location">
               Canlı Konum
-            </a>
+            </a> */}
             <HeaderMenuDropDown />
           </div>
           <div>
