@@ -116,12 +116,14 @@ const AddReqPersonDrawer = ({
     <Drawer
       afterOpenChange={handleDrawerVisibleChange}
       width={512}
-      title="Basic Drawer"
+      title="Add Required Person "
       placement="right"
       onClose={handleCloseAddReqPersonDrawer}
       open={showAddReqPersonDrawer}
     >
-      <h2>hello</h2>
+        <div className="card">
+            <div className="card-body">
+            <h2>{area.name} {area.disaster_type}</h2>
       <form>
         <label for="recipient-name1" class="col-form-label">
           Person Type{" "}
@@ -132,7 +134,7 @@ const AddReqPersonDrawer = ({
           value={Person}
           onChange={(e) => setPerson(e.target.value)}
         >
-          <option selected>Select priority</option>
+          <option selected>Select Person Type</option>
 
           {filteredReqPeople.map((c) => (
             <option key={c._id} value={c._id}>
@@ -187,7 +189,11 @@ const AddReqPersonDrawer = ({
           </button>
         </div>
       </form>
-      <List className="my-4" itemLayout="horizontal">
+     
+            </div>
+        </div>
+        
+      <List className="mt-4" itemLayout="horizontal">
         <div
           className="scrollbar-ripe-malinka"
           style={{ maxHeight: "360px", overflowY: "auto" }}

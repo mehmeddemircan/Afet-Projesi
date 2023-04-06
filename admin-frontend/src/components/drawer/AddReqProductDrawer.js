@@ -125,12 +125,14 @@ const AddReqProductDrawer = ({
     <Drawer
       afterOpenChange={handleDrawerVisibleChange}
       width={512}
-      title="Basic Drawer"
+      title="Add Required Product "
       placement="right"
       onClose={handleCloseAddReqProductDrawer}
       open={showAddReqProductDrawer}
     >
-      <h4>{areaId}</h4>
+     <div className="card">
+            <div className="card-body">
+            <h2>{area.name} {area.disaster_type}</h2>
       <form>
         <label for="recipient-name1" class="col-form-label">
           Product{" "}
@@ -141,7 +143,7 @@ const AddReqProductDrawer = ({
           value={Product}
           onChange={(e) => setProduct(e.target.value)}
         >
-          <option selected>Select priority</option>
+          <option selected>Select Product</option>
 
           {filteredReqProducts.map((c) => (
             <option key={c._id} value={c._id}>
@@ -196,7 +198,9 @@ const AddReqProductDrawer = ({
           </button>
         </div>
       </form>
-      <List className="my-4" itemLayout="horizontal">
+      </div>
+      </div>
+      <List className="mt-4" itemLayout="horizontal">
         <div
           className="scrollbar-ripe-malinka"
           style={{ maxHeight: "360px", overflowY: "auto" }}

@@ -62,12 +62,14 @@ const AreaMarker = ({ area, text }) => {
     onOpenChange={handlePopoverVisibleChange}
       content={
         <div>
-          <div className="d-flex justify-content-start">
+          <div className="d-flex justify-content-start ">
             <p className="me-2">
               latitude {area.coordinates.latitude.toFixed(6)} |
             </p>
             <p>longitude {area.coordinates.longitude.toFixed(6)}</p>
+          
           </div>
+         
           <p
             style={{
               maxWidth: "260px",
