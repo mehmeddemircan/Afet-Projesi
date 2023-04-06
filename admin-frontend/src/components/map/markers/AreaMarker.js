@@ -5,12 +5,18 @@ import ReqProductMapTag from "../../tag/ReqProductMapTag";
 import ReqPersonMapTag from "../../tag/ReqPersonMapTag";
 import AddReqProductDrawer from "../../drawer/AddReqProductDrawer";
 import { useState } from "react";
+import AddReqPersonDrawer from "../../drawer/AddReqPersonDrawer";
 
 const AreaMarker = ({ area, text }) => {
   const dispatch = useDispatch();
 
   const handleDeleteArea = (id) => {
-    dispatch(DeleteArea(id));
+
+
+
+    if (window.confirm(`${area.name} silmek istedğinizden emin misiniz ? `)) {
+      dispatch(DeleteArea(id));
+    }
   };
 
   const [showAddReqProductDrawer, setShowAddReqProductDrawer] = useState(false);
@@ -24,6 +30,17 @@ const AreaMarker = ({ area, text }) => {
 
   const handleCloseAddReqProductDrawer = () => {
     setShowAddReqProductDrawer(false);
+  };
+
+  const [showAddReqPersonDrawer, setShowAddReqPersonDrawer] = useState(false)
+
+  const handleShowAddReqPersonDrawer = () => {
+    setAreaId(area._id);
+    dispatch(GetSingleArea(area._id));
+    setShowAddReqPersonDrawer(true)
+  }
+  const handleCloseAddReqPersonDrawer = () => {
+    setShowAddReqPersonDrawer(false);
   };
 
 
@@ -97,9 +114,16 @@ const AreaMarker = ({ area, text }) => {
               showAddReqProductDrawer={showAddReqProductDrawer}
               handleCloseAddReqProductDrawer={handleCloseAddReqProductDrawer}
             />
-            <button className="btn btn-sm rounded-pill btn-outline-primary">
+            <button className="btn btn-sm rounded-pill btn-outline-primary" onClick={handleShowAddReqPersonDrawer}>
               Add Person
             </button>
+            <AddReqPersonDrawer 
+              areaId={areaId}
+              handleDrawerVisibleChange={handleDrawerVisibleChange}
+              showAddReqPersonDrawer={showAddReqPersonDrawer}
+              handleCloseAddReqPersonDrawer={handleCloseAddReqPersonDrawer}
+            />
+
           </div>
         </div>
       }

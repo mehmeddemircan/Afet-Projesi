@@ -1,82 +1,41 @@
 import { Drawer, List, Tag, message } from "antd";
-import React from "react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { AllProduct } from "../../redux/actions/ProductActions";
-import { useEffect } from "react";
-import { toast } from "react-toastify";
+import { AllPersonType } from "../../redux/actions/PersonTypeActions";
 import {
-  AddProductToArea,
+  AddPersonToArea,
   AllArea,
-  GetRequriredProducts,
-  GetSingleArea,
-  RemoveProductFromArea,
+  GetRequriredPeople,
+  RemovePersonFromArea,
 } from "../../redux/actions/AreaActions";
 import {
-  ADD_REQUIRED_PRODUCT_TO_AREA_RESET,
-  REMOVE_REQURIRED_PRODUCT_FROM_RESET,
+  ADD_REQURIRED_PERSON_TO_AREA_RESET,
+  REMOVE_REQURIRED_PERSON_TO_AREA_RESET,
 } from "../../redux/constants/AreaConstants";
-import ProductItem from "../listitem/ProductItem";
 
-const AddReqProductDrawer = ({
+const AddReqPersonDrawer = ({
   areaId,
-  handleCloseAddReqProductDrawer,
-  showAddReqProductDrawer,
+  handleCloseAddReqPersonDrawer,
+  showAddReqPersonDrawer,
   handleDrawerVisibleChange,
 }) => {
-  const dispatch = useDispatch();
-
-  const getAllProduct = useSelector((state) => state.product.getAllProduct);
-  const [filteredReqProducts, setFilteredReqProducts] = useState(
-    getAllProduct.products
+  const getAllPersonType = useSelector(
+    (state) => state.personType.getAllPersonType
   );
-  const getRequriredProducts = useSelector(
-    (state) => state.area.getRequriredProducts
+  const addPersonToArea = useSelector((state) => state.area.addPersonToArea);
+  const getRequriredPeople = useSelector(
+    (state) => state.area.getRequriredPeople
   );
-  const addProductToArea = useSelector((state) => state.area.addProductToArea);
+  const removePersonFromArea = useSelector(
+    (state) => state.area.removePersonFromArea
+  );
   const { area } = useSelector((state) => state.area.getSingleArea);
 
-  const removeProductFromArea = useSelector(
-    (state) => state.area.removeProductFromArea
+  const dispatch = useDispatch();
+
+  const [filteredReqPeople, setFilteredReqPeople] = useState(
+    getAllPersonType.personTypes
   );
-  
-
-  const filterReqProducts = () => {
-    const filtered = getAllProduct.products.filter(
-      (item) =>
-        !getRequriredProducts.requrired_products.some(
-          (newItem) => newItem.Product._id === item._id
-        )
-    );
-    setFilteredReqProducts(filtered);
-  };
-
-  useEffect(() => {
-    if (areaId == area._id) {
-      dispatch(GetRequriredProducts(areaId));
-    }
-  }, [
-    dispatch,
-    areaId,
-    area,
-    addProductToArea.addedProduct,
-    removeProductFromArea.isRemoved,
-  ]);
-
-  useEffect(() => {
-    filterReqProducts();
-  }, [
-    areaId,
-    area._id,
-    addProductToArea,
-    removeProductFromArea,
-    getAllProduct.products,
-    getRequriredProducts.requrired_products,
-  ]);
-  const handleRemoveProductFromArea = (productId) => {
-    dispatch(RemoveProductFromArea(areaId, productId));
-  };
-
   const [priorityOrders, setPriorityOrders] = useState([
     "Cok Acil",
     "Acil",
@@ -86,30 +45,62 @@ const AddReqProductDrawer = ({
 
   const [quantity, setQuantity] = useState(0);
   const [priorityOrder, setPriorityOrder] = useState("");
-  const [Product, setProduct] = useState("");
-  const [checkedValues, setCheckedValues] = useState([]);
+  const [Person, setPerson] = useState("");
+
+  const filterReqPeople = () => {
+    const filtered = getAllPersonType.personTypes.filter(
+      (item) =>
+        !getRequriredPeople.requrired_people.some(
+          (newItem) => newItem.Person._id === item._id
+        )
+    );
+    setFilteredReqPeople(filtered);
+  };
 
   useEffect(() => {
-    dispatch(AllProduct());
+    if (areaId == area._id) {
+      dispatch(GetRequriredPeople(areaId));
+    }
+  }, [
+    dispatch,
+    areaId,
+    area,
+    addPersonToArea.addedPerson,
+    removePersonFromArea.isRemoved,
+  ]);
+  useEffect(() => {
+    filterReqPeople();
+  }, [
+    areaId,
+    area._id,
+    addPersonToArea,
+    removePersonFromArea,
+    getAllPersonType.personTypes,
+    getRequriredPeople.requrired_people,
+  ]);
+  const handleRemovePersonFromArea = (personId) => {
+    dispatch(RemovePersonFromArea(areaId, personId));
+  };
+  useEffect(() => {
+    dispatch(AllPersonType());
   }, [dispatch]);
-
-  const handleAddReqProductToArea = () => {
-    dispatch(AddProductToArea(areaId, { Product, quantity, priorityOrder }));
-    handleCloseAddReqProductDrawer();
+  const handleAddReqPersonToArea = () => {
+    dispatch(AddPersonToArea(areaId, { Person, quantity, priorityOrder }));
+    handleCloseAddReqPersonDrawer();
   };
   useEffect(() => {
     if (areaId === area._id) {
       dispatch(AllArea([]));
 
-      if (addProductToArea.addedProduct) {
-        setQuantity(0)
-        setPriorityOrder("")
-        message.success(addProductToArea.message);
-        dispatch({ type: ADD_REQUIRED_PRODUCT_TO_AREA_RESET });
+      if (addPersonToArea.addedPerson) {
+        setQuantity(0);
+        setPriorityOrder("");
+        message.success(addPersonToArea.message);
+        dispatch({ type: ADD_REQURIRED_PERSON_TO_AREA_RESET });
       }
-      if (removeProductFromArea.isRemoved) {
-        message.success(removeProductFromArea.message);
-        dispatch({ type: REMOVE_REQURIRED_PRODUCT_FROM_RESET });
+      if (removePersonFromArea.isRemoved) {
+        message.success(removePersonFromArea.message);
+        dispatch({ type: REMOVE_REQURIRED_PERSON_TO_AREA_RESET });
       }
     }
   }, [
@@ -117,8 +108,8 @@ const AddReqProductDrawer = ({
     areaId,
     area,
     area._id,
-    addProductToArea.addedProduct,
-    removeProductFromArea.isRemoved,
+    addPersonToArea.addedPerson,
+    removePersonFromArea.isRemoved,
   ]);
 
   return (
@@ -127,25 +118,25 @@ const AddReqProductDrawer = ({
       width={512}
       title="Basic Drawer"
       placement="right"
-      onClose={handleCloseAddReqProductDrawer}
-      open={showAddReqProductDrawer}
+      onClose={handleCloseAddReqPersonDrawer}
+      open={showAddReqPersonDrawer}
     >
-      <h4>{areaId}</h4>
+      <h2>hello</h2>
       <form>
         <label for="recipient-name1" class="col-form-label">
-          Product{" "}
+          Person Type{" "}
         </label>
         <select
           className="form-control w-100"
           placeholder="Select Priority"
-          value={Product}
-          onChange={(e) => setProduct(e.target.value)}
+          value={Person}
+          onChange={(e) => setPerson(e.target.value)}
         >
           <option selected>Select priority</option>
 
-          {filteredReqProducts.map((c) => (
+          {filteredReqPeople.map((c) => (
             <option key={c._id} value={c._id}>
-              {c.title}
+              {c.name}
             </option>
           ))}
         </select>
@@ -190,7 +181,7 @@ const AddReqProductDrawer = ({
           <button
             type="button"
             className="btn btn-dark   rounded-pill"
-            onClick={handleAddReqProductToArea}
+            onClick={handleAddReqPersonToArea}
           >
             Add
           </button>
@@ -201,13 +192,13 @@ const AddReqProductDrawer = ({
           className="scrollbar-ripe-malinka"
           style={{ maxHeight: "360px", overflowY: "auto" }}
         >
-          {getRequriredProducts.requrired_products.map((reqProduct) => (
+          {getRequriredPeople.requrired_people.map((reqPerson) => (
             <List.Item
               actions={[
                 <>
                   <button
                     className="btn btn-danger btn-sm w-100 rounded-pill "
-                    onClick={() => handleRemoveProductFromArea(reqProduct._id)}
+                    onClick={() => handleRemovePersonFromArea(reqPerson._id)}
                   >
                     Remove
                   </button>
@@ -215,16 +206,16 @@ const AddReqProductDrawer = ({
               ]}
             >
               <List.Item.Meta
-                title={<a>{reqProduct.Product.title}</a>}
+                title={<a>{reqPerson.Person.name}</a>}
                 description={
                   <>
                     <p>
                       Adet :
                       <Tag color="#108ee9" className="ms-2">
-                        {reqProduct.quantity}
+                        {reqPerson.quantity}
                       </Tag>
                     </p>
-                    <p>Aciliyet : {reqProduct.priorityOrder}</p>
+                    <p>Aciliyet : {reqPerson.priorityOrder}</p>
                   </>
                 }
               />
@@ -236,4 +227,4 @@ const AddReqProductDrawer = ({
   );
 };
 
-export default AddReqProductDrawer;
+export default AddReqPersonDrawer;
