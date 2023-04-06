@@ -9,10 +9,7 @@ var taskSchema = new mongoose.Schema(
       required: true,
       maxlength: 500,
     },
-    // assignedTo: {
-    //   type: ObjectId,
-    //   ref: 'User',
-    // },
+   
     dueDate: {
       type: Date,
       required: true,
@@ -33,6 +30,11 @@ var taskSchema = new mongoose.Schema(
         type: String,
       },
     },
+    address : {
+      type : String,
+      required : true ,
+      default :  "",
+    }
   },
   { timestamps: true }
 );

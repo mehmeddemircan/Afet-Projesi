@@ -11,9 +11,6 @@ const AreaMarker = ({ area, text }) => {
   const dispatch = useDispatch();
 
   const handleDeleteArea = (id) => {
-
-
-
     if (window.confirm(`${area.name} silmek istedğinizden emin misiniz ? `)) {
       dispatch(DeleteArea(id));
     }
@@ -32,17 +29,16 @@ const AreaMarker = ({ area, text }) => {
     setShowAddReqProductDrawer(false);
   };
 
-  const [showAddReqPersonDrawer, setShowAddReqPersonDrawer] = useState(false)
+  const [showAddReqPersonDrawer, setShowAddReqPersonDrawer] = useState(false);
 
   const handleShowAddReqPersonDrawer = () => {
     setAreaId(area._id);
     dispatch(GetSingleArea(area._id));
-    setShowAddReqPersonDrawer(true)
-  }
+    setShowAddReqPersonDrawer(true);
+  };
   const handleCloseAddReqPersonDrawer = () => {
     setShowAddReqPersonDrawer(false);
   };
-
 
   const [isPopoverVisible, setIsPopoverVisible] = useState(false);
 
@@ -57,9 +53,8 @@ const AreaMarker = ({ area, text }) => {
   };
   return (
     <Popover
-  
-    open={isPopoverVisible}
-    onOpenChange={handlePopoverVisibleChange}
+      open={isPopoverVisible}
+      onOpenChange={handlePopoverVisibleChange}
       content={
         <div>
           <div className="d-flex justify-content-start ">
@@ -67,9 +62,8 @@ const AreaMarker = ({ area, text }) => {
               latitude {area.coordinates.latitude.toFixed(6)} |
             </p>
             <p>longitude {area.coordinates.longitude.toFixed(6)}</p>
-          
           </div>
-         
+
           <p
             style={{
               maxWidth: "260px",
@@ -84,7 +78,6 @@ const AreaMarker = ({ area, text }) => {
                 <ReqProductMapTag key={product._id} product={product} />
               ))
             )}
-        
           </p>
           <hr />
           <p
@@ -96,11 +89,11 @@ const AreaMarker = ({ area, text }) => {
             <span className="mt-1">gerekli insanlar : </span>
             {area.requrired_people.length == 0 ? (
               <span className="ms-1 mt-1">ihtiyac yok</span>
-            ) : 
+            ) : (
               area.requrired_people.map((person) => (
                 <ReqPersonMapTag person={person} key={person._id} />
               ))
-            }
+            )}
           </p>
           <hr />
           <div className=" d-flex flex-row flex-1 justify-content-end">
@@ -116,16 +109,18 @@ const AreaMarker = ({ area, text }) => {
               showAddReqProductDrawer={showAddReqProductDrawer}
               handleCloseAddReqProductDrawer={handleCloseAddReqProductDrawer}
             />
-            <button className="btn btn-sm rounded-pill btn-outline-primary" onClick={handleShowAddReqPersonDrawer}>
+            <button
+              className="btn btn-sm rounded-pill btn-outline-primary"
+              onClick={handleShowAddReqPersonDrawer}
+            >
               Add Person
             </button>
-            <AddReqPersonDrawer 
+            <AddReqPersonDrawer
               areaId={areaId}
               handleDrawerVisibleChange={handleDrawerVisibleChange}
               showAddReqPersonDrawer={showAddReqPersonDrawer}
               handleCloseAddReqPersonDrawer={handleCloseAddReqPersonDrawer}
             />
-
           </div>
         </div>
       }

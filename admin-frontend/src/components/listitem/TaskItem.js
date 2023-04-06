@@ -50,7 +50,7 @@ const TaskItem = ({ task }) => {
             ) : null}
           </a>
         </p>
-       
+       <p>Address : {task.address}</p>
         <div>
           <button
             className=" btn btn-light btn-sm  text-white rounded-3"

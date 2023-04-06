@@ -5,13 +5,13 @@ const User = require("../models/User");
 // Define task controller functionse
 exports.createTask = catchAsyncErrors(async (req, res) => {
   try {
-    const { text, dueDate, location, city } = req.body;
+    const { text, dueDate, location, city ,address } = req.body;
     const task = new Task({
       text,
-
       dueDate,
       city,
       location,
+      address
     });
     await task.save();
     res.status(201).json({ task });

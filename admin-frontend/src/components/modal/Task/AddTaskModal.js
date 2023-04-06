@@ -56,7 +56,7 @@ const AddTaskModal = ({ handleCloseAddTaskModal, showAddTaskModal }) => {
   };
 
   const handleAddNewTask = () => {
-    dispatch(AddNewTask({ text, city, dueDate, location }));
+    dispatch(AddNewTask({ text, city, dueDate, location , address}));
     handleCloseAddTaskModal();
   };
 
@@ -69,7 +69,7 @@ const AddTaskModal = ({ handleCloseAddTaskModal, showAddTaskModal }) => {
     >
       <form>
         <div class="form-group">
-          <h4 class="text-center">New Task </h4>
+          <h4 class="text-center">New Task  </h4>
           <div>
             <label for="recipient-name" class="col-form-label">
               Text
