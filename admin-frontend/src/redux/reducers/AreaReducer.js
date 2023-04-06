@@ -174,7 +174,7 @@ export const addProductToAreaReducer = (
       };
 
     case ADD_REQUIRED_PRODUCT_TO_AREA_RESET:
-      return { ...ADD_PRODUCT_TO_AREA_INITIAL_STATE };
+      return { ...state , addedProduct : false };
     default:
       return state;
   }
@@ -231,7 +231,7 @@ export const removeProductFromAreaReducer = (
       };
 
     case REMOVE_REQURIRED_PRODUCT_FROM_RESET:
-      return { ...state };
+      return { ...state , isRemoved : false };
     default:
       return state;
   }
