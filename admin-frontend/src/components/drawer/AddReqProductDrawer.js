@@ -59,30 +59,28 @@ const AddReqProductDrawer = ({
       dispatch(GetRequriredProducts(areaId));
     }
 
-    // if (removeProductFromArea.isRemoved) {
-    //   toast(removeProductFromArea.message);
-    //   dispatch({ type: REMOVE_REQURIRED_PRODUCT_FROM_RESET });
-    // }
+   
   }, [
     dispatch,
     areaId,
     area,
     addProductToArea.addedProduct,
-    // removeProductFromArea.isRemoved,
+    removeProductFromArea.isRemoved,
   ]);
+
   useEffect(() => {
     filterReqProducts();
   }, [
     areaId,
     area._id,
     addProductToArea,
-
+    removeProductFromArea,
     getAllProduct.products,
     getRequriredProducts.requrired_products,
   ]);
-  // const handleRemoveProductFromArea = (productId) => {
-  //   dispatch(RemoveProductFromArea(areaId, productId));
-  // };
+  const handleRemoveProductFromArea = (productId) => {
+    dispatch(RemoveProductFromArea(areaId, productId));
+  };
 
   const [priorityOrders, setPriorityOrders] = useState([
     "Cok Acil",
@@ -112,8 +110,13 @@ const AddReqProductDrawer = ({
         message.success(addProductToArea.message);
         dispatch({ type: ADD_REQUIRED_PRODUCT_TO_AREA_RESET });
       }
+      if (removeProductFromArea.isRemoved) {
+        message.success(removeProductFromArea.message)
+        dispatch({type : REMOVE_REQURIRED_PRODUCT_FROM_RESET})
+        
+      }
     }
-  }, [dispatch, areaId, area, area._id, addProductToArea.addedProduct]);
+  }, [dispatch, areaId, area, area._id, addProductToArea.addedProduct,removeProductFromArea.isRemoved]);
 
   return (
     <Drawer
@@ -165,8 +168,6 @@ const AddReqProductDrawer = ({
             <label for="recipient-name" class="col-form-label">
               Priority Order{" "}
             </label>
-
-            <div></div>
           </div>
           <select
             className="form-control w-100"
@@ -193,33 +194,37 @@ const AddReqProductDrawer = ({
         </div>
       </form>
       <List className="my-4" itemLayout="horizontal">
-        <List.Item
-          actions={[
-            <>
-              <button className="btn btn-danger btn-sm w-100 rounded-pill ">
-                Remove
-              </button>
-            </>,
-          ]}
+        <div
+          className="scrollbar-ripe-malinka"
+          style={{ maxHeight: "360px", overflowY: "auto" }}
         >
-          <List.Item.Meta
-            title={<a>dsa</a>}
-            description={
-              <>
-                {" "}
-                <p>
-                  Adet :{" "}
-                  <Tag color="#108ee9" className="ms-2">
-                    {" "}
-                    10
-                    {/* {reqPerson.quantity} */}
-                  </Tag>
-                </p>
-                <p>Aciliyet : Acil</p>
-              </>
-            }
-          />
-        </List.Item>
+          {getRequriredProducts.requrired_products.map((reqProduct) => (
+            <List.Item
+              actions={[
+                <>
+                  <button className="btn btn-danger btn-sm w-100 rounded-pill " onClick={() => handleRemoveProductFromArea(reqProduct._id)}>
+                    Remove
+                  </button>
+                </>,
+              ]}
+            >
+              <List.Item.Meta
+                title={<a>{reqProduct.Product.title}</a>}
+                description={
+                  <>
+                    <p>
+                      Adet :
+                      <Tag color="#108ee9" className="ms-2">
+                        {reqProduct.quantity}
+                      </Tag>
+                    </p>
+                    <p>Aciliyet : {reqProduct.priorityOrder}</p>
+                  </>
+                }
+              />
+            </List.Item>
+          ))}
+        </div>
       </List>
     </Drawer>
   );
