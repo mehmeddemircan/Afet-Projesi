@@ -11,6 +11,8 @@ import EmptyComponent from "../components/empty/EmptyComponent";
 import AddClothesProductModal from "../components/modal/ClothesProdcut/AddClothesProductModal";
 import { message } from "antd";
 import { ADD_CLOTHES_RESET } from "../redux/constants/ClothesConstants";
+import AddMealModal from "../components/modal/ClothesProdcut/AddMealModal";
+import AddHotelModal from "../components/modal/ClothesProdcut/AddHotelModal";
 
 const BrandDetailsPage = () => {
   const { brandId } = useParams();
@@ -34,6 +36,25 @@ const BrandDetailsPage = () => {
 
   const handleCloseAddProductModal = () => {
     setShowAddProductModal(false);
+  };
+
+  const [showAddMealModal, setShowAddMealModal] = useState(false);
+
+  const handleShowAddMealModal = () => {
+    setShowAddMealModal(true);
+  };
+
+  const handleCloseAddMealModal = () => {
+    setShowAddMealModal(false);
+  };
+
+  const [showAddHotelModal, setShowAddHotelModal] = useState(false);
+  const handleShowAddHotelModal = () => {
+    setShowAddHotelModal(true);
+  };
+
+  const handleCloseAddHotelModal = () => {
+    setShowAddHotelModal(false);
   };
 
   return (
@@ -74,14 +95,37 @@ const BrandDetailsPage = () => {
         <div className="d-inline-flex">
           <button
             className="btn btn-outline-primary rounded-pill"
-            onClick={handleShowAddProductModal}
+            onClick={
+              getSingleBrand.brand.category === "Giyim"
+                ? handleShowAddProductModal
+                : getSingleBrand.brand.category === "Gıda"
+                ? handleShowAddMealModal
+                : getSingleBrand.brand.category === "Ev-Hotel"
+                ? handleShowAddHotelModal
+                : null
+            }
           >
-            Add Product
+            {getSingleBrand.brand.category === "Giyim"
+              ? "Add Clothes"
+              : getSingleBrand.brand.category === "Gıda"
+              ? "Add Meal"
+              : getSingleBrand.brand.category === "Ev-Hotel"
+              ? "Add House-Hotel"
+              : "Add"}
           </button>
           <AddClothesProductModal
             showAddProductModal={showAddProductModal}
             handleCloseAddProductModal={handleCloseAddProductModal}
           />
+          <AddMealModal 
+            showAddMealModal={showAddMealModal}
+            handleCloseAddMealModal={handleCloseAddMealModal}
+          />
+          <AddHotelModal 
+            showAddHotelModal={showAddHotelModal}
+            handleCloseAddHotelModal={handleCloseAddHotelModal}
+          />
+
           <FiltersButton>Filter Product</FiltersButton>
         </div>
       </div>

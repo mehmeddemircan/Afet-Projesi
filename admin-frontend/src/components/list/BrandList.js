@@ -7,6 +7,7 @@ import {
 } from "../../redux/constants/BrandConstants";
 import { message } from "antd";
 import BrandItem from "../listitem/BrandItem";
+import LoadingSpinner from "../spinner/LoadingSpinner";
 
 const BrandList = () => {
   const getAllBrand = useSelector((state) => state.brand.getAllBrand);
@@ -31,16 +32,22 @@ const BrandList = () => {
   return (
     <Fragment>
       <div>
-        {getAllBrand.brands.map((category) => (
-          <div key={category._id}>
-            <h2>{category._id}</h2>
-            <div className="d-flex flex-row flex-wrap justify-content-start">
-              {category.brands.map((brand) => (
-                <BrandItem key={brand._id} brand={brand} />
-              ))}
-            </div>
+        {getAllBrand.loading ? (
+          <div className="d-flex justify-content-center align-items-center">
+            <LoadingSpinner />
           </div>
-        ))}
+        ) : (
+          getAllBrand.brands.map((category) => (
+            <div key={category._id}>
+              <h2>{category._id}</h2>
+              <div className="d-flex flex-row flex-wrap justify-content-start">
+                {category.brands.map((brand) => (
+                  <BrandItem key={brand._id} brand={brand} />
+                ))}
+              </div>
+            </div>
+          ))
+        )}
       </div>
     </Fragment>
   );
