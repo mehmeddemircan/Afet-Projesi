@@ -19,6 +19,7 @@ import formReducer from "./reducers/FormReducer";
 import taskReducer from "./reducers/TaskReducer";
 import countryReducer from "./reducers/CountryReducer";
 import cityReducer from "./reducers/CityReducer";
+import brandReducer from "./reducers/BrandReducer";
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -33,6 +34,7 @@ const rootReducer = combineReducers({
   form: formReducer,
   country : countryReducer,
   city : cityReducer ,
+  brand : brandReducer ,
   forgotResetPassword: forgotResetPasswordReducer,
   getAllUserLocations: getAllUserLocationsReducer,
   updateUserLocation: updateUserLocationReducer,

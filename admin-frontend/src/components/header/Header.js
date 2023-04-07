@@ -33,10 +33,13 @@ const Header = () => {
             <a class="navbar-brand" href="/">
               Deprem
             </a>
-            {/* <a class="navbar-brand" href="/location">
-              Canlı Konum
-            </a> */}
+         
             <HeaderMenuDropDown />
+            <a  className="text-dark mt-1 ms-2" style={{
+              textDecorationLine : 'none'
+            }} href="/markalar">
+                Markalar
+            </a>
           </div>
           <div>
             <button

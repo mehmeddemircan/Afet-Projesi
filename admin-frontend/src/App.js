@@ -26,6 +26,8 @@ import LocationPage from "./pages/LocationPage";
 import TasksPage from "./pages/TasksPage";
 import CityCountryPage from "./pages/CityCountryPage";
 import { UpdateLiveLocation } from "./redux/actions/UserActions";
+import AllBrandPage from "./pages/AllBrandPage";
+import BrandDetailsPage from "./pages/BrandDetailsPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -125,6 +127,8 @@ function App() {
         <Route path="/gorevler" element={<TasksPage />} />
         <Route path="/sehir-ulke" element={<CityCountryPage />} />
         <Route path="/upload" element={<AntdUploadPage />} />
+        <Route path="/markalar" element={<AllBrandPage />} />
+        <Route path="/markalar/:brandId" element={<BrandDetailsPage />} />
         <Route path="/*" element={<NotFoundPage />} />
       </Routes>
     </Router>

@@ -53,6 +53,16 @@ const userSchema = new mongoose.Schema(
         ref: 'Task',
       },
     ],
+    basket: [{
+      product: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Product'
+      },
+      quantity: {
+        type: Number,
+        default: 1
+      }
+    }],
     resetPasswordToken: String,
     resetPasswordExpire: Date,
   },

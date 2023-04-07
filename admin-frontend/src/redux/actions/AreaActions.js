@@ -115,7 +115,7 @@ export const AddArea = (area) => async (dispatch) => {
     });
 
     const { data } = await axios.post(
-      `http://localhost:5000/api/create-area`,
+      `https://afetapi.onrender.com/api/create-area`,
       area
     );
 
