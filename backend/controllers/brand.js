@@ -14,9 +14,9 @@ exports.getAllBrand = catchAsyncErrors(async (req, res) => {
 exports.createBrand = catchAsyncErrors(async (req, res) => {
   try {
     const result = await cloudinary.uploader.upload(req.body.image);
-    const { name ,category } = req.body;
+    const { name, category } = req.body;
     const image = result.secure_url;
-    const brand = new Brand({ name,category,image });
+    const brand = new Brand({ name, category, image });
     await brand.save();
     res.status(200).json({
       message: "Successfully added brand",
@@ -29,6 +29,7 @@ exports.createBrand = catchAsyncErrors(async (req, res) => {
 exports.getSingleBrand = catchAsyncErrors(async (req, res) => {
   try {
     const brand = await Brand.findById(req.params.brandId).populate("products");
+
     res.status(200).json(brand);
   } catch (error) {
     res.status(500).json(error);
@@ -37,13 +38,12 @@ exports.getSingleBrand = catchAsyncErrors(async (req, res) => {
 
 exports.updateBrand = catchAsyncErrors(async (req, res) => {
   try {
-
-    const {image} = req.body
+    const { image } = req.body;
 
     const brand = await Brand.findById(req.params.brandId);
     if (!brand) {
       return res.status(404).json({
-        message: 'Brand not found',
+        message: "Brand not found",
       });
     }
     if (image) {
@@ -71,11 +71,9 @@ exports.deleteBrand = catchAsyncErrors(async (req, res) => {
   }
 });
 
-
 exports.getAllBrandsByCategory = async (req, res) => {
   try {
     const brands = await Brand.aggregate([
-    
       {
         $group: {
           _id: "$category",
@@ -85,7 +83,7 @@ exports.getAllBrandsByCategory = async (req, res) => {
               name: "$name",
               products: "$products",
               image: "$image",
-              category : "$category"
+              category: "$category",
             },
           },
         },

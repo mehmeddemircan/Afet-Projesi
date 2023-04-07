@@ -9,6 +9,9 @@ import {
   GET_ALL_BRAND_FAIL,
   GET_ALL_BRAND_REQUEST,
   GET_ALL_BRAND_SUCCESS,
+  GET_SINGLE_BRAND_FAIL,
+  GET_SINGLE_BRAND_REQUEST,
+  GET_SINGLE_BRAND_SUCCESS,
   UPDATE_BRAND_FAIL,
   UPDATE_BRAND_REQUEST,
   UPDATE_BRAND_SUCCESS,
@@ -33,6 +36,29 @@ export const AllBrand = () => async (dispatch) => {
     });
   }
 };
+
+
+export const GetSingleBrand = (brandId) => async (dispatch) => {
+  try {
+    dispatch({
+      type: GET_SINGLE_BRAND_REQUEST,
+    });
+
+    const { data } = await axios.get(`https://afetapi.onrender.com/api/brands/${brandId}`);
+
+    dispatch({
+      type: GET_SINGLE_BRAND_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_SINGLE_BRAND_FAIL,
+      error: error.response,
+    });
+  }
+};
+
+
 // ekleme 
 export const AddBrand = (brand) => async (dispatch) => {
   try {

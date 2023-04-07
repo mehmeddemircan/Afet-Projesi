@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import { ADD_BRAND_FAIL, ADD_BRAND_REQUEST, ADD_BRAND_RESET, ADD_BRAND_SUCCESS, DELETE_BRAND_FAIL, DELETE_BRAND_REQUEST, DELETE_BRAND_RESET, DELETE_BRAND_SUCCESS, GET_ALL_BRAND_FAIL, GET_ALL_BRAND_REQUEST, GET_ALL_BRAND_SUCCESS, UPDATE_BRAND_FAIL, UPDATE_BRAND_REQUEST, UPDATE_BRAND_RESET, UPDATE_BRAND_SUCCESS } from "../constants/BrandConstants";
+import { ADD_BRAND_FAIL, ADD_BRAND_REQUEST, ADD_BRAND_RESET, ADD_BRAND_SUCCESS, DELETE_BRAND_FAIL, DELETE_BRAND_REQUEST, DELETE_BRAND_RESET, DELETE_BRAND_SUCCESS, GET_ALL_BRAND_FAIL, GET_ALL_BRAND_REQUEST, GET_ALL_BRAND_SUCCESS, GET_SINGLE_BRAND_FAIL, GET_SINGLE_BRAND_REQUEST, GET_SINGLE_BRAND_SUCCESS, UPDATE_BRAND_FAIL, UPDATE_BRAND_REQUEST, UPDATE_BRAND_RESET, UPDATE_BRAND_SUCCESS } from "../constants/BrandConstants";
 
 
 export const getAllBrandReducer = (
@@ -19,6 +19,33 @@ export const getAllBrandReducer = (
         };
   
       case GET_ALL_BRAND_FAIL:
+        return {
+          ...state,
+          loading: false,
+          success: false,
+          error: action.payload,
+        };
+      default:
+        return state;
+    }
+  };
+  export const getSingleBrandReducer  = (
+    state = {brand : {}},
+    action
+  ) => {
+    switch (action.type) {
+      case GET_SINGLE_BRAND_REQUEST:
+        return { ...state, loading: true };
+  
+      case GET_SINGLE_BRAND_SUCCESS:
+        return {
+          ...state,
+          loading: false,
+          success: true,
+          brand: action.payload,
+        };
+  
+      case GET_SINGLE_BRAND_FAIL:
         return {
           ...state,
           loading: false,
@@ -115,6 +142,7 @@ export const getAllBrandReducer = (
 
   const brandReducer = combineReducers({
     getAllBrand : getAllBrandReducer,
+    getSingleBrand :getSingleBrandReducer,
     addBrand : addBrandReducer,
     deleteUpdateBrand : deleteUpdateBrandReducer
   })

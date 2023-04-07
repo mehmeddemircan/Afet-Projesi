@@ -1,8 +1,8 @@
 //replace modelSchema,ModelName with whatever you want
 var mongoose = require("mongoose");
 const { ObjectId } = mongoose;
-var brandProductSchema = new mongoose.Schema({
-  name: {
+var clothesProductSchema = new mongoose.Schema({
+  title: {
     type: String,
     required: true,
   },
@@ -10,16 +10,25 @@ var brandProductSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  description: {
-    type: String,
-    required: true,
-  },
+  // description: {
+  //   type: String,
+  //   required: true,
+  // },
   brand: {
     type: ObjectId,
     ref: "Brand",
     required: true,
   },
-  
+  size: {
+    type: String,
+    required: true,
+    enum: ['XS', 'S', 'M', 'L', 'XL'] // define your enum values here
+  },
+  gender: {
+    type: String,
+    required: true,
+    enum: ['Erkek', 'Kadın', 'Unisex'] // define your enum values here
+  },
   stock: {
     type: Number,
     required: true,
@@ -35,8 +44,7 @@ var brandProductSchema = new mongoose.Schema({
       },
     },
   ],
-  
 });
 
-var BrandProduct = mongoose.model("BrandProduct", brandProductSchema);
-module.exports = BrandProduct;
+var ClothesProduct = mongoose.model("ClothesProduct", clothesProductSchema);
+module.exports = ClothesProduct;

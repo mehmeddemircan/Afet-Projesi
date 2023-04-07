@@ -95,7 +95,7 @@ const AddBrandModal = ({ handleCloseAddBrandModal, showAddBrandModal }) => {
     >
       <form>
         <div class="form-group">
-          <h4 class="text-center">New Brand {category} </h4>
+          <h4 class="text-center">New Brand  </h4>
           <label for="recipient-name" class="col-form-label">
             Brand Name
           </label>
