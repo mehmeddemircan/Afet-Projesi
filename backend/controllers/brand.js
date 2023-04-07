@@ -14,9 +14,9 @@ exports.getAllBrand = catchAsyncErrors(async (req, res) => {
 exports.createBrand = catchAsyncErrors(async (req, res) => {
   try {
     const result = await cloudinary.uploader.upload(req.body.image);
-    const { name } = req.body;
+    const { name ,category } = req.body;
     const image = result.secure_url;
-    const brand = new Brand({ name, image });
+    const brand = new Brand({ name,category,image });
     await brand.save();
     res.status(200).json({
       message: "Successfully added brand",
@@ -70,3 +70,31 @@ exports.deleteBrand = catchAsyncErrors(async (req, res) => {
     res.status(500).json(error);
   }
 });
+
+
+exports.getAllBrandsByCategory = async (req, res) => {
+  try {
+    const brands = await Brand.aggregate([
+    
+      {
+        $group: {
+          _id: "$category",
+          brands: {
+            $push: {
+              _id: "$_id",
+              name: "$name",
+              products: "$products",
+              image: "$image",
+              category : "$category"
+            },
+          },
+        },
+      },
+    ]);
+    brands.sort((a, b) => (a._id < b._id ? 1 : -1));
+    res.status(200).json(brands);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server Error" });
+  }
+};

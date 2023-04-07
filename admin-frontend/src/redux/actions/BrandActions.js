@@ -20,7 +20,7 @@ export const AllBrand = () => async (dispatch) => {
       type: GET_ALL_BRAND_REQUEST,
     });
 
-    const { data } = await axios.get(`https://afetapi.onrender.com/api/brands`);
+    const { data } = await axios.get(`http://localhost:5000/api/group`);
 
     dispatch({
       type: GET_ALL_BRAND_SUCCESS,
@@ -41,7 +41,7 @@ export const AddBrand = (brand) => async (dispatch) => {
     });
 
     const { data } = await axios.post(
-      `https://afetapi.onrender.com/api/create-brand`,
+      `http://localhost:5000/api/create-brand`,
       brand
     );
 

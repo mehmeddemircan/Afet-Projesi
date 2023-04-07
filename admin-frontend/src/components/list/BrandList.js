@@ -27,10 +27,18 @@ const BrandList = () => {
 
   return (
     <Fragment>
-        <div className="d-flex flex-row flex-wrap justify-content-start">
-        {getAllBrand.brands.map((brand) => (
-            <BrandItem key={brand._id} brand={brand} />
-        ))}
+        <div>
+        {getAllBrand.brands.map((category) => (
+        <div key={category._id} >
+        <h2>{category._id}</h2>
+          <div  className="d-flex flex-row flex-wrap justify-content-start">
+            {category.brands.map((brand) => (
+              <BrandItem key={brand._id} brand={brand} />
+            ))}
+          </div>
+        </div>
+      ))}
+
       </div>
     </Fragment>
   )

@@ -8,19 +8,33 @@ import { AddBrand } from "../../../redux/actions/BrandActions";
 import ImgCrop from "antd-img-crop";
 import { SendOutlined, CameraFilled } from "@ant-design/icons";
 const AddBrandModal = ({ handleCloseAddBrandModal, showAddBrandModal }) => {
-
-  
   const [name, setName] = useState("");
-  const [images, setImages] = useState([]);
 
   const [image, setImage] = useState("");
+  const [categories,setCategories] = useState(["Giyim", "Gıda", "Ev-Hotel","Ulaşım"])
 
-  const [imageList, setImageList] = useState([]);
+  const [category, setCategory] = useState("")
 
-  const onFinish = (imageUrl) => {
-    setImageList([...imageList, imageUrl]);
+  const [imageLength, setImageLength] = useState(0);
+
+  // const onFinish = (imageUrl) => {
+  //   setImageList([...imageList, imageUrl]);
+  // };
+
+  const onPreview = async (file) => {
+    let src = file.url;
+    if (!src) {
+      src = await new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file.originFileObj);
+        reader.onload = () => resolve(reader.result);
+      });
+    }
+    const image = new Image();
+    image.src = src;
+    const imgWindow = window.open(src);
+    imgWindow?.document.write(image.outerHTML);
   };
-
   const uploadProps = {
     beforeUpload: (file) => {
       return new Promise((resolve, reject) => {
@@ -40,8 +54,9 @@ const AddBrandModal = ({ handleCloseAddBrandModal, showAddBrandModal }) => {
               })
               .then((response) => {
                 // Call the onFinish callback with the uploaded image URL
-                onFinish(response.data.url);
+                // onFinish(response.data.url);
                 setImage(response.data.url);
+                setImageLength(1);
                 resolve(false); // prevent default antd upload behavior
               })
               .catch((error) => {
@@ -65,9 +80,10 @@ const AddBrandModal = ({ handleCloseAddBrandModal, showAddBrandModal }) => {
   const dispatch = useDispatch();
 
   const handleAddBrand = () => {
-    dispatch(AddBrand({ name, image }));
+    dispatch(AddBrand({ name,category, image }));
     handleCloseAddBrandModal();
-    setImageList([]);
+    setName("");
+    setImage("");
   };
 
   return (
@@ -79,7 +95,7 @@ const AddBrandModal = ({ handleCloseAddBrandModal, showAddBrandModal }) => {
     >
       <form>
         <div class="form-group">
-          <h4 class="text-center">New Brand  </h4>
+          <h4 class="text-center">New Brand {category} </h4>
           <label for="recipient-name" class="col-form-label">
             Brand Name
           </label>
@@ -91,16 +107,35 @@ const AddBrandModal = ({ handleCloseAddBrandModal, showAddBrandModal }) => {
             onChange={(e) => setName(e.target.value)}
           />
         </div>
-
+        <div>
+              <label for="recipient-name" class="col-form-label">
+                Brand Category
+              </label>
+              <select
+                class="form-select"
+                aria-label="Default select example"
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+              >
+             
+                <option selected>Open this select menu</option>
+                {categories.map((category) => (
+                  <option key={category} value={category}>{category}</option>
+                ))}
+              </select>
+            </div>
         <div class="my-3">
           <label for="formFile" class="form-label">
             Default file input example
           </label>
           <ImgCrop rotationSlider>
-            <Upload {...uploadProps} listType="picture-card">
-              {imageList.length < 1 && (
-                <CameraFilled style={{ fontSize: 30 }} />
-              )}
+            <Upload
+              {...uploadProps}
+              onPreview={onPreview}
+              onRemove={() => setImageLength(0)}
+              listType="picture-card"
+            >
+              {imageLength === 0 && <CameraFilled style={{ fontSize: 30 }} />}
             </Upload>
           </ImgCrop>
         </div>
