@@ -23,7 +23,7 @@ const Header = () => {
   return (
     <Fragment>
       <nav
-        class="navbar  navbar-expand-sm navbar-light   "
+        class="navbar navbar-expand-sm navbar-light"
         style={{
           border: "1px solid rgb(221,221,221)",
         }}
