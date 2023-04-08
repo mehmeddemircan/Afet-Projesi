@@ -6,12 +6,18 @@ var brandSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  
   category: {
     type: String,
     required: true,
     enum: ["Giyim", "Gıda", "Ev-Hotel","Ulaşım"],
     default : "Giyim"
-  },
+  },  
+  // address : {
+  //   type : String,
+  //   default : ""
+  // },
+
   products: [
     {
       type: ObjectId,

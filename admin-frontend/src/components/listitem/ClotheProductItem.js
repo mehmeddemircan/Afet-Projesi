@@ -1,8 +1,28 @@
 import { Card, Carousel, Tooltip, Image, Avatar } from "antd";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { DeleteClothes } from "../../redux/actions/ClothesAction";
+import EditClothesProductModal from "../modal/ClothesProdcut/EditClothesProductModal";
 
 const { Meta } = Card;
 const ClotheProductItem = ({ item }) => {
+
+
+  const [showEditClothesModal, setShowEditClothesModal] = useState(false)
+  const handleShowEditClothesModal = () => {
+    setShowEditClothesModal(true)
+  }
+
+  const handleCloseEditClothesModal = () => {
+    setShowEditClothesModal(false)
+  }
+
+    const dispatch = useDispatch()
+    const handleDeleteProduct = () => {
+        dispatch(DeleteClothes(item._id))
+    }
+
+
   return (
     <Card
       hoverable
@@ -32,16 +52,16 @@ const ClotheProductItem = ({ item }) => {
             </Carousel>
           </Image.PreviewGroup>
 
-          <Tooltip placement="topLeft" title="Add Wishlist">
+          <Tooltip placement="topLeft" title="Delete Product">
             <button
               className="btn btn-md "
               style={{ position: "absolute", top: 0, right: 0 }}
-              // onClick={handleDeleteProduct}
+              onClick={handleDeleteProduct}
             >
               <i
-                class="fa-regular fa-heart "
+                class="fa-regular fa-x "
                 style={{
-                  fontSize: "21px",
+                  fontSize: "18px",
                 }}
               ></i>
             </button>
@@ -49,7 +69,27 @@ const ClotheProductItem = ({ item }) => {
         </div>
       }
     >
-      <Meta title={item.title} description={<p>Price : {item.price} TL</p>} />
+      <Meta
+        title={item.title}
+        description={
+          <>
+            <p>Price : {item.price} TL</p>
+            <p>gender : {item.gender}</p>
+            <p>Stock : {item.stock} Adet</p>
+            <div className="d-flex flex-row justify-content-end">
+              <button className=" mx-2 mb-2 btn btn-sm btn-dark rounded-pill" onClick={handleShowEditClothesModal}>
+                Edit
+              </button>
+
+              <EditClothesProductModal 
+                item={item}
+                showEditClothesModal={showEditClothesModal}
+                handleCloseEditClothesModal={handleCloseEditClothesModal}
+              />
+            </div>
+          </>
+        }
+      />
     </Card>
   );
 };

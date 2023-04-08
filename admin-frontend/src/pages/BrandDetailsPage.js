@@ -10,7 +10,10 @@ import ClotheProductItem from "../components/listitem/ClotheProductItem";
 import EmptyComponent from "../components/empty/EmptyComponent";
 import AddClothesProductModal from "../components/modal/ClothesProdcut/AddClothesProductModal";
 import { message } from "antd";
-import { ADD_CLOTHES_RESET } from "../redux/constants/ClothesConstants";
+import {
+  ADD_CLOTHES_RESET,
+  DELETE_CLOTHES_RESET,
+} from "../redux/constants/ClothesConstants";
 import AddMealModal from "../components/modal/ClothesProdcut/AddMealModal";
 import AddHotelModal from "../components/modal/ClothesProdcut/AddHotelModal";
 
@@ -20,13 +23,20 @@ const BrandDetailsPage = () => {
   const navigate = useNavigate();
   const getSingleBrand = useSelector((state) => state.brand.getSingleBrand);
   const addClothes = useSelector((state) => state.clothes.addClothes);
+  const deleteUpdateClothes = useSelector(
+    (state) => state.clothes.deleteUpdateClothes
+  );
   useEffect(() => {
     dispatch(GetSingleBrand(brandId));
     if (addClothes.isAdded) {
       message.success(addClothes.message);
       dispatch({ type: ADD_CLOTHES_RESET });
     }
-  }, [dispatch, addClothes.isAdded]);
+    if (deleteUpdateClothes.isDeleted) {
+      message.success(deleteUpdateClothes.message);
+      dispatch({ type: DELETE_CLOTHES_RESET });
+    }
+  }, [dispatch, addClothes.isAdded, deleteUpdateClothes.isDeleted]);
 
   const [showAddProductModal, setShowAddProductModal] = useState(false);
 
@@ -117,11 +127,11 @@ const BrandDetailsPage = () => {
             showAddProductModal={showAddProductModal}
             handleCloseAddProductModal={handleCloseAddProductModal}
           />
-          <AddMealModal 
+          <AddMealModal
             showAddMealModal={showAddMealModal}
             handleCloseAddMealModal={handleCloseAddMealModal}
           />
-          <AddHotelModal 
+          <AddHotelModal
             showAddHotelModal={showAddHotelModal}
             handleCloseAddHotelModal={handleCloseAddHotelModal}
           />

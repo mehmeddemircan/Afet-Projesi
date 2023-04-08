@@ -16,7 +16,7 @@ import {
   UPDATE_BRAND_REQUEST,
   UPDATE_BRAND_SUCCESS,
 } from "../constants/BrandConstants";
-// getirme işlemi 
+// getirme işlemi
 export const AllBrand = () => async (dispatch) => {
   try {
     dispatch({
@@ -37,14 +37,15 @@ export const AllBrand = () => async (dispatch) => {
   }
 };
 
-
 export const GetSingleBrand = (brandId) => async (dispatch) => {
   try {
     dispatch({
       type: GET_SINGLE_BRAND_REQUEST,
     });
 
-    const { data } = await axios.get(`https://afetapi.onrender.com/api/brands/${brandId}`);
+    const { data } = await axios.get(
+      `https://afetapi.onrender.com/api/brands/${brandId}`
+    );
 
     dispatch({
       type: GET_SINGLE_BRAND_SUCCESS,
@@ -58,8 +59,7 @@ export const GetSingleBrand = (brandId) => async (dispatch) => {
   }
 };
 
-
-// ekleme 
+// ekleme
 export const AddBrand = (brand) => async (dispatch) => {
   try {
     dispatch({
@@ -82,7 +82,7 @@ export const AddBrand = (brand) => async (dispatch) => {
     });
   }
 };
-// silme id ye göre 
+// silme id ye göre
 export const DeleteBrand = (brandId) => async (dispatch) => {
   try {
     dispatch({
@@ -104,15 +104,16 @@ export const DeleteBrand = (brandId) => async (dispatch) => {
     });
   }
 };
-// güncelleme  id ye göre 
-export const UpdateBrand = (brandId) => async (dispatch) => {
+// güncelleme  id ye göre
+export const UpdateBrand = (brandId, brand) => async (dispatch) => {
   try {
     dispatch({
       type: UPDATE_BRAND_REQUEST,
     });
 
     const { data } = await axios.put(
-      `http://localhost:5000/api/brands/${brandId}/update`
+      `https://afetapi.onrender.com/api/brands/${brandId}/update`,
+      brand
     );
 
     dispatch({
@@ -126,4 +127,3 @@ export const UpdateBrand = (brandId) => async (dispatch) => {
     });
   }
 };
-

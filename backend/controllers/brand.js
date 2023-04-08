@@ -50,6 +50,7 @@ exports.updateBrand = catchAsyncErrors(async (req, res) => {
       const result = await cloudinary.uploader.upload(req.body.image);
       brand.image = result.secure_url;
     }
+   
     brand.name = req.body.name || brand.name;
     await brand.save();
     res.status(200).json({

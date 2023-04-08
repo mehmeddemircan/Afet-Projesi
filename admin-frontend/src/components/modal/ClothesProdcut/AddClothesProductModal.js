@@ -12,21 +12,19 @@ const AddClothesProductModal = ({
   handleCloseAddProductModal,
   showAddProductModal,
 }) => {
-  const getSingleBrand = useSelector((state) => state.brand.getSingleBrand);
-    const {brandId} = useParams()
+  const { brandId } = useParams();
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState(0);
-  const [brand, setBrand] = useState(brandId);
+  const [brand, setBrand] = useState(`${brandId}`);
 
-//   const [sizes, setSizes] = useState(["XS", "S", "M", "L", "XL"]);
   const [genders, setGenders] = useState(["Erkek", "Kadın", "Unisex"]);
   const [stock, setStock] = useState(0);
   const [images, setImages] = useState([]);
-//   const [size, setSize] = useState("");
+
   const [gender, setGender] = useState("");
- 
-  const dispatch = useDispatch()
-  
+
+  const dispatch = useDispatch();
+
   const onPreview = async (file) => {
     let src = file.url;
     if (!src) {
@@ -62,7 +60,7 @@ const AddClothesProductModal = ({
                 // Call the onFinish callback with the uploaded image URL
                 // onFinish(response.data.url);
                 setImages([...images, response.data.url]);
-          
+
                 resolve(false); // prevent default antd upload behavior
               })
               .catch((error) => {
@@ -83,17 +81,18 @@ const AddClothesProductModal = ({
     },
   };
 
-  const handleRemoveImage = (url) => {
-    setImages((prevImages) => {
-      return prevImages.filter((image) => image !== url);
-    });
+  const handleRemoveImage = (file) => {
+    const url = file.url || (file.response && file.response.url);
+    const filteredImages = images.filter((image) => image !== url);
+    setImages(filteredImages);
+    message.success(`${file.response.url} removed successfully.`);
   };
 
   const handleAddNewClothes = () => {
-    dispatch(AddClothes({title,price,brand,gender,stock,images}))
-    handleCloseAddProductModal()
-    setImages([])
-}
+    dispatch(AddClothes({ title, price, brand, gender, stock, images }));
+    handleCloseAddProductModal();
+    setImages([]);
+  };
 
   return (
     <Fragment>
@@ -105,7 +104,7 @@ const AddClothesProductModal = ({
       >
         <form>
           <div class="form-group">
-            <h4 class="text-center">New Title    </h4>
+            <h4 class="text-center">New Title </h4>
             <label for="recipient-name" class="col-form-label">
               Product Title
             </label>
@@ -130,24 +129,6 @@ const AddClothesProductModal = ({
             />
           </div>
 
-          {/* <div>
-            <label for="recipient-name" class="col-form-label">
-              Size
-            </label>
-            <select
-              class="form-select"
-              aria-label="Default select example"
-              value={size}
-              onChange={(e) => setSize(e.target.value)}
-            >
-              <option selected>Select size</option>
-              {sizes.map((size) => (
-                <option key={size} value={size}>
-                  {size}
-                </option>
-              ))}
-            </select>
-          </div> */}
           <div>
             <label for="recipient-name" class="col-form-label">
               Gender
@@ -179,21 +160,20 @@ const AddClothesProductModal = ({
             />
           </div>
           <div class="my-3">
-          <label for="formFile" class="form-label">
-            Default file input example
-         
-          </label>
-          <ImgCrop rotationSlider>
-            <Upload
-              {...uploadProps}
-              onPreview={onPreview}
-              onRemove={handleRemoveImage}
-              listType="picture-card"
-            >
-              {images.length < 5 && <CameraFilled style={{ fontSize: 30 }} />}
-            </Upload>
-          </ImgCrop>
-        </div>
+            <label for="formFile" class="form-label">
+              Default file input example
+            </label>
+            <ImgCrop rotationSlider>
+              <Upload
+                {...uploadProps}
+                onPreview={onPreview}
+                onRemove={handleRemoveImage}
+                listType="picture-card"
+              >
+                {images.length < 5 && <CameraFilled style={{ fontSize: 30 }} />}
+              </Upload>
+            </ImgCrop>
+          </div>
         </form>
       </Modal>
     </Fragment>

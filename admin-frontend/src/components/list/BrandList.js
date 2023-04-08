@@ -4,6 +4,7 @@ import { AllBrand } from "../../redux/actions/BrandActions";
 import {
   ADD_BRAND_RESET,
   DELETE_BRAND_RESET,
+  UPDATE_BRAND_RESET,
 } from "../../redux/constants/BrandConstants";
 import { message } from "antd";
 import BrandItem from "../listitem/BrandItem";
@@ -27,7 +28,11 @@ const BrandList = () => {
       message.success(deleteUpdateBrand.message);
       dispatch({ type: DELETE_BRAND_RESET });
     }
-  }, [dispatch, addBrand.isAdded, deleteUpdateBrand.isDeleted]);
+    if (deleteUpdateBrand.isUpdated) {
+      message.success(deleteUpdateBrand.message)
+      dispatch({type : UPDATE_BRAND_RESET})
+    }
+  }, [dispatch, addBrand.isAdded, deleteUpdateBrand.isDeleted,deleteUpdateBrand.isUpdated]);
 
   return (
     <Fragment>

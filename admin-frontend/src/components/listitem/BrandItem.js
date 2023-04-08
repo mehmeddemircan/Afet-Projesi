@@ -1,14 +1,25 @@
 import { Card, Tooltip } from "antd";
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { DeleteBrand } from "../../redux/actions/BrandActions";
-
+import { EditOutlined } from "@ant-design/icons";
+import EditBrandModal from "../modal/Brand/EditBrandModal";
 const BrandItem = ({ brand }) => {
 
   const dispatch = useDispatch()
   const handleDeleteBrand = (id) => {
     dispatch(DeleteBrand(id))
   }
+  const [showEditBrandModal, setShowEditBrandModal] = useState(false)
+
+  const handleShowEditBrandModal = () => {
+    setShowEditBrandModal(true)
+  }
+
+  const handleCloseEditBrandModal = () => {
+    setShowEditBrandModal(false)
+  }
+
 
   return (
     <Card
@@ -38,13 +49,22 @@ const BrandItem = ({ brand }) => {
         </div>
       }
     >
+      <div className="d-flex flex-row flex-wrap justify-content-between align-items-center" >
       <a
         href={`/markalar/${brand._id}`}
-        className="text-dark fs-3"
+        className="text-dark fs-5 w-90"
         style={{ textDecorationLine: "none" }}
       >
         {brand.name}
       </a>
+      
+      <a onClick={handleShowEditBrandModal}> <EditOutlined /></a>
+        <EditBrandModal
+          brand ={brand}
+          showEditBrandModal={showEditBrandModal}
+          handleCloseEditBrandModal={handleCloseEditBrandModal}
+        />
+      </div>
     </Card>
   );
 };

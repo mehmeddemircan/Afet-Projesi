@@ -23,15 +23,13 @@ const uploadImagesToCloudinary = async (images) => {
 };
 exports.createClothesProduct = catchAsyncErrors(async (req, res) => {
   try {
-    // Upload images to Cloudinary
-    // Upload images to Cloudinary
     const uploadedImages = await uploadImagesToCloudinary(req.body.images);
 
     const newProduct = new ClothesProduct({
       title: req.body.title,
       price: req.body.price,
       brand: req.body.brand,
-      // size: req.body.size,
+
       gender: req.body.gender,
       stock: req.body.stock,
       images: uploadedImages,
@@ -39,13 +37,13 @@ exports.createClothesProduct = catchAsyncErrors(async (req, res) => {
 
     const savedProduct = await newProduct.save();
 
-      // Find the corresponding Brand document and update its products array
-      const updatedBrand = await Brand.findOneAndUpdate(
-        { _id: req.body.brand },
-        { $push: { products: savedProduct._id } },
-        { new: true }
-      );
-  
+    // Find the corresponding Brand document and update its products array
+    const updatedBrand = await Brand.findOneAndUpdate(
+      { _id: req.body.brand },
+      { $push: { products: savedProduct._id } },
+      { new: true }
+    );
+
     res.status(200).json(savedProduct);
   } catch (error) {
     res.status(500).json(error);
@@ -71,11 +69,10 @@ exports.updateClothesProduct = catchAsyncErrors(async (req, res) => {
       return;
     }
 
-    // Update the product properties
     product.title = req.body.title || product.title;
     product.price = req.body.price || product.price;
     product.brand = req.body.brand || product.brand;
-    // product.size = req.body.size || product.size;
+
     product.gender = req.body.gender || product.gender;
     product.stock = req.body.stock || product.stock;
 
