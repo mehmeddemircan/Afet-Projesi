@@ -19,11 +19,11 @@ var clothesProductSchema = new mongoose.Schema({
     ref: "Brand",
     required: true,
   },
-  size: {
-    type: String,
-    required: true,
-    enum: ['XS', 'S', 'M', 'L', 'XL'] // define your enum values here
-  },
+  // size: {
+  //   type: String,
+  //   required: true,
+  //   enum: ['XS', 'S', 'M', 'L', 'XL'] // define your enum values here
+  // },
   gender: {
     type: String,
     required: true,

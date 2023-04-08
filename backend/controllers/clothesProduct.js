@@ -31,7 +31,7 @@ exports.createClothesProduct = catchAsyncErrors(async (req, res) => {
       title: req.body.title,
       price: req.body.price,
       brand: req.body.brand,
-      size: req.body.size,
+      // size: req.body.size,
       gender: req.body.gender,
       stock: req.body.stock,
       images: uploadedImages,
@@ -75,7 +75,7 @@ exports.updateClothesProduct = catchAsyncErrors(async (req, res) => {
     product.title = req.body.title || product.title;
     product.price = req.body.price || product.price;
     product.brand = req.body.brand || product.brand;
-    product.size = req.body.size || product.size;
+    // product.size = req.body.size || product.size;
     product.gender = req.body.gender || product.gender;
     product.stock = req.body.stock || product.stock;
 

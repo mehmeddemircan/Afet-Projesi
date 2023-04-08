@@ -8,7 +8,7 @@ export const AddClothes = (clothes) => async (dispatch) => {
       });
   
       const { data } = await axios.post(
-        `https://afetapi.onrender.com/api/create-clothesProduct`,clothes
+        `https://afetapi.onrender.com/create-clothesProduct`,clothes
       );
   
       dispatch({

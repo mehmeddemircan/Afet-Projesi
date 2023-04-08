@@ -7,23 +7,24 @@ import Resizer from "react-image-file-resizer";
 import ImgCrop from "antd-img-crop";
 import { SendOutlined, CameraFilled } from "@ant-design/icons";
 import { AddClothes } from "../../../redux/actions/ClothesAction";
+import { useParams } from "react-router-dom";
 const AddClothesProductModal = ({
   handleCloseAddProductModal,
   showAddProductModal,
 }) => {
   const getSingleBrand = useSelector((state) => state.brand.getSingleBrand);
-
+    const {brandId} = useParams()
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState(0);
-  const [brand, setBrand] = useState(`${getSingleBrand.brand._id}`);
+  const [brand, setBrand] = useState(brandId);
 
-  const [sizes, setSizes] = useState(["XS", "S", "M", "L", "XL"]);
+//   const [sizes, setSizes] = useState(["XS", "S", "M", "L", "XL"]);
   const [genders, setGenders] = useState(["Erkek", "Kadın", "Unisex"]);
   const [stock, setStock] = useState(0);
   const [images, setImages] = useState([]);
-  const [size, setSize] = useState("");
+//   const [size, setSize] = useState("");
   const [gender, setGender] = useState("");
-
+ 
   const dispatch = useDispatch()
   
   const onPreview = async (file) => {
@@ -89,8 +90,9 @@ const AddClothesProductModal = ({
   };
 
   const handleAddNewClothes = () => {
-    dispatch(AddClothes({title,price,brand,size,gender,stock,images}))
+    dispatch(AddClothes({title,price,brand,gender,stock,images}))
     handleCloseAddProductModal()
+    setImages([])
 }
 
   return (
@@ -103,7 +105,7 @@ const AddClothesProductModal = ({
       >
         <form>
           <div class="form-group">
-            <h4 class="text-center">New Title  </h4>
+            <h4 class="text-center">New Title    </h4>
             <label for="recipient-name" class="col-form-label">
               Product Title
             </label>
@@ -128,7 +130,7 @@ const AddClothesProductModal = ({
             />
           </div>
 
-          <div>
+          {/* <div>
             <label for="recipient-name" class="col-form-label">
               Size
             </label>
@@ -145,7 +147,7 @@ const AddClothesProductModal = ({
                 </option>
               ))}
             </select>
-          </div>
+          </div> */}
           <div>
             <label for="recipient-name" class="col-form-label">
               Gender
