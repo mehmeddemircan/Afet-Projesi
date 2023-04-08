@@ -14,20 +14,49 @@ import {
   ADD_CLOTHES_RESET,
   DELETE_CLOTHES_RESET,
 } from "../redux/constants/ClothesConstants";
-import AddMealModal from "../components/modal/ClothesProdcut/AddMealModal";
-import AddHotelModal from "../components/modal/ClothesProdcut/AddHotelModal";
 
+import AddHotelModal from "../components/modal/ClothesProdcut/AddHotelModal";
+import { AllClothesByBrand } from "../redux/actions/ClothesAction";
+import { AllMealByBrand } from "../redux/actions/MealActions";
+import {
+  ADD_MEAL_RESET,
+  DELETE_MEAL_RESET,
+} from "../redux/constants/MealConstants";
+import AddMealModal from "../components/modal/Meal/AddMealModal";
+
+import MealProductItem from "../components/listitem/MealProductItem";
 const BrandDetailsPage = () => {
   const { brandId } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const getSingleBrand = useSelector((state) => state.brand.getSingleBrand);
   const addClothes = useSelector((state) => state.clothes.addClothes);
+  const addMeal = useSelector((state) => state.mealProduct.addMeal);
+  const deleteUpdateMeal = useSelector(
+    (state) => state.mealProduct.deleteUpdateMeal
+  );
+  const getAllMealByBrand = useSelector(
+    (state) => state.mealProduct.getAllMealByBrand
+  );
+  const getAllClothes = useSelector((state) => state.clothes.getAllClothes);
+
   const deleteUpdateClothes = useSelector(
     (state) => state.clothes.deleteUpdateClothes
   );
+  //düzenlenecek
   useEffect(() => {
     dispatch(GetSingleBrand(brandId));
+
+    if (getSingleBrand.brand.category === "Giyim") {
+      dispatch(AllClothesByBrand(brandId));
+    }
+    if (getSingleBrand.brand.category === "Gıda") {
+      dispatch(AllMealByBrand(brandId));
+    }
+  }, [dispatch, getSingleBrand.brand.category]);
+
+  useEffect(() => {
+    dispatch(AllClothesByBrand(brandId));
     if (addClothes.isAdded) {
       message.success(addClothes.message);
       dispatch({ type: ADD_CLOTHES_RESET });
@@ -37,6 +66,18 @@ const BrandDetailsPage = () => {
       dispatch({ type: DELETE_CLOTHES_RESET });
     }
   }, [dispatch, addClothes.isAdded, deleteUpdateClothes.isDeleted]);
+
+  useEffect(() => {
+    dispatch(AllMealByBrand(brandId));
+    if (addMeal.isAdded) {
+      message.success(addMeal.message);
+      dispatch({ type: ADD_MEAL_RESET });
+    }
+    if (deleteUpdateMeal.isDeleted) {
+      message.success(deleteUpdateMeal.message);
+      dispatch({ type: DELETE_MEAL_RESET });
+    }
+  }, [dispatch, addMeal.isAdded, deleteUpdateMeal.isDeleted]);
 
   const [showAddProductModal, setShowAddProductModal] = useState(false);
 
@@ -142,14 +183,23 @@ const BrandDetailsPage = () => {
       <div className="d-flex flex-row flex-wrap justify-content-start">
         {getSingleBrand &&
         getSingleBrand.brand &&
-        getSingleBrand.brand.products &&
-        getSingleBrand.brand.products.length > 0 ? (
-          getSingleBrand.brand.products.map((item) => (
-            <ClotheProductItem key={item._id} item={item} />
-          ))
-        ) : (
-          <EmptyComponent />
-        )}
+        getSingleBrand.brand.category === "Giyim" ? (
+          getAllClothes.clothes && getAllClothes.clothes.length > 0 ? (
+            getAllClothes.clothes.map((item) => (
+              <ClotheProductItem key={item._id} item={item} />
+            ))
+          ) : (
+            <EmptyComponent />
+          )
+        ) : getSingleBrand.brand.category === "Gıda" ? (
+          getAllMealByBrand.meals && getAllMealByBrand.meals.length > 0 ? (
+            getAllMealByBrand.meals.map((meal) => (
+              <MealProductItem key={meal._id} meal={meal} />
+            ))
+          ) : (
+            <EmptyComponent />
+          )
+        ) : null}
       </div>
     </MainLayout>
   );

@@ -6,7 +6,32 @@ import {
   DELETE_CLOTHES_FAIL,
   DELETE_CLOTHES_REQUEST,
   DELETE_CLOTHES_SUCCESS,
+  GET_ALL_CLOTHES_BY_BRAND_FAIL,
+  GET_ALL_CLOTHES_BY_BRAND_REQUEST,
+  GET_ALL_CLOTHES_BY_BRAND_SUCCESS,
 } from "../constants/ClothesConstants";
+
+export const AllClothesByBrand = (brandId) => async (dispatch) => {
+  try {
+    dispatch({
+      type: GET_ALL_CLOTHES_BY_BRAND_REQUEST,
+    });
+
+    const { data } = await axios.get(
+      `https://afetapi.onrender.com/api/brands/${brandId}/clothes`
+    );
+
+    dispatch({
+      type: GET_ALL_CLOTHES_BY_BRAND_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_ALL_CLOTHES_BY_BRAND_FAIL,
+      error: error.response,
+    });
+  }
+};
 
 export const AddClothes = (clothes) => async (dispatch) => {
   try {

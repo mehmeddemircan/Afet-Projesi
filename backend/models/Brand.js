@@ -19,14 +19,12 @@ var brandSchema = new mongoose.Schema({
   // },
 
   products: [
+    
     {
       type: ObjectId,
       ref: "ClothesProduct",
     },
-    // //  {
-    //   type: mongoose.Schema.Types.ObjectId,
-    //   ref: 'Service', // Reference to Service model
-    // },
+    
   ],
   image : {
     type : String,
