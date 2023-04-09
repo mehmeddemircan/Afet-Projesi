@@ -113,6 +113,7 @@ const ClothingNeedFormPage = () => {
         additionalInfo,
       })
     );
+  
   };
 
   const prefixSelector = (
@@ -342,6 +343,9 @@ const ClothingNeedFormPage = () => {
                       setClothingItems(newUsers);
                     }}
                   />
+                  {
+                     productCategory && productSize && gender && quantity !== 0 && quantity.toString() !== "" ?  <button className="btn btn-primary btn-sm rounded-pill" onClick={handleAddClothingItem}>Onayla</button> : null
+                  }
                 </Space>
               ))}
               <Form.Item>
@@ -349,7 +353,7 @@ const ClothingNeedFormPage = () => {
                   type="dashed"
                   onClick={() => {
                     add();
-                    handleAddClothingItem();
+                   
                   }}
                   block
                   icon={<PlusOutlined />}
