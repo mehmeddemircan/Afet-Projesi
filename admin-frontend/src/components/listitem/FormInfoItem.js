@@ -1,4 +1,4 @@
-import { Descriptions, List, Tooltip } from "antd";
+import { Card, Descriptions, List, Tooltip } from "antd";
 import React, { Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -6,7 +6,16 @@ import {
   DeleteGetHelpForm,
 } from "../../redux/actions/FormActions";
 
-const FormInfoItem = ({isApproved, form, handleApproveForm, handleDeleteForm }) => {
+const FormInfoItem = ({
+  isApproved,
+  form,
+  handleApproveForm,
+  handleDeleteForm,
+}) => {
+  const getAllClothingForms = useSelector(
+    (state) => state.clothingNeedForm.getAllClothingForms
+  );
+
   return (
     <Fragment>
       <List.Item key={form._id} className="card my-3 px-2">
@@ -15,12 +24,14 @@ const FormInfoItem = ({isApproved, form, handleApproveForm, handleDeleteForm }) 
             <div className="d-flex justify-content-between">
               <a>User Info</a>{" "}
               <div>
-                  {isApproved ? null : <button
-                  className="btn btn-outline-success rounded-pill"
-                  onClick={() => handleApproveForm(form._id)}
-                >
-                  Approve
-                </button>}
+                {isApproved ? null : (
+                  <button
+                    className="btn btn-outline-success rounded-pill"
+                    onClick={() => handleApproveForm(form._id)}
+                  >
+                    Approve
+                  </button>
+                )}
 
                 <Tooltip title="Delete">
                   <button
@@ -35,14 +46,37 @@ const FormInfoItem = ({isApproved, form, handleApproveForm, handleDeleteForm }) 
           }
         >
           <Descriptions.Item label="Name">{form.name}</Descriptions.Item>
-          <Descriptions.Item label="Telephone">{form.phoneNumber}</Descriptions.Item>
-          <Descriptions.Item label="Email">{form.email}</Descriptions.Item>
-          <Descriptions.Item label="Urgency">{form.urgency}</Descriptions.Item>
-          <Descriptions.Item label="Number of Person">{form.numberOfPerson}</Descriptions.Item>
-          <Descriptions.Item label="Address">
-            {form.address}
+          <Descriptions.Item label="Telephone">
+            {form.phoneNumber}
           </Descriptions.Item>
+          <Descriptions.Item label="Email">{form.email}</Descriptions.Item>
+          {getAllClothingForms.success ? null : (
+            <>
+              <Descriptions.Item label="Urgency">
+                {form.urgency}
+              </Descriptions.Item>
+              <Descriptions.Item label="Number of Person">
+                {form.numberOfPerson}
+              </Descriptions.Item>
+            </>
+          )}
+          <Descriptions.Item label="Address">{form.address}</Descriptions.Item>
         </Descriptions>
+        {getAllClothingForms.success ? (
+          <div className="d-flex flex-row flex-wrap justify-content-start">
+            {form.clothingItems.map((item) => (
+              <Card
+                title={item.productCategory}
+                bordered={true}
+                className="mx-2"
+              >
+                <p>Size : {item.productSize}</p>
+                <p>Gender :{item.gender} </p>
+                <p>Quantity : {item.quantity}</p>
+              </Card>
+            ))}
+          </div>
+        ) : null}
       </List.Item>
     </Fragment>
   );

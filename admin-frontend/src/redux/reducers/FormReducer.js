@@ -38,6 +38,7 @@ export const getFormsByCategoryIdReducer = (state = { forms: [] }, action) => {
         loading: false,
         success: true,
         forms: action.payload,
+       
       };
 
     case GET_FORMS_BY_CATEGORYID_FAIL:

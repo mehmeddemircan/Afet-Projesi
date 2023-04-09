@@ -28,6 +28,7 @@ import CityCountryPage from "./pages/CityCountryPage";
 import { UpdateLiveLocation } from "./redux/actions/UserActions";
 import AllBrandPage from "./pages/AllBrandPage";
 import BrandDetailsPage from "./pages/BrandDetailsPage";
+import ClothingNeedFormPage from "./pages/ClothingNeedFormPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -129,6 +130,7 @@ function App() {
         <Route path="/upload" element={<AntdUploadPage />} />
         <Route path="/markalar" element={<AllBrandPage />} />
         <Route path="/markalar/:brandId" element={<BrandDetailsPage />} />
+        <Route path="/giyimformu" element={<ClothingNeedFormPage />} />
         <Route path="/*" element={<NotFoundPage />} />
       </Routes>
     </Router>

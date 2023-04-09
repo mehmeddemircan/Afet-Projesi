@@ -21,7 +21,7 @@ import {
   DELETE_FORM_RESET,
   UPDATE_FORM_RESET,
 } from "../redux/constants/FormConstants";
-
+import { AllClothingForm } from "../redux/actions/ClothingNeedFormAction";
 
 const { TabPane } = Tabs;
 const FormListPage = () => {
@@ -33,9 +33,7 @@ const FormListPage = () => {
   const deleteUpdateGetHelpForm = useSelector(
     (state) => state.form.deleteUpdateGetHelpForm
   );
-  const getApprovedFormsByCategoryId = useSelector(
-    (state) => state.form.getApprovedFormsByCategoryId
-  );
+  const getAllClothingForms = useSelector((state) => state.clothingNeedForm.getAllClothingForms)
   const dispatch = useDispatch();
 
   const getSingleFormCategory = useSelector(
@@ -45,6 +43,8 @@ const FormListPage = () => {
   const approvedForms = getFormsByCategoryId.forms.filter(
     (form) => form.isApproved === true
   );
+
+  
   const unApprovedForms = getFormsByCategoryId.forms.filter(
     (form) => form.isApproved === false
   );
@@ -64,6 +64,9 @@ const FormListPage = () => {
     deleteUpdateGetHelpForm.isDeleted,
     deleteUpdateGetHelpForm.isApproved,
   ]);
+
+
+
 
   useEffect(() => {
     dispatch(GetFormCategory(categoryId));
@@ -89,6 +92,13 @@ const FormListPage = () => {
   const handleApproveForm = (id) => {
     dispatch(ApproveGetHelpForm(id));
   };
+
+  useEffect(() => {
+    if (categoryId === "64320327e809f0b2e969c8ef") {
+      dispatch(AllClothingForm())
+    }
+  }, [dispatch,categoryId])
+
   return (
     <MainLayout>
       <div className="row">
@@ -129,7 +139,7 @@ const FormListPage = () => {
         </FiltersButton>
       </div>
       {/* search input */}
-     
+
       <form className="my-4">
         <div class="d-flex justify-content-between flex-row align-items-center">
           <div className="col-md-3">
@@ -169,7 +179,6 @@ const FormListPage = () => {
           </div>
 
           <button className="btn btn-outline-secondary " onClick={handleSearch}>
-            {" "}
             Search
           </button>
         </div>
@@ -177,7 +186,15 @@ const FormListPage = () => {
       <Tabs>
         <TabPane key="1" tab="Un Approved">
           <List>
-            {unApprovedForms.map((form) => (
+            {getAllClothingForms.success ? getAllClothingForms.clothingForms.map((form) => (
+                 <FormInfoItem
+                 isApproved={false}
+                 key={form._id}
+                 form={form}
+                 handleDeleteForm={handleDeleteForm}
+                 handleApproveForm={handleApproveForm}
+               />
+            )) :unApprovedForms.map((form) => (
               <FormInfoItem
                 isApproved={false}
                 key={form._id}
@@ -185,7 +202,8 @@ const FormListPage = () => {
                 handleDeleteForm={handleDeleteForm}
                 handleApproveForm={handleApproveForm}
               />
-            ))}
+            )) }
+            {}
           </List>
         </TabPane>
         <TabPane key="2" tab="Approved">
