@@ -92,16 +92,18 @@ const ClothingNeedFormPage = () => {
   const getAllClothingForms = useSelector(
     (state) => state.clothingNeedForm.getAllClothingForms
   );
-  const addClothingForm = useSelector((state) => state.clothingNeedForm.addClothingForm)
+  const addClothingForm = useSelector(
+    (state) => state.clothingNeedForm.addClothingForm
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(AllClothingForm());
-    if(addClothingForm.success){
-        message.success(addClothingForm.message)
-        dispatch({type : ADD_CLOTHING_FORM_RESET})
+    if (addClothingForm.success) {
+      message.success(addClothingForm.message);
+      dispatch({ type: ADD_CLOTHING_FORM_RESET });
     }
-  }, [dispatch,addClothingForm.success]);
+  }, [dispatch, addClothingForm.success]);
   const handleSendForm = () => {
     dispatch(
       SendClothingForm({
@@ -113,8 +115,11 @@ const ClothingNeedFormPage = () => {
         additionalInfo,
       })
     );
-  
   };
+
+  useEffect(() => {
+    handleAddClothingItem()
+  }, [productCategory && productSize && gender && quantity !== 0 && quantity.toString() !== ""])
 
   const prefixSelector = (
     <Form.Item name="prefix" noStyle>
@@ -343,9 +348,7 @@ const ClothingNeedFormPage = () => {
                       setClothingItems(newUsers);
                     }}
                   />
-                  {
-                     productCategory && productSize && gender && quantity !== 0 && quantity.toString() !== "" ?  <button className="btn btn-primary btn-sm rounded-pill" onClick={handleAddClothingItem}>Onayla</button> : null
-                  }
+                
                 </Space>
               ))}
               <Form.Item>
@@ -353,7 +356,6 @@ const ClothingNeedFormPage = () => {
                   type="dashed"
                   onClick={() => {
                     add();
-                   
                   }}
                   block
                   icon={<PlusOutlined />}
@@ -396,10 +398,6 @@ const ClothingNeedFormPage = () => {
           </button>
         </div>
       </Form>
-
-      {getAllClothingForms.clothingForms.map((form) => (
-        <FormInfoItem key={form._id} form={form} />
-      ))}
     </MainLayout>
   );
 };

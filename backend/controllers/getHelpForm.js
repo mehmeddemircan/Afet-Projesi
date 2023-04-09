@@ -121,7 +121,6 @@ exports.approveHelpForm = catchAsyncErrors(async(req,res) => {
       )
 
       res.status(200).json({
-      
         message : "Successfully approved form"
       })
 

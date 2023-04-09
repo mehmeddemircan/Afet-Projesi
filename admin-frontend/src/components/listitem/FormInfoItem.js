@@ -1,16 +1,15 @@
 import { Card, Descriptions, List, Tooltip } from "antd";
 import React, { Fragment } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  ApproveGetHelpForm,
-  DeleteGetHelpForm,
-} from "../../redux/actions/FormActions";
+import { useSelector } from "react-redux";
 
 const FormInfoItem = ({
   isApproved,
+  isClothingForm,
   form,
   handleApproveForm,
   handleDeleteForm,
+  handleDeleteClothingForm,
+  handleApproveClothingForm,
 }) => {
   const getAllClothingForms = useSelector(
     (state) => state.clothingNeedForm.getAllClothingForms
@@ -27,7 +26,11 @@ const FormInfoItem = ({
                 {isApproved ? null : (
                   <button
                     className="btn btn-outline-success rounded-pill"
-                    onClick={() => handleApproveForm(form._id)}
+                    onClick={() =>
+                      isClothingForm
+                        ? handleApproveClothingForm(form._id)
+                        : handleApproveForm(form._id)
+                    }
                   >
                     Approve
                   </button>
@@ -36,7 +39,11 @@ const FormInfoItem = ({
                 <Tooltip title="Delete">
                   <button
                     className="btn btn-light"
-                    onClick={() => handleDeleteForm(form._id)}
+                    onClick={() =>
+                      isClothingForm
+                        ? handleDeleteClothingForm(form._id)
+                        : handleDeleteForm(form._id)
+                    }
                   >
                     <i class="fa-solid fa-trash"></i>
                   </button>

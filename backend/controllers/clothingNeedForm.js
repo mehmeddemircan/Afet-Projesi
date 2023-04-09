@@ -67,3 +67,24 @@ exports.deleteClothingNeedForm = catchAsyncErrors(async (req, res) => {
     });
   } catch (error) {}
 });
+
+
+exports.approveClothingForm = catchAsyncErrors(async(req,res) => {
+  try {
+       await ClothingNeedForm.findByIdAndUpdate(req.params.id, {
+        $set : {
+          isApproved : true ,
+          ...req.body
+        }
+      },
+        {new : true}
+      )
+
+      res.status(200).json({
+        message : "Successfully approved clothing form"
+      })
+
+  } catch (error) {
+    res.status(500).json(error)    
+  }
+})

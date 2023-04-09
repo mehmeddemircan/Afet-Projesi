@@ -21,7 +21,16 @@ import {
   DELETE_FORM_RESET,
   UPDATE_FORM_RESET,
 } from "../redux/constants/FormConstants";
-import { AllClothingForm } from "../redux/actions/ClothingNeedFormAction";
+import {
+  AllClothingForm,
+  ApproveClothingForm,
+  DeleteClothingForm,
+} from "../redux/actions/ClothingNeedFormAction";
+import { deleteUpdateClothingFormReducer } from "../redux/reducers/ClothingNeedFormReducer";
+import {
+  DELETE_CLOTHING_FORM_RESET,
+  UPDATE_CLOTHING_FORM_RESET,
+} from "../redux/constants/ClothingNeedFormConstants";
 
 const { TabPane } = Tabs;
 const FormListPage = () => {
@@ -33,7 +42,9 @@ const FormListPage = () => {
   const deleteUpdateGetHelpForm = useSelector(
     (state) => state.form.deleteUpdateGetHelpForm
   );
-  const getAllClothingForms = useSelector((state) => state.clothingNeedForm.getAllClothingForms)
+  const getAllClothingForms = useSelector(
+    (state) => state.clothingNeedForm.getAllClothingForms
+  );
   const dispatch = useDispatch();
 
   const getSingleFormCategory = useSelector(
@@ -44,7 +55,6 @@ const FormListPage = () => {
     (form) => form.isApproved === true
   );
 
-  
   const unApprovedForms = getFormsByCategoryId.forms.filter(
     (form) => form.isApproved === false
   );
@@ -64,9 +74,6 @@ const FormListPage = () => {
     deleteUpdateGetHelpForm.isDeleted,
     deleteUpdateGetHelpForm.isApproved,
   ]);
-
-
-
 
   useEffect(() => {
     dispatch(GetFormCategory(categoryId));
@@ -93,11 +100,44 @@ const FormListPage = () => {
     dispatch(ApproveGetHelpForm(id));
   };
 
+  const handleDeleteClothingForm = (id) => {
+    dispatch(DeleteClothingForm(id));
+  };
+
+  const handleApproveClothingForm = (id) => {
+    dispatch(ApproveClothingForm(id));
+  };
+
+  const deleteUpdateClothingForm = useSelector(
+    (state) => state.clothingNeedForm.deleteUpdateClothingForm
+  );
+
+  const approvedClothingForms = getAllClothingForms.clothingForms.filter(
+    (form) => form.isApproved === true
+  );
+
+  const upApprovedClothingForms = getAllClothingForms.clothingForms.filter(
+    (form) => form.isApproved === false
+  );
+
   useEffect(() => {
     if (categoryId === "64320327e809f0b2e969c8ef") {
-      dispatch(AllClothingForm())
+      dispatch(AllClothingForm());
     }
-  }, [dispatch,categoryId])
+    if (deleteUpdateClothingForm.isDeleted) {
+      message.success(deleteUpdateClothingForm.message);
+      dispatch({ type: DELETE_CLOTHING_FORM_RESET });
+    }
+    if (deleteUpdateClothingForm.isUpdated) {
+      message.success(deleteUpdateClothingForm.message);
+      dispatch({ type: UPDATE_CLOTHING_FORM_RESET });
+    }
+  }, [
+    dispatch,
+    categoryId,
+    deleteUpdateClothingForm.isDeleted,
+    deleteUpdateClothingForm.isUpdated,
+  ]);
 
   return (
     <MainLayout>
@@ -186,36 +226,52 @@ const FormListPage = () => {
       <Tabs>
         <TabPane key="1" tab="Un Approved">
           <List>
-            {getAllClothingForms.success ? getAllClothingForms.clothingForms.map((form) => (
-                 <FormInfoItem
-                 isApproved={false}
-                 key={form._id}
-                 form={form}
-                 handleDeleteForm={handleDeleteForm}
-                 handleApproveForm={handleApproveForm}
-               />
-            )) :unApprovedForms.map((form) => (
-              <FormInfoItem
-                isApproved={false}
-                key={form._id}
-                form={form}
-                handleDeleteForm={handleDeleteForm}
-                handleApproveForm={handleApproveForm}
-              />
-            )) }
+            {getAllClothingForms.success
+              ? upApprovedClothingForms.map((form) => (
+                  <FormInfoItem
+                    isApproved={false}
+                    isClothingForm={true}
+                    key={form._id}
+                    form={form}
+                    handleDeleteClothingForm={handleDeleteClothingForm}
+                    handleApproveClothingForm={handleApproveClothingForm}
+                  />
+                ))
+              : unApprovedForms.map((form) => (
+                  <FormInfoItem
+                    isApproved={false}
+                    isClothingForm={false}
+                    key={form._id}
+                    form={form}
+                    handleDeleteForm={handleDeleteForm}
+                    handleApproveForm={handleApproveForm}
+                  />
+                ))}
             {}
           </List>
         </TabPane>
         <TabPane key="2" tab="Approved">
           <List>
-            {approvedForms.map((form) => (
-              <FormInfoItem
-                isApproved={true}
-                key={form._id}
-                form={form}
-                handleDeleteForm={handleDeleteForm}
-              />
-            ))}
+            {getAllClothingForms.success
+              ? approvedClothingForms.map((form) => (
+                  <FormInfoItem
+                    isApproved={true}
+                    isClothingForm={true}
+                    key={form._id}
+                    form={form}
+                    handleDeleteClothingForm={handleDeleteClothingForm}
+                
+                  />
+                ))
+              : approvedForms.map((form) => (
+                  <FormInfoItem
+                    isApproved={true}
+                    isClothingForm={false}
+                    key={form._id}
+                    form={form}
+                    handleDeleteForm={handleDeleteForm}
+                  />
+                ))}
           </List>
         </TabPane>
       </Tabs>

@@ -39,8 +39,11 @@ var clothingNeedFormSchema = new mongoose.Schema({
     ],
     additionalInfo: {
         type: String,
-    }
-    //isApproved 
+    },
+    isApproved: {
+        type: Boolean,
+        default: false,
+      },
 },{timestamps : true });
 
 var ClothingNeedForm = mongoose.model('ClothingNeedForm', clothingNeedFormSchema);
