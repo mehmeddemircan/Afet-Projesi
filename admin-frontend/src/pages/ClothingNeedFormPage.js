@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import MainLayout from "../components/layout/MainLayout";
-import { Button, Form, Input, Select, Space } from "antd";
+import { Button, Form, Input, Select, Space, message } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,6 +10,7 @@ import {
 } from "../redux/actions/ClothingNeedFormAction";
 import { useEffect } from "react";
 import FormInfoItem from "../components/listitem/FormInfoItem";
+import { ADD_CLOTHING_FORM_RESET } from "../redux/constants/ClothingNeedFormConstants";
 const { Option } = Select;
 const ClothingNeedFormPage = () => {
   const [name, setName] = useState("");
@@ -91,11 +92,16 @@ const ClothingNeedFormPage = () => {
   const getAllClothingForms = useSelector(
     (state) => state.clothingNeedForm.getAllClothingForms
   );
+  const addClothingForm = useSelector((state) => state.clothingNeedForm.addClothingForm)
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(AllClothingForm());
-  }, [dispatch]);
+    if(addClothingForm.success){
+        message.success(addClothingForm.message)
+        dispatch({type : ADD_CLOTHING_FORM_RESET})
+    }
+  }, [dispatch,addClothingForm.success]);
   const handleSendForm = () => {
     dispatch(
       SendClothingForm({
