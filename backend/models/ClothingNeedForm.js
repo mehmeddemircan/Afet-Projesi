@@ -1,7 +1,12 @@
 //replace modelSchema,ModelName with whatever you want
 var mongoose = require('mongoose');
-
+const {ObjectId} = mongoose
 var clothingNeedFormSchema = new mongoose.Schema({
+    userId: {
+        type: ObjectId,
+        ref: 'User',
+        required: true
+      },
     name: {
         type: String,
     },

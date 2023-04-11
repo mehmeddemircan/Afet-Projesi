@@ -104,9 +104,13 @@ const ClothingNeedFormPage = () => {
       dispatch({ type: ADD_CLOTHING_FORM_RESET });
     }
   }, [dispatch, addClothingForm.success]);
+
+  const auth = useSelector((state) => state.auth)
+  const [userId, setUserId] = useState(auth.user._id)
   const handleSendForm = () => {
     dispatch(
       SendClothingForm({
+        userId,
         name,
         phoneNumber,
         email,
