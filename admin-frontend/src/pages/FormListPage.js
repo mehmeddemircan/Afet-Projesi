@@ -31,6 +31,15 @@ import {
   DELETE_CLOTHING_FORM_RESET,
   UPDATE_CLOTHING_FORM_RESET,
 } from "../redux/constants/ClothingNeedFormConstants";
+import {
+  AllShelterForm,
+  ApproveShelterForm,
+  DeleteShelterForm,
+} from "../redux/actions/ShelterNeedFormActions";
+import {
+  DELETE_SHELTER_FORM_RESET,
+  UPDATE_SHELTER_FORM_RESET,
+} from "../redux/constants/ShelterNeedFormConstants";
 
 const { TabPane } = Tabs;
 const FormListPage = () => {
@@ -108,6 +117,14 @@ const FormListPage = () => {
     dispatch(ApproveClothingForm(id));
   };
 
+  const handleDeleteShelterForm = (id) => {
+    dispatch(DeleteShelterForm(id));
+  };
+
+  const handleApproveShelterForm = (id) => {
+    dispatch(ApproveShelterForm(id));
+  };
+
   const deleteUpdateClothingForm = useSelector(
     (state) => state.clothingNeedForm.deleteUpdateClothingForm
   );
@@ -116,7 +133,7 @@ const FormListPage = () => {
     (form) => form.isApproved === true
   );
 
-  const upApprovedClothingForms = getAllClothingForms.clothingForms.filter(
+  const unApprovedClothingForms = getAllClothingForms.clothingForms.filter(
     (form) => form.isApproved === false
   );
 
@@ -139,6 +156,38 @@ const FormListPage = () => {
     deleteUpdateClothingForm.isUpdated,
   ]);
 
+  const getAllShelterForm = useSelector(
+    (state) => state.shelterNeedForm.getAllShelterForm
+  );
+  const deleteUpdateShelterForm = useSelector(
+    (state) => state.shelterNeedForm.deleteUpdateShelterForm
+  );
+
+  const approvedShelterForms = getAllShelterForm.shelterForms.filter(
+    (form) => form.isApproved === true
+  );
+
+  const unApprovedShelterForms = getAllShelterForm.shelterForms.filter(
+    (form) => form.isApproved === false
+  );
+  useEffect(() => {
+    if (categoryId === "6432032ee809f0b2e969c8f1") {
+      dispatch(AllShelterForm());
+    }
+    if (deleteUpdateShelterForm.isDeleted) {
+      message.success(deleteUpdateShelterForm.message);
+      dispatch({ type: DELETE_SHELTER_FORM_RESET });
+    }
+    if (deleteUpdateShelterForm.isUpdated) {
+      message.success(deleteUpdateShelterForm.message);
+      dispatch({ type: UPDATE_SHELTER_FORM_RESET });
+    }
+  }, [
+    dispatch,
+    categoryId,
+    deleteUpdateShelterForm.isDeleted,
+    deleteUpdateShelterForm.isUpdated,
+  ]);
   return (
     <MainLayout>
       <div className="row">
@@ -226,11 +275,24 @@ const FormListPage = () => {
       <Tabs>
         <TabPane key="1" tab="Un Approved">
           <List>
-            {getAllClothingForms.success
-              ? upApprovedClothingForms.map((form) => (
+            {getAllShelterForm.success
+              ? unApprovedShelterForms.map((form) => (
+                  <FormInfoItem
+                    isApproved={false}
+                    isShelterForm={true}
+                    isClothingForm={false}
+                    key={form._id}
+                    form={form}
+                    handleDeleteShelterForm={handleDeleteShelterForm}
+                    handleApproveShelterForm={handleApproveShelterForm}
+                  />
+                ))
+              : getAllClothingForms.success
+              ? unApprovedClothingForms.map((form) => (
                   <FormInfoItem
                     isApproved={false}
                     isClothingForm={true}
+                    isShelterForm={false}
                     key={form._id}
                     form={form}
                     handleDeleteClothingForm={handleDeleteClothingForm}
@@ -241,18 +303,29 @@ const FormListPage = () => {
                   <FormInfoItem
                     isApproved={false}
                     isClothingForm={false}
+                    isShelterForm={false}
                     key={form._id}
                     form={form}
                     handleDeleteForm={handleDeleteForm}
                     handleApproveForm={handleApproveForm}
                   />
                 ))}
-            {}
           </List>
         </TabPane>
         <TabPane key="2" tab="Approved">
           <List>
-            {getAllClothingForms.success
+            {getAllShelterForm.success
+              ? approvedShelterForms.map((form) => (
+                  <FormInfoItem
+                    isApproved={true}
+                    isShelterForm={true}
+                    isClothingForm={false}
+                    key={form._id}
+                    form={form}
+                    handleDeleteShelterForm={handleDeleteShelterForm}
+                  />
+                ))
+              : getAllClothingForms.success
               ? approvedClothingForms.map((form) => (
                   <FormInfoItem
                     isApproved={true}
@@ -260,7 +333,6 @@ const FormListPage = () => {
                     key={form._id}
                     form={form}
                     handleDeleteClothingForm={handleDeleteClothingForm}
-                
                   />
                 ))
               : approvedForms.map((form) => (

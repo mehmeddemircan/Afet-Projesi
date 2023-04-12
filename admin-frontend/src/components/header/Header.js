@@ -6,6 +6,7 @@ import HeaderMenuDropDown from "../dropdown/HeaderMenuDropDown";
 import NotLoggedInSegment from "./NotLoggedInSegment";
 import { useSelector } from "react-redux";
 import LoggedInSegment from "./LoggedInSegment";
+import FormMenuDropDown from "../dropdown/FormMenuDropDown";
 
 const Header = () => {
   const auth = useSelector((state) => state.auth);
@@ -35,6 +36,7 @@ const Header = () => {
             </a>
 
             <HeaderMenuDropDown />
+         
             <a
               className="text-dark mt-1 ms-2"
               style={{
@@ -44,15 +46,7 @@ const Header = () => {
             >
               Markalar
             </a>
-            <a
-              className="text-dark mt-1 ms-2"
-              style={{
-                textDecorationLine: "none",
-              }}
-              href="/giyimformu"
-            >
-              Giyim Formu Ouştur
-            </a>
+              <FormMenuDropDown />
           </div>
           <div>
             <button

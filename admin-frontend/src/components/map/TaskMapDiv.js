@@ -34,7 +34,7 @@ const TaskMapDiv = ({ task }) => {
             task={task}
             text={
               <>
-                <a>görevv</a>
+                <a>görev</a>
                 {/* <a>{area.name} Depremi</a> */}
               </>
             }

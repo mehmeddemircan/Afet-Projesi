@@ -8,6 +8,7 @@ import {
 import { AllFormByCategoryId } from "../redux/actions/FormActions";
 import { useNavigate } from "react-router-dom";
 import { GET_ALL_CLOTHING_FORM_RESET } from "../redux/constants/ClothingNeedFormConstants";
+import { GET_ALL_SHELTER_FORM_RESET } from "../redux/constants/ShelterNeedFormConstants";
 
 const FormCategoryPage = () => {
   const getAllFormCategory = useSelector(
@@ -18,6 +19,7 @@ const FormCategoryPage = () => {
   useEffect(() => {
     dispatch(AllFormCategory());
     dispatch({ type: GET_ALL_CLOTHING_FORM_RESET });
+    dispatch({ type: GET_ALL_SHELTER_FORM_RESET });
   }, [dispatch]);
   const navigate = useNavigate();
 

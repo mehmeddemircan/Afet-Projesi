@@ -56,4 +56,5 @@ const GetHelpFormSchema = new mongoose.Schema({
 
 });
 
-module.exports = mongoose.model("GetHelpForm", GetHelpFormSchema);
+var GetHelpForm = mongoose.model("GetHelpForm", GetHelpFormSchema);
+module.exports = GetHelpForm

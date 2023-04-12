@@ -105,8 +105,11 @@ const ClothingNeedFormPage = () => {
     }
   }, [dispatch, addClothingForm.success]);
 
-  const auth = useSelector((state) => state.auth)
-  const [userId, setUserId] = useState(auth.user._id)
+  const auth = useSelector((state) => state.auth);
+  const [userId, setUserId] = useState(auth.user._id);
+  useEffect(() => {
+    setUserId(auth.user._id);
+  }, [auth]);
   const handleSendForm = () => {
     dispatch(
       SendClothingForm({
@@ -122,8 +125,14 @@ const ClothingNeedFormPage = () => {
   };
 
   useEffect(() => {
-    handleAddClothingItem()
-  }, [productCategory && productSize && gender && quantity !== 0 && quantity.toString() !== ""])
+    handleAddClothingItem();
+  }, [
+    productCategory &&
+      productSize &&
+      gender &&
+      quantity !== 0 &&
+      quantity.toString() !== "",
+  ]);
 
   const prefixSelector = (
     <Form.Item name="prefix" noStyle>
@@ -138,16 +147,8 @@ const ClothingNeedFormPage = () => {
   );
   return (
     <MainLayout>
-      <h6>
-        {clothingItems.map((a) => (
-          <h4>
-            {a.productCategory}
-            {a.productSize}
-            {a.gender}
-            {a.quantity}
-          </h4>
-        ))}
-      </h6>
+      <h4>Giyim İhtiyaç Formu</h4>
+
       <Form
         className="mx-auto"
         initialValues={{
@@ -352,7 +353,6 @@ const ClothingNeedFormPage = () => {
                       setClothingItems(newUsers);
                     }}
                   />
-                
                 </Space>
               ))}
               <Form.Item>

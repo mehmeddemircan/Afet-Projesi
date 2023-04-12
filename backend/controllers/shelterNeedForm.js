@@ -21,7 +21,7 @@ exports.getAllShelterNeedForm = catchAsyncErrors(async (req, res) => {
     const skipIndex = (page - 1) * limit;
   
     try {
-      const shelterForms = await ShelterNeedForm.find()
+      const shelterForms = await ShelterNeedForm.find().populate('cityOptions','_id name')
         .sort({ createdAt: -1 }) // sort by creation date in descending order
         .skip(skipIndex)
         .limit(limit);

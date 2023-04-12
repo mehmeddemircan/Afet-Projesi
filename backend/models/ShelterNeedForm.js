@@ -1,6 +1,6 @@
 //replace modelSchema,ModelName with whatever you want
 var mongoose = require('mongoose');
-const {ObjectId} = mongoose 
+const {ObjectId} = mongoose.Schema
 var shelterNeedFormSchema = new mongoose.Schema({
     userId : {
         type : ObjectId,

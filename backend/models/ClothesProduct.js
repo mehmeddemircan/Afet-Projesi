@@ -1,6 +1,6 @@
 //replace modelSchema,ModelName with whatever you want
 var mongoose = require("mongoose");
-const { ObjectId } = mongoose;
+const { ObjectId } = mongoose.Schema;
 var clothesProductSchema = new mongoose.Schema({
   title: {
     type: String,

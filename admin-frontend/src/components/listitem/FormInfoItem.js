@@ -1,18 +1,26 @@
-import { Card, Descriptions, List, Tooltip } from "antd";
+import { Card, Descriptions, List, Tag, Tooltip } from "antd";
+import DescriptionsItem from "antd/es/descriptions/Item";
+import moment from "moment";
 import React, { Fragment } from "react";
 import { useSelector } from "react-redux";
 
 const FormInfoItem = ({
   isApproved,
   isClothingForm,
+  isShelterForm,
   form,
   handleApproveForm,
   handleDeleteForm,
   handleDeleteClothingForm,
   handleApproveClothingForm,
+  handleDeleteShelterForm,
+  handleApproveShelterForm
 }) => {
   const getAllClothingForms = useSelector(
     (state) => state.clothingNeedForm.getAllClothingForms
+  );
+  const getAllShelterForm = useSelector(
+    (state) => state.shelterNeedForm.getAllShelterForm
   );
 
   return (
@@ -28,7 +36,8 @@ const FormInfoItem = ({
                     className="btn btn-outline-success rounded-pill"
                     onClick={() =>
                       isClothingForm
-                        ? handleApproveClothingForm(form._id)
+                        ? handleApproveClothingForm(form._id) : 
+                        isShelterForm ? handleApproveShelterForm(form._id) 
                         : handleApproveForm(form._id)
                     }
                   >
@@ -41,7 +50,8 @@ const FormInfoItem = ({
                     className="btn btn-light"
                     onClick={() =>
                       isClothingForm
-                        ? handleDeleteClothingForm(form._id)
+                        ? handleDeleteClothingForm(form._id) : 
+                        isShelterForm ? handleDeleteShelterForm(form._id)
                         : handleDeleteForm(form._id)
                     }
                   >
@@ -57,7 +67,7 @@ const FormInfoItem = ({
             {form.phoneNumber}
           </Descriptions.Item>
           <Descriptions.Item label="Email">{form.email}</Descriptions.Item>
-          {getAllClothingForms.success ? null : (
+          {getAllClothingForms.success || getAllShelterForm.success ? null : (
             <>
               <Descriptions.Item label="Urgency">
                 {form.urgency}
@@ -68,6 +78,33 @@ const FormInfoItem = ({
             </>
           )}
           <Descriptions.Item label="Address">{form.address}</Descriptions.Item>
+          {getAllShelterForm.success && (
+            <>
+              <Descriptions.Item label="City Options">
+                {form.cityOptions.map((city) => (
+                  <Tag color="#108ee9">{city.name}</Tag>
+                ))}
+              </Descriptions.Item>
+              <DescriptionsItem></DescriptionsItem>
+              <Descriptions.Item label="Chekin Date">
+                {moment(form.checkinDate).locale("tr").format("MMM Do YY")}
+              </Descriptions.Item>
+              <Descriptions.Item label="Chekin Date">
+                {moment(form.checkoutDate).locale("tr").format("MMM Do YY")}
+              </Descriptions.Item>
+              <DescriptionsItem></DescriptionsItem>
+              <Descriptions.Item label="Number of Adults">
+                {form.numberOfAdults}
+              </Descriptions.Item>
+              <Descriptions.Item label="Number Of Children">
+                {form.numberOfChildren}
+              </Descriptions.Item>
+            </>
+          )}
+
+          <Descriptions.Item label="Additional Info">
+            {form.additionalInfo}
+          </Descriptions.Item>
         </Descriptions>
         {getAllClothingForms.success ? (
           <div className="d-flex flex-row flex-wrap justify-content-start">

@@ -29,6 +29,7 @@ import { UpdateLiveLocation } from "./redux/actions/UserActions";
 import AllBrandPage from "./pages/AllBrandPage";
 import BrandDetailsPage from "./pages/BrandDetailsPage";
 import ClothingNeedFormPage from "./pages/ClothingNeedFormPage";
+import ShelterNeedFormPage from "./pages/ShelterNeedFormPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -131,6 +132,7 @@ function App() {
         <Route path="/markalar" element={<AllBrandPage />} />
         <Route path="/markalar/:brandId" element={<BrandDetailsPage />} />
         <Route path="/giyimformu" element={<ClothingNeedFormPage />} />
+        <Route path="/barinmaformu" element={<ShelterNeedFormPage />} />
         <Route path="/*" element={<NotFoundPage />} />
       </Routes>
     </Router>

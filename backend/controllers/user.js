@@ -1,4 +1,7 @@
 const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
+const ClothingNeedForm = require("../models/ClothingNeedForm");
+const GetHelpForm = require("../models/GetHelpForm");
+const ShelterNeedForm = require("../models/ShelterNeedForm");
 const Task = require("../models/Task");
 const User = require("../models/User");
 
@@ -139,7 +142,7 @@ exports.addTaskToUser = async (req, res) => {
     user.tasks.push(taskId);
     await user.save();
     res.status(200).json({
-      message : "Successfully added task to user"
+      message: "Successfully added task to user",
     });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -156,28 +159,46 @@ exports.getTasksOfUser = catchAsyncErrors(async (req, res) => {
   }
 });
 
-exports.removeTaskFromUser = catchAsyncErrors(async(req,res) => {
+exports.removeTaskFromUser = catchAsyncErrors(async (req, res) => {
   try {
-    
+    // Delete controller to remove product from required_products array
 
-      // Delete controller to remove product from required_products array
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(404).json({ message: "Area not found" });
+    }
 
-    
-          const user = await User.findById(req.params.id);
-          if (!user) {
-            return res.status(404).json({ message: "Area not found" });
-          }
-    
-          // Remove product from required_products array
-          user.tasks.pull({ _id: req.params.objectId });
-          await user.save();
-    
-          res.json({ message: "Task removed from user successfully" });
-        } catch (err) {
-          console.error(err);
-          res.status(500).json({ message: "Server Error" });
-        }
+    // Remove product from required_products array
+    user.tasks.pull({ _id: req.params.objectId });
+    await user.save();
 
+    res.json({ message: "Task removed from user successfully" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server Error" });
+  }
+});
 
+// sayfalama şeklinde olmalı
+exports.getMyShelterNeedForms = catchAsyncErrors(async (req, res) => {
+  try {
+    const userShelterForms = await ShelterNeedForm.find({
+      userId: req.params.userId,
+    });
 
+    res.status(200).json(userShelterForms);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
+exports.getMyClothingNeedForms = catchAsyncErrors(async(req,res) => {
+  try {
+    const userClothingForms = await ClothingNeedForm.find({userId : req.params.userId})
+
+    res.status(200).json(userClothingForms)
+  } catch (error) {
+    res.status(500).json(error)
+  }
 })
+

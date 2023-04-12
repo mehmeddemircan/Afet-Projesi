@@ -23,6 +23,7 @@ import brandReducer from "./reducers/BrandReducer";
 import clothesReducer from "./reducers/ClothesReducer";
 import mealProductReducer from "./reducers/MealReducer";
 import clothingNeedFormReducer from "./reducers/ClothingNeedFormReducer";
+import shelterNeedFormReducer from "./reducers/ShelterNeedFormReducer";
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -41,6 +42,7 @@ const rootReducer = combineReducers({
   clothes : clothesReducer , 
   mealProduct : mealProductReducer ,
   clothingNeedForm : clothingNeedFormReducer ,  
+  shelterNeedForm : shelterNeedFormReducer,
   forgotResetPassword: forgotResetPasswordReducer,
   getAllUserLocations: getAllUserLocationsReducer,
   updateUserLocation: updateUserLocationReducer,
