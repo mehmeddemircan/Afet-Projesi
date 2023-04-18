@@ -9,7 +9,7 @@ export const AllShelterByBrand = (brandId) => async (dispatch) => {
       });
   
       const { data } = await axios.get(
-        `http://localhost:5000/api/brands/${brandId}/shelters`
+        `https://afetapi.onrender.com/api/brands/${brandId}/shelters`
       );
   
       dispatch({
@@ -31,7 +31,7 @@ export const AllShelterByBrand = (brandId) => async (dispatch) => {
         });
   
         const { data } = await axios.post(
-          `http://localhost:5000/api/create-shelterProduct`,
+          `https://afetapi.onrender.com/api/create-shelterProduct`,
           shelter
         );
   
@@ -54,7 +54,7 @@ export const DeleteShelter = (shelterId) => async (dispatch) => {
           });
     
           const { data } = await axios.delete(
-            `http://localhost:5000/api/shelters/${shelterId}/delete`
+            `https://afetapi.onrender.com/api/shelters/${shelterId}/delete`
           );
     
           dispatch({
@@ -77,7 +77,7 @@ export const UpdateShelter = (shelterId,shelter) => async (dispatch) => {
           });
     
           const { data } = await axios.put(
-            `http://localhost:5000/api/shelters/${shelterId}/update`,shelter
+            `https://afetapi.onrender.com/api/shelters/${shelterId}/update`,shelter
           );
     
           dispatch({

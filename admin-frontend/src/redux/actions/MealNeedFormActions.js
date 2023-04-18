@@ -8,7 +8,7 @@ export const AllMealForm = () => async (dispatch) => {
       });
   
       const { data } = await axios.get(
-        `http://localhost:5000/api/mealNeedForms`
+        `https://afetapi.onrender.com/api/mealNeedForms`
       );
   
       dispatch({
@@ -30,7 +30,7 @@ export const AllMealForm = () => async (dispatch) => {
       });
   
       const { data } = await axios.post(
-        `http://localhost:5000/api/create-mealNeedForm`,
+        `https://afetapi.onrender.com/api/create-mealNeedForm`,
         shelterForm
       );
   
@@ -53,7 +53,7 @@ export const AllMealForm = () => async (dispatch) => {
       });
   
       const { data } = await axios.delete(
-        `http://localhost:5000/api/mealNeedForms/${mealFormId}/delete`
+        `https://afetapi.onrender.com/api/mealNeedForms/${mealFormId}/delete`
       );
   
       dispatch({
@@ -75,7 +75,7 @@ export const AllMealForm = () => async (dispatch) => {
       });
   
       const { data } = await axios.put(
-        `http://localhost:5000/api/mealNeedForms/${mealFormId}/approve`
+        `https://afetapi.onrender.com/api/mealNeedForms/${mealFormId}/approve`
       );
   
       dispatch({

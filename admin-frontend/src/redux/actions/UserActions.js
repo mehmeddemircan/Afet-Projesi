@@ -82,7 +82,7 @@ export const UpdateUserRole = (id) => async (dispatch) => {
     });
 
     const { data } = await axios.put(
-      `http://localhost:5000/api/users/${id}/make-admin`
+      `https://afetapi.onrender.com/api/users/${id}/make-admin`
     );
 
     dispatch({
@@ -104,7 +104,7 @@ export const GiveRoleToUser = (id,role) => async (dispatch) => {
     });
 
     const { data } = await axios.put(
-      `http://localhost:5000/api/users/${id}/give-role`,role
+      `https://afetapi.onrender.com/api/users/${id}/give-role`,role
     );
 
     dispatch({
@@ -264,7 +264,7 @@ export const GetUsersByRole = (userRoles) => async (dispatch) => {
     });
 
     const { data } = await axios.get(
-      `http://localhost:5000/api/users/filter-by-role?userRoles=${userRoles}`
+      `https://afetapi.onrender.com/api/users/filter-by-role?userRoles=${userRoles}`
     );
 
     dispatch({

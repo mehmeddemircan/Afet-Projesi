@@ -88,7 +88,7 @@ export const UpdateClotheProduct = (clotheId,clothe) => async (dispatch) => {
     });
 
     const { data } = await axios.put(
-      `http://localhost:5000/api/clothesProduct/${clotheId}/update`,clothe
+      `https://afetapi.onrender.com/api/clothesProduct/${clotheId}/update`,clothe
     );
 
     dispatch({

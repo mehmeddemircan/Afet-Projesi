@@ -89,7 +89,7 @@ export const AddMeal = (meal) => async (dispatch) => {
       });
   
       const { data } = await axios.put(
-        `http://localhost:5000/api/meals/${mealId}/update`,meal
+        `https://afetapi.onrender.com/api/meals/${mealId}/update`,meal
       );
   
       dispatch({

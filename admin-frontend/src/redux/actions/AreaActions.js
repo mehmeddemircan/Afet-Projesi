@@ -41,7 +41,7 @@ export const AllArea = (selectedProducts,priorityOrders,selectedPeople) => async
       type: GET_ALL_AREA_REQUEST,
     });
 
-    const {data}  = await axios.get(`http://localhost:5000/api/filter-areas?filters=${selectedProducts}&priorityOrders=${priorityOrders}&people=${selectedPeople}`)
+    const {data}  = await axios.get(`https://afetapi.onrender.com/api/filter-areas?filters=${selectedProducts}&priorityOrders=${priorityOrders}&people=${selectedPeople}`)
     
 
     dispatch({
@@ -63,7 +63,7 @@ export const GetSingleArea = (areaId) => async (dispatch) => {
     });
 
     const { data } = await axios.get(
-      `http://localhost:5000/api/areas/${areaId}`
+      `https://afetapi.onrender.com/api/areas/${areaId}`
     );
 
     dispatch({
@@ -132,7 +132,7 @@ export const AddProductToArea = (id, product) => async (dispatch) => {
     });
 
     const { data } = await axios.post(
-      `http://localhost:5000/api/areas/${id}/add-product`,
+      `https://afetapi.onrender.com/api/areas/${id}/add-product`,
       product
     );
 
@@ -156,7 +156,7 @@ export const RemoveProductFromArea =
       });
 
       const { data } = await axios.delete(
-        `http://localhost:5000/api/areas/${areaId}/products/${productId}/remove`
+        `https://afetapi.onrender.com/api/areas/${areaId}/products/${productId}/remove`
       );
 
       dispatch({
@@ -222,7 +222,7 @@ export const AddPersonToArea = (id, person) => async (dispatch) => {
     });
 
     const { data } = await axios.post(
-      `http://localhost:5000/api/areas/${id}/add-person`,
+      `https://afetapi.onrender.com/api/areas/${id}/add-person`,
       person
     );
 
@@ -245,7 +245,7 @@ export const RemovePersonFromArea = (areaId, personId) => async (dispatch) => {
     });
 
     const { data } = await axios.delete(
-      `http://localhost:5000/api/areas/${areaId}/people/${personId}/remove`
+      `https://afetapi.onrender.com/api/areas/${areaId}/people/${personId}/remove`
     );
 
     dispatch({
@@ -267,7 +267,7 @@ export const GetRequriredPeople = (id) => async (dispatch) => {
     });
 
     const { data } = await axios.get(
-      `http://localhost:5000/api/areas/${id}/requriredPeople`
+      `https://afetapi.onrender.com/api/areas/${id}/requriredPeople`
     );
 
     dispatch({
