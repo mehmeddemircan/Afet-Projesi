@@ -38,7 +38,7 @@ exports.createClothesProduct = catchAsyncErrors(async (req, res) => {
     const savedProduct = await newProduct.save();
 
     // Find the corresponding Brand document and update its products array
-    const updatedBrand = await Brand.findOneAndUpdate(
+    await Brand.findOneAndUpdate(
       { _id: req.body.brand },
       { $push: { products: savedProduct._id } },
       { new: true }

@@ -9,6 +9,9 @@ import {
   GET_ALL_CLOTHES_BY_BRAND_FAIL,
   GET_ALL_CLOTHES_BY_BRAND_REQUEST,
   GET_ALL_CLOTHES_BY_BRAND_SUCCESS,
+  UPDATE_CLOTHES_FAIL,
+  UPDATE_CLOTHES_REQUEST,
+  UPDATE_CLOTHES_SUCCESS,
 } from "../constants/ClothesConstants";
 
 export const AllClothesByBrand = (brandId) => async (dispatch) => {
@@ -73,6 +76,28 @@ export const DeleteClothes = (clotheId) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: DELETE_CLOTHES_FAIL,
+      error: error.response,
+    });
+  }
+};
+
+export const UpdateClotheProduct = (clotheId,clothe) => async (dispatch) => {
+  try {
+    dispatch({
+      type: UPDATE_CLOTHES_REQUEST,
+    });
+
+    const { data } = await axios.put(
+      `http://localhost:5000/api/clothesProduct/${clotheId}/update`,clothe
+    );
+
+    dispatch({
+      type: UPDATE_CLOTHES_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: UPDATE_CLOTHES_FAIL,
       error: error.response,
     });
   }

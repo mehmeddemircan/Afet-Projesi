@@ -1,21 +1,23 @@
 const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
-const Area = require("../models/Area");
+const  Area = require("../models/Area");
 
 exports.createArea = catchAsyncErrors(async (req, res) => {
-    const newArea = new Area(req.body);
-    try {
-      const savedArea = await newArea.save();
-      res.status(200).json(savedArea);
-    } catch (error) {
-      res.status(500).json(error);
-    }
+  const newArea = new Area(req.body);
+  try {
+    const savedArea = await newArea.save();
+    res.status(200).json(savedArea);
+  } catch (error) {
+    res.status(500).json(error);
+  }
 });
 
 exports.getAllArea = catchAsyncErrors(async (req, res) => {
   try {
     const areas = await Area.find()
-      .populate("requrired_products.Product", "_id title description")
-      .populate("requrired_people.Person", "_id name");
+    .populate("requrired_products.Product", "_id title description")
+    .populate("requrired_people.Person", "_id name")
+    .exec();
+
     res.status(200).json(areas);
   } catch (error) {
     res.status(500).json(error);
@@ -25,9 +27,9 @@ exports.getAllArea = catchAsyncErrors(async (req, res) => {
 exports.getSingleArea = catchAsyncErrors(async (req, res) => {
   try {
     const area = await Area.findById(req.params.id)
-      .populate("requrired_products.Product", "_id title description")
-      .populate("requrired_people.Person", "_id name")
-      .exec();
+    .populate("requrired_products.Product", "_id title description")
+    .populate("requrired_people.Person", "_id name")
+    .exec();
 
     res.status(200).json(area);
   } catch (error) {
@@ -55,7 +57,7 @@ exports.updateArea = catchAsyncErrors(async (req, res) => {
     );
 
     res.status(200).json(updatedArea);
-  } catch (error) { 
+  } catch (error) {
     res.status(500).json(error);
   }
 });
@@ -116,9 +118,8 @@ exports.removeProductFromRequriredProducts = catchAsyncErrors(
 exports.getRequriredProducts = catchAsyncErrors(async (req, res) => {
   try {
     const area = await Area.findById(req.params.id).populate(
-      "requrired_products.Product"
-      
-    );
+      "requrired_products.Product");
+
     const requrired_products = area.requrired_products;
     res.status(200).json(requrired_products);
   } catch (error) {
@@ -198,9 +199,9 @@ exports.getFilterQueryForArea = catchAsyncErrors(async (req, res) => {
   // Controller function to filter areas based on required_products
   try {
     const priorityOrders = req.query.priorityOrders; // Get an array of priorityOrder values from the query parameter
-    const areas = await Area.find()
-      .populate("requrired_products.Product", "_id title description")
-      .populate("requrired_people.Person", "_id name"); // Retrieve all areas from the database
+    const areas = await Area.find() .populate("requrired_products.Product", "_id title description")
+    .populate("requrired_people.Person", "_id name"); // Retrieve all areas from the database
+
     let filteredAreas = areas;
     if (priorityOrders) {
       filteredAreas = areas.filter((area) => {
@@ -222,8 +223,9 @@ exports.getFilterIncludesProductForArea = catchAsyncErrors(async (req, res) => {
   try {
     const filters = req.query.filters; // Get an array of priorityOrder values from the query parameter
     const areas = await Area.find()
-      .populate("requrired_products.Product", "_id title description")
-      .populate("requrired_people.Person", "_id name");
+    .populate("requrired_products.Product", "_id title description")
+    .populate("requrired_people.Person", "_id name");
+      
     let filteredAreas = areas;
     if (filters) {
       filteredAreas = areas.filter((area) => {
@@ -241,3 +243,124 @@ exports.getFilterIncludesProductForArea = catchAsyncErrors(async (req, res) => {
     return res.status(500).json({ error: "Internal Server Error" }); // Return an error response if there is an issue with the database query
   }
 });
+
+// bu oldu
+// exports.createRequriredProduct = catchAsyncErrors(async (req, res) => {
+//   const { areaId } = req.params; // Extract areaId from request parameters
+//   // Extract RequriredProduct details from request body
+
+//   try {
+//     // Create a new RequriredProduct
+//     const newRequriredProduct = new RequriredProduct(req.body);
+
+//     // Save the new RequriredProduct to the database
+//     await newRequriredProduct.save();
+
+//     // Find the Area by its areaId and push the new RequriredProduct to its requrired_products array
+//     const area = await Area.findById(areaId);
+
+//     area.requrired_products.push(newRequriredProduct);
+//     await area.save();
+
+//     if (!area) {
+//       return res.status(404).json({ error: "Area not found" });
+//     }
+
+//     return res
+//       .status(200)
+//       .json({ message: "Successfully added product to area" });
+//   } catch (error) {
+//     console.error(error);
+//     return res.status(500).json({ error: "Server error" });
+//   }
+// });
+
+// exports.createRequriredPerson = catchAsyncErrors(async (req, res) => {
+//   const { areaId } = req.params; // Extract areaId from request parameters
+//   // Extract RequriredProduct details from request body
+
+//   try {
+//     // Create a new RequriredProduct
+//     const newRequriredPerson = new RequriredPerson(req.body);
+
+//     // Save the new RequriredProduct to the database
+//     await newRequriredPerson.save();
+
+//     // Find the Area by its areaId and push the new RequriredProduct to its requrired_products array
+//     const area = await Area.findById(areaId);
+
+//     area.requrired_people.push(newRequriredPerson);
+//     await area.save();
+
+//     if (!area) {
+//       return res.status(404).json({ error: "Area not found" });
+//     }
+
+//     return res
+//       .status(200)
+//       .json({ message: "Successfully added person to area" });
+//   } catch (error) {
+//     console.error(error);
+//     return res.status(500).json({ error: "Server error" });
+//   }
+// });
+
+exports.filterAreas = catchAsyncErrors(async(req,res) => {
+  try {
+    const filters = req.query.filters; // Get an array of productTitle values from the query parameter
+    const people = req.query.people;
+    const priorityOrders = req.query.priorityOrders; // Get an array of priorityOrder values from the query parameter
+    const areas = await Area.find().populate({
+      path: "requrired_people",
+      populate: {
+        path: "Person", // Field to populate
+        model: "Person", // Model to use for population
+        select: "_id name",
+      },
+    }).populate({
+      path: "requrired_products",
+      populate: {
+        path: "Product", // Field to populate
+        model: "Product", // Model to use for population
+        select: "_id title description priorityOrder", // Add priorityOrder to the select fields
+      },
+    });
+  
+    let filteredAreas = areas;
+  
+    if (filters) {
+      filteredAreas = filteredAreas.filter((area) => {
+        // Filter the requrired_products array of each area to only include products with title values in the filters array
+        area.requrired_products = area.requrired_products.filter((product) =>
+          filters.includes(product.Product.title)
+        );
+        return area.requrired_products.length > 0; // Only include areas that have at least one product with a title value in the filters array
+      });
+    }
+    
+    if (people) {
+      filteredAreas = filteredAreas.filter((area) => {
+        // Filter the requrired_products array of each area to only include products with title values in the filters array
+        area.requrired_people = area.requrired_people.filter((person) =>
+          people.includes(person.Person.name)
+        );
+        return area.requrired_people.length > 0; // Only include areas that have at least one product with a title value in the filters array
+      });
+    }
+  
+    if (priorityOrders) {
+      filteredAreas = filteredAreas.filter((area) => {
+        // Filter the requrired_products array of each area to only include products with priorityOrder values in the priorityOrders array
+        area.requrired_products = area.requrired_products.filter((product) =>
+          priorityOrders.includes(product.priorityOrder)
+        );
+        return area.requrired_products.length > 0; // Only include areas that have at least one product with a priorityOrder value in the priorityOrders array
+      });
+    }
+  
+    res.json(filteredAreas);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Internal Server Error" }); // Return an error response if there is an issue with the database query
+  }
+})

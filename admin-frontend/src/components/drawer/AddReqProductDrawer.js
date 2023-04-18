@@ -39,7 +39,6 @@ const AddReqProductDrawer = ({
   const removeProductFromArea = useSelector(
     (state) => state.area.removeProductFromArea
   );
-  
 
   const filterReqProducts = () => {
     const filtered = getAllProduct.products.filter(
@@ -52,7 +51,7 @@ const AddReqProductDrawer = ({
   };
 
   useEffect(() => {
-    if (areaId == area._id) {
+    if (showAddReqProductDrawer && areaId == area._id) {
       dispatch(GetRequriredProducts(areaId));
     }
   }, [
@@ -61,6 +60,7 @@ const AddReqProductDrawer = ({
     area,
     addProductToArea.addedProduct,
     removeProductFromArea.isRemoved,
+    showAddReqProductDrawer,
   ]);
 
   useEffect(() => {
@@ -87,23 +87,31 @@ const AddReqProductDrawer = ({
   const [quantity, setQuantity] = useState(0);
   const [priorityOrder, setPriorityOrder] = useState("");
   const [Product, setProduct] = useState("");
-  const [checkedValues, setCheckedValues] = useState([]);
 
   useEffect(() => {
-    dispatch(AllProduct());
-  }, [dispatch]);
+    if (showAddReqProductDrawer) {
+      dispatch(AllProduct());
+    }
+  }, [dispatch, showAddReqProductDrawer]);
 
   const handleAddReqProductToArea = () => {
     dispatch(AddProductToArea(areaId, { Product, quantity, priorityOrder }));
     handleCloseAddReqProductDrawer();
   };
+
+  const [selectedProducts, setSelectedProducts] = useState([]);
+  const [selectedPeople, setSelectedPeople] = useState([]);
+  const [checkedValues, setCheckedValues] = useState([]);
+
   useEffect(() => {
     if (areaId === area._id) {
-      dispatch(AllArea([]));
+      if (!showAddReqProductDrawer) {
+        dispatch(AllArea(selectedProducts, checkedValues, selectedPeople));
+      }
 
       if (addProductToArea.addedProduct) {
-        setQuantity(0)
-        setPriorityOrder("")
+        setQuantity(0);
+        setPriorityOrder("");
         message.success(addProductToArea.message);
         dispatch({ type: ADD_REQUIRED_PRODUCT_TO_AREA_RESET });
       }
@@ -119,6 +127,7 @@ const AddReqProductDrawer = ({
     area._id,
     addProductToArea.addedProduct,
     removeProductFromArea.isRemoved,
+    showAddReqProductDrawer,
   ]);
 
   return (
@@ -130,75 +139,77 @@ const AddReqProductDrawer = ({
       onClose={handleCloseAddReqProductDrawer}
       open={showAddReqProductDrawer}
     >
-     <div className="card">
-            <div className="card-body">
-            <h2>{area.name} {area.disaster_type}</h2>
-      <form>
-        <label for="recipient-name1" class="col-form-label">
-          Product{" "}
-        </label>
-        <select
-          className="form-control w-100"
-          placeholder="Select Priority"
-          value={Product}
-          onChange={(e) => setProduct(e.target.value)}
-        >
-          <option selected>Select Product</option>
-
-          {filteredReqProducts.map((c) => (
-            <option key={c._id} value={c._id}>
-              {c.title}
-            </option>
-          ))}
-        </select>
-
-        {/* button  */}
-
-        <div class="form-group">
-          <label for="recipient-name" class="col-form-label">
-            Quantity{" "}
-          </label>
-          <input
-            type="number"
-            class="form-control "
-            id="person-name"
-            value={quantity}
-            onChange={(e) => setQuantity(e.target.value)}
-          />
-        </div>
-        {/* button  */}
-
-        <div>
-          <div className="d-flex justify-content-between align-items-center mt-2">
-            <label for="recipient-name" class="col-form-label">
-              Priority Order{" "}
+      <div className="card">
+        <div className="card-body">
+          <h2>
+            {area.name} {area.disaster_type}
+          </h2>
+          <form>
+            <label for="recipient-name1" class="col-form-label">
+              Product{" "}
             </label>
-          </div>
-          <select
-            className="form-control w-100"
-            placeholder="Select Priority"
-            value={priorityOrder}
-            onChange={(e) => setPriorityOrder(e.target.value)}
-          >
-            <option selected>Select priority</option>
-            {priorityOrders.map((c) => (
-              <option key={c} value={c}>
-                {c}
-              </option>
-            ))}
-          </select>
+            <select
+              className="form-control w-100"
+              placeholder="Select Priority"
+              value={Product}
+              onChange={(e) => setProduct(e.target.value)}
+            >
+              <option selected>Select Product</option>
+
+              {filteredReqProducts.map((c) => (
+                <option key={c._id} value={c._id}>
+                  {c.title}
+                </option>
+              ))}
+            </select>
+
+            {/* button  */}
+
+            <div class="form-group">
+              <label for="recipient-name" class="col-form-label">
+                Quantity{" "}
+              </label>
+              <input
+                type="number"
+                class="form-control "
+                id="person-name"
+                value={quantity}
+                onChange={(e) => setQuantity(e.target.value)}
+              />
+            </div>
+            {/* button  */}
+
+            <div>
+              <div className="d-flex justify-content-between align-items-center mt-2">
+                <label for="recipient-name" class="col-form-label">
+                  Priority Order{" "}
+                </label>
+              </div>
+              <select
+                className="form-control w-100"
+                placeholder="Select Priority"
+                value={priorityOrder}
+                onChange={(e) => setPriorityOrder(e.target.value)}
+              >
+                <option selected>Select priority</option>
+                {priorityOrders.map((c) => (
+                  <option key={c} value={c}>
+                    {c}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="d-flex justify-content-end my-4">
+              <button
+                type="button"
+                className="btn btn-dark   rounded-pill"
+                onClick={handleAddReqProductToArea}
+              >
+                Add
+              </button>
+            </div>
+          </form>
         </div>
-        <div className="d-flex justify-content-end my-4">
-          <button
-            type="button"
-            className="btn btn-dark   rounded-pill"
-            onClick={handleAddReqProductToArea}
-          >
-            Add
-          </button>
-        </div>
-      </form>
-      </div>
       </div>
       <List className="mt-4" itemLayout="horizontal">
         <div

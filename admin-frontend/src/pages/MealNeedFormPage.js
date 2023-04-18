@@ -1,66 +1,55 @@
 import React, { useEffect, useState } from "react";
 import MainLayout from "../components/layout/MainLayout";
-import {
-  DatePicker,
-  Form,
-  Input,
-  List,
-  Popover,
-  Select,
-  Space,
-  message,
-} from "antd";
-import TextArea from "antd/es/input/TextArea";
-import { useDispatch, useSelector } from "react-redux";
-import { AllCity } from "../redux/actions/CityActions";
-import {
-  AllShelterForm,
-  SendShelterForm,
-} from "../redux/actions/ShelterNeedFormActions";
-import { CREATE_SHELTER_NEED_FORM_RESET } from "../redux/constants/ShelterNeedFormConstants";
-import SearchMapContent from "../components/map/SearchMapContent";
-import PlacesAutocomplete from "react-places-autocomplete";
+import { Form, Input, Select, message } from "antd";
 import AddressInput from "../components/form/AddressInput";
+import { AllMealForm, SendMealForm } from "../redux/actions/MealNeedFormActions";
+import { useDispatch, useSelector } from "react-redux";
+import TextArea from "antd/es/input/TextArea";
+import { CREATE_MEAL_NEED_FORM_RESET } from "../redux/constants/MealNeedFormConstants";
 const { Option } = Select;
-const ShelterNeedFormPage = () => {
+const MealNeedFormPage = () => {
   const [userId, setUserId] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [address, setAddress] = useState("");
-  const [cityOptions, setCityOptions] = useState([]);
   const [additionalInfo, setAdditionalInfo] = useState("");
-  const [checkinDate, setCheckinDate] = useState("");
-  const [checkoutDate, setCheckoutDate] = useState("");
   const [numberOfAdults, setNumberOfAdults] = useState(0);
   const [numberOfChildren, setNumberOfChildren] = useState(0);
 
-  const getAllCity = useSelector((state) => state.city.getAllCity);
   const auth = useSelector((state) => state.auth);
-  const getAllShelterForm = useSelector(
-    (state) => state.shelterNeedForm.getAllShelterForm
-  );
-  const addShelterForm = useSelector(
-    (state) => state.shelterNeedForm.addShelterForm
-  );
-
+  const addMealForm = useSelector((state) => state.mealNeedForm.addMealForm)
+  const getAllMealForm = useSelector((state) => state.mealNeedForm.getAllMealForm)
   const dispatch = useDispatch();
-
-  const countryId = "642aee9f57a3fb51360bfcdc";
+  useEffect(() => {
+    setUserId(auth.user._id);
+  }, [auth]);
+  const handleSelect = async (value) => {
+    setAddress(value);
+  };
 
   useEffect(() => {
-    dispatch(AllCity(countryId));
-  }, [dispatch]);
-  const handleAddCityChange = (value) => {
-    setCityOptions(value);
-  };
-  const handleCheckinDateChange = (date, dateString) => {
-    setCheckinDate(dateString);
-  };
-  const handleCheckoutDateChange = (date, dateString) => {
-    setCheckoutDate(dateString);
-  };
+    dispatch(AllMealForm());
+    if (addMealForm.success) {
+      message.success(addMealForm.message);
+      dispatch({ type: CREATE_MEAL_NEED_FORM_RESET });
+    }
+  }, [dispatch, addMealForm.success]);
 
+  const handleMealForm = () => {
+    dispatch(
+      SendMealForm({
+        userId,
+        name,
+        phoneNumber,
+        email,
+        address,
+        numberOfAdults,
+        numberOfChildren,
+        additionalInfo,
+      })
+    );
+  };
   const prefixSelector = (
     <Form.Item name="prefix" noStyle>
       <Select
@@ -72,42 +61,10 @@ const ShelterNeedFormPage = () => {
       </Select>
     </Form.Item>
   );
-  useEffect(() => {
-    setUserId(auth.user._id);
-  }, [auth]);
-
-  useEffect(() => {
-    dispatch(AllShelterForm());
-    if (addShelterForm.success) {
-      message.success(addShelterForm.message);
-      dispatch({ type: CREATE_SHELTER_NEED_FORM_RESET });
-    }
-  }, [dispatch, addShelterForm.success]);
-
-  const handleSelect = async (value) => {
-    setAddress(value);
-  };
-  const handleSendShelterForm = () => {
-    dispatch(
-      SendShelterForm({
-        userId,
-        name,
-        phoneNumber,
-        email,
-        address,
-        cityOptions,
-        checkinDate,
-        checkoutDate,
-        numberOfAdults,
-        numberOfChildren,
-        additionalInfo,
-      })
-    );
-  };
 
   return (
     <MainLayout>
-      <h4>Barınma Formu</h4>
+      <h4>Gıda Formu</h4>
       <Form
         className="mx-auto"
         initialValues={{
@@ -195,8 +152,11 @@ const ShelterNeedFormPage = () => {
             },
           ]}
         >
-          
-          <AddressInput address={address} setAddress={setAddress} handleSelect={handleSelect} />
+          <AddressInput
+            address={address}
+            setAddress={setAddress}
+            handleSelect={handleSelect}
+          />
           {/* <SearchMapContent 
           address={address}
           setAddress={setAddress}
@@ -210,33 +170,6 @@ const ShelterNeedFormPage = () => {
           /> */}
         </Form.Item>
 
-        <Form.Item name="cityOptions" label="City Options">
-          <Select
-            mode="multiple"
-            allowClear
-            style={{
-              width: "100%",
-            }}
-            placeholder="Please select"
-            onChange={handleAddCityChange}
-          >
-            {getAllCity.cities.map((city) => (
-              <Option value={city._id}>{city.name}</Option>
-            ))}
-          </Select>
-        </Form.Item>
-        <div className="d-flex flex-row ">
-          <Form.Item name="checkinDate" label="Checkin Date">
-            <Space direction="vertical">
-              <DatePicker onChange={handleCheckinDateChange} />
-            </Space>
-          </Form.Item>
-          <Form.Item name="checkoutDate" label="Checkout Date" className="mx-3">
-            <Space direction="vertical">
-              <DatePicker onChange={handleCheckoutDateChange} />
-            </Space>
-          </Form.Item>
-        </div>
         <div className="d-flex flex-row">
           <Form.Item
             name="numberofAdults"
@@ -300,14 +233,17 @@ const ShelterNeedFormPage = () => {
           <button
             type="button"
             className="btn btn-dark rounded-pill"
-            onClick={handleSendShelterForm}
+            onClick={handleMealForm}
           >
             Send
           </button>
         </div>
       </Form>
+      {getAllMealForm.mealForms.map((form) => (
+        <h2>{form.name}</h2>
+      ))}
     </MainLayout>
   );
 };
 
-export default ShelterNeedFormPage;
+export default MealNeedFormPage;

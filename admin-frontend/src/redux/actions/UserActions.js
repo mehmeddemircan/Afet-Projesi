@@ -3,6 +3,7 @@ import {
   ADD_TASK_TO_USER_FAIL,
   ADD_TASK_TO_USER_REQUEST,
   ADD_TASK_TO_USER_SUCCESS,
+  FILTER_BY_ROLE_REQUEST,
   GET_ALL_USER_FAIL,
   GET_ALL_USER_REQUEST,
   GET_ALL_USER_SUCCESS,
@@ -81,7 +82,7 @@ export const UpdateUserRole = (id) => async (dispatch) => {
     });
 
     const { data } = await axios.put(
-      `https://afetapi.onrender.com/api/users/${id}/update-role`
+      `http://localhost:5000/api/users/${id}/make-admin`
     );
 
     dispatch({
@@ -95,6 +96,29 @@ export const UpdateUserRole = (id) => async (dispatch) => {
     });
   }
 };
+
+export const GiveRoleToUser = (id,role) => async (dispatch) => {
+  try {
+    dispatch({
+      type: UPDATE_USER_ROLE_REQUEST,
+    });
+
+    const { data } = await axios.put(
+      `http://localhost:5000/api/users/${id}/give-role`,role
+    );
+
+    dispatch({
+      type: UPDATE_USER_ROLE_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: UPDATE_USER_ROLE_FAIL,
+      error: error.response,
+    });
+  }
+};
+
 
 export const GetAllUserLocations = () => async (dispatch) => {
   try {
@@ -232,3 +256,26 @@ export const GetAllTaskNotAdded = (userId) => async (dispatch) => {
     });
   }
 };
+
+export const GetUsersByRole = (userRoles) => async (dispatch) => {
+  try {
+    dispatch({
+      type: FILTER_BY_ROLE_REQUEST,
+    });
+
+    const { data } = await axios.get(
+      `http://localhost:5000/api/users/filter-by-role?userRoles=${userRoles}`
+    );
+
+    dispatch({
+      type: GET_NOT_ADDED_TASK_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_NOT_ADDED_TASK_FAIL,
+      error: error.response,
+    });
+  }
+};
+

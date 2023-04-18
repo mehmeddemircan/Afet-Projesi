@@ -13,6 +13,9 @@ const {
   getRequriredPeople,
   getFilterQueryForArea,
   getFilterIncludesProductForArea,
+  createRequriredProduct,
+  createRequriredPerson,
+  filterAreas,
 } = require("../controllers/area");
 
 var router = express.Router();
@@ -40,4 +43,7 @@ router.route("/areas/:id/requriredPeople").get(getRequriredPeople);
 router.route('/get-filter-areas').get(getFilterQueryForArea);
 //by products name in requrired_products
 router.route('/get-areas-by-productTitle').get(getFilterIncludesProductForArea)
+// router.route('/areas/:areaId/addProduct').post(createRequriredProduct)
+// router.route('/areas/:areaId/addPerson').post(createRequriredPerson)
+router.route('/filter-areas').get(filterAreas)
 module.exports = router;

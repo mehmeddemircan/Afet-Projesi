@@ -37,6 +37,7 @@ const AddAreaButton = () => {
   const addArea = useSelector((state) => state.area.addArea);
   const deleteUpdateArea = useSelector((state) => state.area.deleteUpdateArea);
   const [selectedProducts, setSelectedProducts] = useState([]);
+  const [selectedPeople, setSelectedPeople] = useState([])
   const [priorities, setPriorities] = useState([]);
   const handleChange = (value) => {
     setSelectedProducts(value);
@@ -48,7 +49,7 @@ const AddAreaButton = () => {
     if (selectedProducts.length > 0) {
       dispatch(AllAreaByProductTitle(selectedProducts));
     } else {
-      dispatch(AllArea(priorities));
+      dispatch(AllArea(selectedProducts,priorities,selectedPeople));
     }
     if (addArea.success) {
       dispatch({ type: ADD_AREA_RESET });

@@ -36,7 +36,7 @@ exports.getAllUserByPage = catchAsyncErrors(async (req, res) => {
   }
 });
 
-exports.updateRoleUser = catchAsyncErrors(async (req, res) => {
+exports.userMakeAdmin = catchAsyncErrors(async (req, res) => {
   try {
     const updatedUser = await User.findByIdAndUpdate(
       req.params.id,
@@ -47,6 +47,23 @@ exports.updateRoleUser = catchAsyncErrors(async (req, res) => {
     res.status(200).json({
       updatedUser,
       message: "Successfully changed role , updated as admin",
+    });
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
+exports.updateUserRole = catchAsyncErrors(async (req, res) => {
+  try {
+    const updatedUser = await User.findByIdAndUpdate(
+      req.params.id,
+      { role: req.body.role },
+      { new: true }
+    );
+
+    res.status(200).json({
+      updatedUser,
+      message: "Successfully changed role , updated role",
     });
   } catch (error) {
     res.status(500).json(error);
@@ -110,6 +127,7 @@ exports.getUserLocationOnMap = catchAsyncErrors(async (req, res) => {
       name: 1,
       email: 1,
       location: 1,
+      role: 1,
     });
 
     res.status(200).json(users);
@@ -122,7 +140,7 @@ exports.getUsersOnMap = catchAsyncErrors(async (req, res) => {
   try {
     const users = await User.find(
       { location: { $exists: true } },
-      { name: 1, email: 1, location: 1 }
+      { name: 1, email: 1, location: 1, role: 1 }
     );
 
     res.status(200).json(users);
@@ -192,13 +210,33 @@ exports.getMyShelterNeedForms = catchAsyncErrors(async (req, res) => {
   }
 });
 
-exports.getMyClothingNeedForms = catchAsyncErrors(async(req,res) => {
+exports.getMyClothingNeedForms = catchAsyncErrors(async (req, res) => {
   try {
-    const userClothingForms = await ClothingNeedForm.find({userId : req.params.userId})
+    const userClothingForms = await ClothingNeedForm.find({
+      userId: req.params.userId,
+    });
 
-    res.status(200).json(userClothingForms)
+    res.status(200).json(userClothingForms);
   } catch (error) {
-    res.status(500).json(error)
+    res.status(500).json(error);
   }
-})
+});
 
+// Controller action to handle user filtering by user role
+exports.filterUsersByUserRole = async (req, res) => {
+  try {
+    let users;
+    const { userRoles } = req.query; // Get selected user roles from query parameters
+
+    if (userRoles) {
+      const userRolesArray = userRoles.split(','); // Split user roles string into an array
+      users = await User.find({ role: { $in: userRolesArray } },{name:1,location:1,email:1,role:1}); // Find users with matching user roles
+    } else {
+      users = await User.find( { location: { $exists: true } },
+        { name: 1, email: 1, location: 1, role: 1 }); // Find all users if no user roles are provided
+    }
+    res.status(200).json(users); // Return filtered users as JSON response
+  } catch (err) {
+    res.status(500).json({ error: "Server error" });
+  }
+};

@@ -21,6 +21,8 @@ import CreateAreaMarker from "./markers/CreateAreaMarker";
 import AreaMarker from "./markers/AreaMarker";
 import TaskMarker from "./markers/TaskMarker";
 import UserMarker from "./markers/UserMarker";
+import FiltersButtonUserContent from "../popover/FiltersButtonUserContent";
+import { AllPersonType } from "../../redux/actions/PersonTypeActions";
 
 export default function MapComponent() {
   const defaultProps = {
@@ -34,10 +36,12 @@ export default function MapComponent() {
   const getAllArea = useSelector((state) => state.area.getAllArea);
   const addArea = useSelector((state) => state.area.addArea);
   const deleteUpdateArea = useSelector((state) => state.area.deleteUpdateArea);
+  const [selectedProducts, setSelectedProducts] = useState([]);
+  const [selectedPeople, setSelectedPeople] = useState([]);
   const [checkedValues, setCheckedValues] = useState([]);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(AllArea(checkedValues));
+    dispatch(AllArea(selectedProducts, checkedValues, selectedPeople));
     if (addArea.success) {
       setMarker(null);
       dispatch({ type: ADD_AREA_RESET });
@@ -49,6 +53,8 @@ export default function MapComponent() {
   }, [
     dispatch,
     checkedValues.length,
+    selectedProducts.length,
+    selectedPeople.length,
     addArea.success,
     deleteUpdateArea.isDeleted,
   ]);
@@ -152,7 +158,11 @@ export default function MapComponent() {
   const handleToogleLiveLocation = () => {
     setShowLiveLocation((prev) => !prev);
     if (showTaskFilter) {
+    
       setShowTaskFilter(false);
+    }
+    if (!showTaskFilter) {
+      dispatch(AllPersonType())
     }
   };
   useEffect(() => {
@@ -166,6 +176,14 @@ export default function MapComponent() {
       clearInterval(intervalId);
     };
   }, [dispatch, showLiveLocation]);
+  
+  const [selectedRoles, setSelectedRoles] = useState([])
+
+  const handleAddUserRole = (value) => {
+      setSelectedRoles(value)
+  }
+
+
 
   return (
     // Important! Always set the container height explicitly
@@ -195,11 +213,16 @@ export default function MapComponent() {
           </button>
           <FiltersButton
             title={
+              showLiveLocation ? 
+                "Filters users by role" : 
               showTaskFilter
                 ? "Filters tasks by city"
                 : "Filters areas by Priority order"
             }
             content={
+              showLiveLocation ? (
+                  <FiltersButtonUserContent handleAddUserRole ={handleAddUserRole}/>
+              ) : 
               showTaskFilter ? (
                 <FiltersButtonTaskContent
                   selectedCities={selectedCities}
@@ -213,7 +236,11 @@ export default function MapComponent() {
               )
             }
           >
-            {showTaskFilter ? "Filters Task" : "Filters Area"}
+            {showLiveLocation
+              ? "Filters Users"
+              : showTaskFilter
+              ? "Filters Task"
+              : "Filters Area"}
           </FiltersButton>
         </div>
       </div>

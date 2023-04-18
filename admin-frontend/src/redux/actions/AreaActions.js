@@ -35,17 +35,14 @@ import {
   REMOVE_REQURIRED_PRODUCT_FROM_SUCCESS,
 } from "../constants/AreaConstants";
 
-export const AllArea = (priorities) => async (dispatch) => {
+export const AllArea = (selectedProducts,priorityOrders,selectedPeople) => async (dispatch) => {
   try {
     dispatch({
       type: GET_ALL_AREA_REQUEST,
     });
 
-    const { data } = await axios.get(
-      priorities !== []
-        ? `https://afetapi.onrender.com/api/get-filter-areas?priorityOrders=${priorities}`
-        : `https://afetapi.onrender.com/api/get-filter-areas?priorityOrders=`
-    );
+    const {data}  = await axios.get(`http://localhost:5000/api/filter-areas?filters=${selectedProducts}&priorityOrders=${priorityOrders}&people=${selectedPeople}`)
+    
 
     dispatch({
       type: GET_ALL_AREA_SUCCESS,
@@ -66,7 +63,7 @@ export const GetSingleArea = (areaId) => async (dispatch) => {
     });
 
     const { data } = await axios.get(
-        `http://localhost:5000/api/areas/${areaId}`
+      `http://localhost:5000/api/areas/${areaId}`
     );
 
     dispatch({
@@ -80,7 +77,6 @@ export const GetSingleArea = (areaId) => async (dispatch) => {
     });
   }
 };
-
 
 export const AllAreaByProductTitle = (filters) => async (dispatch) => {
   try {
@@ -105,8 +101,6 @@ export const AllAreaByProductTitle = (filters) => async (dispatch) => {
     });
   }
 };
-
-
 
 export const AddArea = (area) => async (dispatch) => {
   try {
@@ -138,7 +132,7 @@ export const AddProductToArea = (id, product) => async (dispatch) => {
     });
 
     const { data } = await axios.post(
-      `https://afetapi.onrender.com/api/areas/${id}/add-product`,
+      `http://localhost:5000/api/areas/${id}/add-product`,
       product
     );
 
@@ -162,7 +156,7 @@ export const RemoveProductFromArea =
       });
 
       const { data } = await axios.delete(
-        `https://afetapi.onrender.com/api/areas/${areaId}/products/${productId}/remove`
+        `http://localhost:5000/api/areas/${areaId}/products/${productId}/remove`
       );
 
       dispatch({
@@ -184,7 +178,7 @@ export const GetRequriredProducts = (id) => async (dispatch) => {
     });
 
     const { data } = await axios.get(
-      `https://afetapi.onrender.com/api/areas/${id}/requriredProducts`
+      `http://localhost:5000/api/areas/${id}/requriredProducts`
     );
 
     dispatch({
@@ -228,7 +222,7 @@ export const AddPersonToArea = (id, person) => async (dispatch) => {
     });
 
     const { data } = await axios.post(
-      `https://afetapi.onrender.com/api/areas/${id}/add-person`,
+      `http://localhost:5000/api/areas/${id}/add-person`,
       person
     );
 
@@ -251,7 +245,7 @@ export const RemovePersonFromArea = (areaId, personId) => async (dispatch) => {
     });
 
     const { data } = await axios.delete(
-      `https://afetapi.onrender.com/api/areas/${areaId}/people/${personId}/remove`
+      `http://localhost:5000/api/areas/${areaId}/people/${personId}/remove`
     );
 
     dispatch({
@@ -273,7 +267,7 @@ export const GetRequriredPeople = (id) => async (dispatch) => {
     });
 
     const { data } = await axios.get(
-      `https://afetapi.onrender.com/api/areas/${id}/requriredPeople`
+      `http://localhost:5000/api/areas/${id}/requriredPeople`
     );
 
     dispatch({
@@ -287,6 +281,3 @@ export const GetRequriredPeople = (id) => async (dispatch) => {
     });
   }
 };
-
-
-

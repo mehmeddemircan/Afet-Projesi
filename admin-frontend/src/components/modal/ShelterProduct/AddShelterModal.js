@@ -1,39 +1,40 @@
-import { Modal, Upload, message } from "antd";
+import { Form, Input, Modal, Select, message, Upload } from "antd";
+import TextArea from "antd/es/input/TextArea";
 import axios from "axios";
-import React, { Fragment, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { useState } from "react";
 import Resizer from "react-image-file-resizer";
 
 import ImgCrop from "antd-img-crop";
 import { SendOutlined, CameraFilled } from "@ant-design/icons";
-import { AddClothes } from "../../../redux/actions/ClothesAction";
 import { useParams } from "react-router-dom";
-import AddEditClothesForm from "../../form/AddEditClothesForm";
-const AddClothesProductModal = ({
-  handleCloseAddProductModal,
-  showAddProductModal,
+import { useDispatch } from "react-redux";
+import { AddShelter } from "../../../redux/actions/ShelterActions";
+import AddEditShelterForm from "../../form/AddEditShelterForm";
+const { Option } = Select;
+const AddShelterModal = ({
+  showAddShelterModal,
+  handleCloseAddShelterModal,
 }) => {
   const { brandId } = useParams();
+
   const [title, setTitle] = useState("");
-  const [price, setPrice] = useState(0);
+  const [description, setDescription] = useState("");
   const [brand, setBrand] = useState(`${brandId}`);
-
-  const [genders, setGenders] = useState(["Erkek", "Kadın", "Unisex"]);
-  const [stock, setStock] = useState(0);
+  const [categories, setCategories] = useState(["Ev", "Hotel"]);
+  const [category, setCategory] = useState("");
+  const [roomNumber, setRoomNumber] = useState("");
+  const [price, setPrice] = useState("");
+  const [stock, setStock] = useState("");
   const [images, setImages] = useState([]);
-  const [fileList, setFileList] = useState([]);
-  const [gender, setGender] = useState("");
-
-  const handleSelectGender = (value) => {
-    setGender(value);
+  const [fileList, setFileList] = useState([])
+  const handleSelectCategory = (value) => {
+    setCategory(value);
   };
-
-  const dispatch = useDispatch();
 
   const onChange = ({ fileList: newFileList }) => {
     setFileList(newFileList);
   };
-
   const onPreview = async (file) => {
     let src = file.url;
     if (!src) {
@@ -48,7 +49,6 @@ const AddClothesProductModal = ({
     const imgWindow = window.open(src);
     imgWindow?.document.write(image.outerHTML);
   };
-
   const uploadProps = {
     beforeUpload: (file) => {
       return new Promise((resolve, reject) => {
@@ -82,7 +82,7 @@ const AddClothesProductModal = ({
       });
     },
     onChange: (info) => {
-      const { status, response } = info.file;
+      const { status } = info.file;
       if (status === "done") {
         message.success(`${info.file.name} file uploaded successfully.`);
       } else if (status === "error") {
@@ -97,42 +97,56 @@ const AddClothesProductModal = ({
     setImages(filteredImages);
     message.success(`${file.response.url} removed successfully.`);
   };
-
-  const handleAddNewClothes = () => {
-    dispatch(AddClothes({ title, price, brand, gender, stock, images }));
-    handleCloseAddProductModal();
+  const dispatch = useDispatch();
+  const handleAddShelter = () => {
+    dispatch(
+      AddShelter({
+        title,
+        description,
+        brand,
+        category,
+        price,
+        stock,
+        images,
+        roomNumber,
+      })
+    );
+    handleCloseAddShelterModal();
     setImages([]);
   };
 
   return (
-    <Fragment>
-      <Modal
-        centered
-        open={showAddProductModal}
-        onOk={handleAddNewClothes}
-        onCancel={handleCloseAddProductModal}
-      >
-       
-        <AddEditClothesForm
-          title={title}
-          setTitle={setTitle}
-          handleSelectGender={handleSelectGender}
-          genders={genders}
-          price={price}
-          setPrice={setPrice}
-          stock={stock}
-          setStock={setStock}
-          handleRemoveImage={handleRemoveImage}
-          gender={gender}
-          images={images}
-          fileList={fileList}
-          uploadProps={uploadProps}
-          onPreview={onPreview}
-          onChange={onChange}
-        />
-      </Modal>
-    </Fragment>
+    <Modal
+      title="Add Shelter"
+      centered
+      open={showAddShelterModal}
+      onOk={handleAddShelter}
+      onCancel={handleCloseAddShelterModal}
+    >
+      <AddEditShelterForm
+        title={title}
+        setTitle={setTitle}
+        description={description}
+        setDescription={setDescription}
+        categories={categories}
+        category={category}
+        setCategory={setCategory}
+        price={price}
+        setPrice={setPrice}
+        stock={stock}
+        setStock={setStock}
+        roomNumber={roomNumber}
+        setRoomNumber={setRoomNumber}
+        handleSelectCategory={handleSelectCategory}
+        handleRemoveImage={handleRemoveImage}
+        images={images}
+        fileList={fileList}
+        uploadProps={uploadProps}
+        onPreview={onPreview}
+        onChange={onChange}
+      />
+    </Modal>
   );
 };
 
-export default AddClothesProductModal;
+export default AddShelterModal;

@@ -1,4 +1,4 @@
-import { Card, Descriptions, List, Tag, Tooltip } from "antd";
+import { Card, Descriptions, List, Tag, Tooltip ,Badge } from "antd";
 import DescriptionsItem from "antd/es/descriptions/Item";
 import moment from "moment";
 import React, { Fragment } from "react";
@@ -8,13 +8,16 @@ const FormInfoItem = ({
   isApproved,
   isClothingForm,
   isShelterForm,
+  isMealForm,
   form,
   handleApproveForm,
   handleDeleteForm,
   handleDeleteClothingForm,
   handleApproveClothingForm,
   handleDeleteShelterForm,
-  handleApproveShelterForm
+  handleApproveShelterForm,
+  handleApproveMealForm,
+  handleDeleteMealForm
 }) => {
   const getAllClothingForms = useSelector(
     (state) => state.clothingNeedForm.getAllClothingForms
@@ -22,9 +25,13 @@ const FormInfoItem = ({
   const getAllShelterForm = useSelector(
     (state) => state.shelterNeedForm.getAllShelterForm
   );
+  const getAllMealForm = useSelector(
+    (state) => state.mealNeedForm.getAllMealForm
+  );
 
   return (
     <Fragment>
+      
       <List.Item key={form._id} className="card my-3 px-2">
         <Descriptions
           title={
@@ -35,9 +42,12 @@ const FormInfoItem = ({
                   <button
                     className="btn btn-outline-success rounded-pill"
                     onClick={() =>
+                      isMealForm ? 
+                        handleApproveMealForm(form._id)  : 
                       isClothingForm
-                        ? handleApproveClothingForm(form._id) : 
-                        isShelterForm ? handleApproveShelterForm(form._id) 
+                        ? handleApproveClothingForm(form._id)
+                        : isShelterForm
+                        ? handleApproveShelterForm(form._id)
                         : handleApproveForm(form._id)
                     }
                   >
@@ -49,9 +59,12 @@ const FormInfoItem = ({
                   <button
                     className="btn btn-light"
                     onClick={() =>
+                      isMealForm ? 
+                        handleDeleteMealForm(form._id) : 
                       isClothingForm
-                        ? handleDeleteClothingForm(form._id) : 
-                        isShelterForm ? handleDeleteShelterForm(form._id)
+                        ? handleDeleteClothingForm(form._id)
+                        : isShelterForm
+                        ? handleDeleteShelterForm(form._id)
                         : handleDeleteForm(form._id)
                     }
                   >
@@ -67,7 +80,7 @@ const FormInfoItem = ({
             {form.phoneNumber}
           </Descriptions.Item>
           <Descriptions.Item label="Email">{form.email}</Descriptions.Item>
-          {getAllClothingForms.success || getAllShelterForm.success ? null : (
+          {getAllClothingForms.success || getAllShelterForm.success || getAllMealForm.success ? null : (
             <>
               <Descriptions.Item label="Urgency">
                 {form.urgency}
@@ -101,18 +114,33 @@ const FormInfoItem = ({
               </Descriptions.Item>
             </>
           )}
+          {getAllMealForm.success && (
+            <>
+               <Descriptions.Item label="Number of Adults">
+             {form.numberOfAdults}
+           </Descriptions.Item>
+           <Descriptions.Item label="Number Of Children">
+             {form.numberOfChildren}
+           </Descriptions.Item>
+            </>
+          
+          )}
 
           <Descriptions.Item label="Additional Info">
             {form.additionalInfo}
           </Descriptions.Item>
         </Descriptions>
         {getAllClothingForms.success ? (
-          <div className="d-flex flex-row flex-wrap justify-content-start">
+          <div className="d-flex flex-row flex-wrap justify-content-between">
             {form.clothingItems.map((item) => (
               <Card
                 title={item.productCategory}
+                hoverable={true}
                 bordered={true}
                 className="mx-2"
+                style={{
+                  border: "2px solid rgb(221,221,221)",
+                }}
               >
                 <p>Size : {item.productSize}</p>
                 <p>Gender :{item.gender} </p>
@@ -122,6 +150,7 @@ const FormInfoItem = ({
           </div>
         ) : null}
       </List.Item>
+
     </Fragment>
   );
 };

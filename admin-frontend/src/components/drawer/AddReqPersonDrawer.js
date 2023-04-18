@@ -6,6 +6,7 @@ import {
   AddPersonToArea,
   AllArea,
   GetRequriredPeople,
+  GetSingleArea,
   RemovePersonFromArea,
 } from "../../redux/actions/AreaActions";
 import {
@@ -58,7 +59,7 @@ const AddReqPersonDrawer = ({
   };
 
   useEffect(() => {
-    if (areaId == area._id) {
+    if (showAddReqPersonDrawer && areaId == area._id) {
       dispatch(GetRequriredPeople(areaId));
     }
   }, [
@@ -82,15 +83,24 @@ const AddReqPersonDrawer = ({
     dispatch(RemovePersonFromArea(areaId, personId));
   };
   useEffect(() => {
-    dispatch(AllPersonType());
-  }, [dispatch]);
+    if (showAddReqPersonDrawer) {
+      dispatch(AllPersonType());
+    }
+  }, [dispatch, showAddReqPersonDrawer]);
   const handleAddReqPersonToArea = () => {
     dispatch(AddPersonToArea(areaId, { Person, quantity, priorityOrder }));
     handleCloseAddReqPersonDrawer();
   };
+
+  const [selectedProducts, setSelectedProducts] = useState([]);
+  const [selectedPeople, setSelectedPeople] = useState([]);
+  const [checkedValues, setCheckedValues] = useState([]);
+
   useEffect(() => {
     if (areaId === area._id) {
-      dispatch(AllArea([]));
+      if (!showAddReqPersonDrawer) {
+        dispatch(AllArea(selectedProducts, checkedValues, selectedPeople));
+      }
 
       if (addPersonToArea.addedPerson) {
         setQuantity(0);
@@ -110,6 +120,7 @@ const AddReqPersonDrawer = ({
     area._id,
     addPersonToArea.addedPerson,
     removePersonFromArea.isRemoved,
+    showAddReqPersonDrawer
   ]);
 
   return (
@@ -121,78 +132,79 @@ const AddReqPersonDrawer = ({
       onClose={handleCloseAddReqPersonDrawer}
       open={showAddReqPersonDrawer}
     >
-        <div className="card">
-            <div className="card-body">
-            <h2>{area.name} {area.disaster_type}</h2>
-      <form>
-        <label for="recipient-name1" class="col-form-label">
-          Person Type{" "}
-        </label>
-        <select
-          className="form-control w-100"
-          placeholder="Select Priority"
-          value={Person}
-          onChange={(e) => setPerson(e.target.value)}
-        >
-          <option selected>Select Person Type</option>
-
-          {filteredReqPeople.map((c) => (
-            <option key={c._id} value={c._id}>
-              {c.name}
-            </option>
-          ))}
-        </select>
-
-        {/* button  */}
-
-        <div class="form-group">
-          <label for="recipient-name" class="col-form-label">
-            Quantity{" "}
-          </label>
-          <input
-            type="number"
-            class="form-control "
-            id="person-name"
-            value={quantity}
-            onChange={(e) => setQuantity(e.target.value)}
-          />
-        </div>
-        {/* button  */}
-
-        <div>
-          <div className="d-flex justify-content-between align-items-center mt-2">
-            <label for="recipient-name" class="col-form-label">
-              Priority Order{" "}
+      <div className="card">
+        <div className="card-body">
+          <h2>
+            {area.name} {area.disaster_type}
+          </h2>
+          <form>
+            <label for="recipient-name1" class="col-form-label">
+              Person Type{" "}
             </label>
-          </div>
-          <select
-            className="form-control w-100"
-            placeholder="Select Priority"
-            value={priorityOrder}
-            onChange={(e) => setPriorityOrder(e.target.value)}
-          >
-            <option selected>Select priority</option>
-            {priorityOrders.map((c) => (
-              <option key={c} value={c}>
-                {c}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="d-flex justify-content-end my-4">
-          <button
-            type="button"
-            className="btn btn-dark   rounded-pill"
-            onClick={handleAddReqPersonToArea}
-          >
-            Add
-          </button>
-        </div>
-      </form>
-     
+            <select
+              className="form-control w-100"
+              placeholder="Select Priority"
+              value={Person}
+              onChange={(e) => setPerson(e.target.value)}
+            >
+              <option selected>Select Person Type</option>
+
+              {filteredReqPeople.map((c) => (
+                <option key={c._id} value={c._id}>
+                  {c.name}
+                </option>
+              ))}
+            </select>
+
+            {/* button  */}
+
+            <div class="form-group">
+              <label for="recipient-name" class="col-form-label">
+                Quantity{" "}
+              </label>
+              <input
+                type="number"
+                class="form-control "
+                id="person-name"
+                value={quantity}
+                onChange={(e) => setQuantity(e.target.value)}
+              />
             </div>
+            {/* button  */}
+
+            <div>
+              <div className="d-flex justify-content-between align-items-center mt-2">
+                <label for="recipient-name" class="col-form-label">
+                  Priority Order{" "}
+                </label>
+              </div>
+              <select
+                className="form-control w-100"
+                placeholder="Select Priority"
+                value={priorityOrder}
+                onChange={(e) => setPriorityOrder(e.target.value)}
+              >
+                <option selected>Select priority</option>
+                {priorityOrders.map((c) => (
+                  <option key={c} value={c}>
+                    {c}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="d-flex justify-content-end my-4">
+              <button
+                type="button"
+                className="btn btn-dark   rounded-pill"
+                onClick={handleAddReqPersonToArea}
+              >
+                Add
+              </button>
+            </div>
+          </form>
         </div>
-        
+      </div>
+
       <List className="mt-4" itemLayout="horizontal">
         <div
           className="scrollbar-ripe-malinka"

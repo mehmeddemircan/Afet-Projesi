@@ -40,6 +40,8 @@ import {
   DELETE_SHELTER_FORM_RESET,
   UPDATE_SHELTER_FORM_RESET,
 } from "../redux/constants/ShelterNeedFormConstants";
+import { AllMealForm, ApproveMealForm, DeleteMealForm } from "../redux/actions/MealNeedFormActions";
+import { DELETE_MEAL_NEED_FORM_RESET, UPDATE_MEAL_NEED_FORM_RESET } from "../redux/constants/MealNeedFormConstants";
 
 const { TabPane } = Tabs;
 const FormListPage = () => {
@@ -188,6 +190,48 @@ const FormListPage = () => {
     deleteUpdateShelterForm.isDeleted,
     deleteUpdateShelterForm.isUpdated,
   ]);
+
+    const deleteUpdateMealForm = useSelector((state) => state.mealNeedForm.deleteUpdateMealForm)
+    const getAllMealForm = useSelector((state) => state.mealNeedForm.getAllMealForm)
+
+
+    const approvedMealForms = getAllMealForm.mealForms.filter(
+      (form) => form.isApproved === true
+    );
+  
+    const unApprovedMealForms = getAllMealForm.mealForms.filter(
+      (form) => form.isApproved === false
+    );
+
+    const handleDeleteMealForm = (id) => {
+      dispatch(DeleteMealForm(id));
+    };
+  
+    const handleApproveMealForm = (id) => {
+      dispatch(ApproveMealForm(id));
+    };
+  
+
+  useEffect(() => {
+    //isim de verilebilir
+    if (categoryId === "641c85e4839a1f4fb7df11e2") {
+      dispatch(AllMealForm());
+    }
+    if (deleteUpdateMealForm.isDeleted) {
+      message.success(deleteUpdateMealForm.message);
+      dispatch({ type: DELETE_MEAL_NEED_FORM_RESET });
+    }
+    if (deleteUpdateMealForm.isUpdated) {
+      message.success(deleteUpdateMealForm.message);
+      dispatch({ type: UPDATE_MEAL_NEED_FORM_RESET });
+    }
+  }, [
+    dispatch,
+    categoryId,
+    deleteUpdateMealForm.isDeleted,
+    deleteUpdateMealForm.isUpdated,
+  ]);
+
   return (
     <MainLayout>
       <div className="row">
@@ -275,12 +319,27 @@ const FormListPage = () => {
       <Tabs>
         <TabPane key="1" tab="Un Approved">
           <List>
-            {getAllShelterForm.success
+            {
+            getAllMealForm.success ? unApprovedMealForms.map((form) => (
+              <FormInfoItem 
+                isApproved={false}
+                isShelterForm={false}
+                isClothingForm={false}
+                isMealForm={true}
+                key={form._id}
+                form={form}
+                handleDeleteMealForm={handleDeleteMealForm}
+                handleApproveMealForm={handleApproveMealForm}
+                
+                />
+            )) : 
+            getAllShelterForm.success
               ? unApprovedShelterForms.map((form) => (
                   <FormInfoItem
                     isApproved={false}
                     isShelterForm={true}
                     isClothingForm={false}
+                    isMealForm={false}
                     key={form._id}
                     form={form}
                     handleDeleteShelterForm={handleDeleteShelterForm}
@@ -293,6 +352,7 @@ const FormListPage = () => {
                     isApproved={false}
                     isClothingForm={true}
                     isShelterForm={false}
+                    isMealForm={false}
                     key={form._id}
                     form={form}
                     handleDeleteClothingForm={handleDeleteClothingForm}
@@ -304,6 +364,7 @@ const FormListPage = () => {
                     isApproved={false}
                     isClothingForm={false}
                     isShelterForm={false}
+                    isMealForm={false}
                     key={form._id}
                     form={form}
                     handleDeleteForm={handleDeleteForm}
@@ -314,12 +375,28 @@ const FormListPage = () => {
         </TabPane>
         <TabPane key="2" tab="Approved">
           <List>
-            {getAllShelterForm.success
+            {
+              getAllMealForm.success ? approvedMealForms.map((form) => (
+                <FormInfoItem 
+                  isApproved={true}
+                  isShelterForm={false}
+                  isClothingForm={false}
+                  isMealForm={true}
+                  key={form._id}
+                  form={form}
+                  handleDeleteMealForm={handleDeleteMealForm}
+                
+                  
+                  />
+              )) : 
+            
+            getAllShelterForm.success
               ? approvedShelterForms.map((form) => (
                   <FormInfoItem
                     isApproved={true}
                     isShelterForm={true}
                     isClothingForm={false}
+                    isMealForm={false}
                     key={form._id}
                     form={form}
                     handleDeleteShelterForm={handleDeleteShelterForm}
@@ -330,6 +407,8 @@ const FormListPage = () => {
                   <FormInfoItem
                     isApproved={true}
                     isClothingForm={true}
+                    isShelterForm={false}
+                    isMealForm={false}
                     key={form._id}
                     form={form}
                     handleDeleteClothingForm={handleDeleteClothingForm}
@@ -339,6 +418,8 @@ const FormListPage = () => {
                   <FormInfoItem
                     isApproved={true}
                     isClothingForm={false}
+                    isMealForm={false}
+                    isShelterForm={false}
                     key={form._id}
                     form={form}
                     handleDeleteForm={handleDeleteForm}

@@ -1,31 +1,31 @@
 const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
-const ShelterNeedForm = require("../models/ShelterNeedForm");
+const MealNeedForm = require("../models/MealNeedForm");
 
-exports.createShelterNeedForm = catchAsyncErrors(async (req, res) => {
+exports.createMealNeedForm = catchAsyncErrors(async (req, res) => {
   try {
-    await ShelterNeedForm.create(req.body);
+    await MealNeedForm.create(req.body);
     res.status(200).json({ message: "Successfully sent it " });
   } catch (error) {
     res.status(500).json(error);
   }
 });
 
-exports.getAllShelterNeedForm = catchAsyncErrors(async (req, res) => {
+exports.getAllMealNeedForm = catchAsyncErrors(async (req, res) => {
   const page = parseInt(req.query.page) || 1; // default to page 1
   const limit = parseInt(req.query.limit) || 10; // default to 10 items per page
   const skipIndex = (page - 1) * limit;
 
   try {
-    const shelterForms = await ShelterNeedForm.find()
-      .populate("cityOptions", "_id name")
+    const mealForms = await MealNeedForm.find()
+
       .sort({ createdAt: -1 }) // sort by creation date in descending order
       .skip(skipIndex)
       .limit(limit);
 
-    const total = await ShelterNeedForm.countDocuments();
+    const total = await MealNeedForm.countDocuments();
 
     res.status(200).json({
-      shelterForms,
+      mealForms,
       currentPage: page,
       totalPages: Math.ceil(total / limit),
     });
@@ -34,19 +34,18 @@ exports.getAllShelterNeedForm = catchAsyncErrors(async (req, res) => {
   }
 });
 
-exports.getShelterNeedFormById = catchAsyncErrors(async (req, res) => {
+exports.getSingleMealFormById = catchAsyncErrors(async (req, res) => {
   try {
-    const shelterNeedForm = await ShelterNeedForm.findById(req.params.id);
-
-    res.status(200).json(shelterNeedForm);
+    const singleMealForm = await MealNeedForm.findById(req.params.id);
+    res.status(200).json(singleMealForm);
   } catch (error) {
-    res.status(500).json(error);
+    res.status(500).json({ error: error.message });
   }
 });
 
-exports.updateShelterNeedForm = catchAsyncErrors(async (req, res) => {
+exports.updateMealNeedForm = catchAsyncErrors(async (req, res) => {
   try {
-    await ShelterNeedForm.findByIdAndUpdate(
+    await MealNeedForm.findByIdAndUpdate(
       req.params.id,
       { $set: req.body },
       { new: true }
@@ -59,19 +58,19 @@ exports.updateShelterNeedForm = catchAsyncErrors(async (req, res) => {
   }
 });
 
-exports.deleteShelterNeedForm = catchAsyncErrors(async (req, res) => {
+exports.deleteMealNeedForm = catchAsyncErrors(async (req, res) => {
   try {
-    await ShelterNeedForm.findByIdAndDelete(req.params.id);
+    await MealNeedForm.findByIdAndDelete(req.params.id);
 
     res.status(200).json({
-      message: "Successfully deleted Shelter need form ",
+      message: "Successfully deleted meal need form ",
     });
   } catch (error) {}
 });
 
-exports.approveShelterNeedForm = catchAsyncErrors(async (req, res) => {
+exports.approveMealNeedForm = catchAsyncErrors(async (req, res) => {
   try {
-    await ShelterNeedForm.findByIdAndUpdate(
+    await MealNeedForm.findByIdAndUpdate(
       req.params.id,
       {
         $set: {
@@ -83,10 +82,9 @@ exports.approveShelterNeedForm = catchAsyncErrors(async (req, res) => {
     );
 
     res.status(200).json({
-      message: "Successfully approved Shelter form",
+      message: "Successfully approved meal form",
     });
   } catch (error) {
     res.status(500).json(error);
   }
 });
-

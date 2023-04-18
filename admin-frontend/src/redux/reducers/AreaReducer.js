@@ -78,6 +78,7 @@ export const getAllAreaReducer = (state = GET_ALL_AREA_INITIAL_STATE, action) =>
   }
 };
 
+
 export const getAreasByProductTitleReducer = (
   state = { areas: [] },
   action
@@ -193,7 +194,7 @@ export const getRequriredProductsReducer = (
         ...state,
         loading: false,
         success: true,
-        requrired_products: action.payload,
+        requrired_products : action.payload,
       };
 
     case GET_REQURIRED_PRODUCTS_FAIL:

@@ -1,13 +1,15 @@
 //replace modelSchema,ModelName with whatever you want
-var mongoose = require('mongoose');
+var mongoose = require("mongoose");
 
-var PersonSchema = new mongoose.Schema({
+var PersonSchema = new mongoose.Schema(
+  {
     name: {
-        type: String,
-        required: true 
+      type: String,
+      required: true,
     },
-   
-},{timestamps: true});
+  },
+  { timestamps: true }
+);
 
-var Person = mongoose.model('Person', PersonSchema);
+var Person = mongoose.model("Person", PersonSchema);
 module.exports = Person;

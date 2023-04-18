@@ -1,10 +1,17 @@
-import { List, message } from "antd";
+import { Button, List, Popover, Space, message } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { GetUserTasks, UpdateUserRole } from "../../redux/actions/UserActions";
+import {
+  GetUserTasks,
+  GiveRoleToUser,
+  UpdateUserRole,
+} from "../../redux/actions/UserActions";
 import TaskDrawer from "../drawer/TaskDrawer";
 import { GetAllTaskNotAdded } from "../../redux/actions/UserActions";
-import { ADD_TASK_TO_USER_RESET, REMOVE_TASK_TO_USER_RESET } from "../../redux/constants/UserConstants";
+import {
+  ADD_TASK_TO_USER_RESET,
+  REMOVE_TASK_TO_USER_RESET,
+} from "../../redux/constants/UserConstants";
 import { useNavigate } from "react-router-dom";
 const UserItem = ({ user }) => {
   const dispatch = useDispatch();
@@ -16,22 +23,62 @@ const UserItem = ({ user }) => {
 
   const [openDrawer, setOpenDrawer] = useState(false);
   const { loading } = useSelector((state) => state.user.getUserTasks);
-  const [userId, setUserId] = useState("")
-
+  const [userId, setUserId] = useState("");
 
   const handleOpenDrawer = (id) => {
-    setUserId(id)
+    setUserId(id);
     setOpenDrawer(true);
   };
 
   const handleCloseDrawer = () => {
     setOpenDrawer(false);
   };
+  const getAllPersonType = useSelector(
+    (state) => state.personType.getAllPersonType
+  );
+  const [role, setRole] = useState(user.role);
+
+  const updateUserRole = useSelector((state) => state.user.updateUserRole);
+
+  const handleGiveRoleToUser = (value) => {
+    setRole(value);
+
+    dispatch(GiveRoleToUser(user._id, { role: value }));
+  };
 
   return (
     <List.Item
+      //update role
       actions={[
         <>
+          <Space wrap>
+            <Popover
+              content={
+                <>
+                  {role}
+                  <div className="d-flex flex-column">
+                    {getAllPersonType.personTypes.map((personType) => (
+                      <button
+                        key={personType._id}
+                        className="btn  btn-sm btn-light rounded-pill text-white my-1"
+                        style={{ background: "rgb(255,56,92)" }}
+                        onClick={() => handleGiveRoleToUser(personType.name)}
+                      >
+                        {personType.name}
+                      </button>
+                    ))}
+                  </div>
+                </>
+              }
+              placement="left"
+              trigger="click"
+            >
+              <Button type="primary" shape="round" className="mx-2">
+                Roles
+              </Button>
+            </Popover>
+          </Space>
+
           <button
             className="btn btn-sm btn-light text-dark rounded-pill me-2"
             onClick={handleMakeAdmin}
@@ -50,21 +97,18 @@ const UserItem = ({ user }) => {
             Add Task{" "}
           </button>
 
-          {
-            openDrawer && (
-              <TaskDrawer
-              userId ={userId}
+          {openDrawer && (
+            <TaskDrawer
+              userId={userId}
               key={user._id}
               user={user}
               openDrawer={openDrawer}
               handleCloseDrawer={handleCloseDrawer}
             />
-            )
-          }
+          )}
         </>,
       ]}
     >
-      
       <List.Item.Meta
         title={<a>{user.name}</a>}
         description="Ant Design, a design language for background applications, is refined by Ant UED Team"
@@ -74,3 +118,5 @@ const UserItem = ({ user }) => {
 };
 
 export default UserItem;
+
+

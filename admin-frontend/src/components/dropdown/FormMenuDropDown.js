@@ -31,6 +31,20 @@ const items = [
     ),
     key: "1",
   },
+  {
+    label: (
+        <Badge.Ribbon text="New">
+      <a
+        class="me-2 mt-1 text-dark"
+        href="/gidaformu"
+        style={{ textDecoration: "none", fontSize: "18px" }}
+      >
+        Gıda Formu oluştur
+      </a>
+      </Badge.Ribbon>
+    ),
+    key: "2",
+  },
 ];
 const FormMenuDropDown = () => {
   return (

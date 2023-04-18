@@ -115,7 +115,7 @@ const EditBrandModal = ({
                 setImage("");
                 setImageLength(0);
               }}
-              fileList={image ? [{ url: image, name: "image" }] : null} // pass an array with one item containing the image details, or an empty array if the image hasn't been uploaded yet
+              defaultFileList={image ? [{ url: image, name: "image" }] : []} // pass an array with one item containing the image details, or an empty array if the image hasn't been uploaded yet
               listType="picture-card"
             >
               {imageLength === 0 && image === "" && (

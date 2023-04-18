@@ -7,14 +7,14 @@ import {  useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import InfoBreadcrumb from "../components/breadcrumb/InfoBreadcrumb";
 import { Badge } from "antd";
-;
+
 
 const AllAreaPage = () => {
 
 
   const getAllArea = useSelector((state) => state.area.getAllArea);
 
-
+ 
 
   return (
     <Fragment>

@@ -3,7 +3,7 @@ const cloudinary = require("cloudinary");
 const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
 exports.getAllBrand = catchAsyncErrors(async (req, res) => {
   try {
-    const brands = await Brand.find();
+    const brands = await Brand.find().select('-products');
 
     res.status(200).json(brands);
   } catch (error) {
@@ -28,7 +28,7 @@ exports.createBrand = catchAsyncErrors(async (req, res) => {
 
 exports.getSingleBrand = catchAsyncErrors(async (req, res) => {
   try {
-    const brand = await Brand.findById(req.params.brandId).populate("products");
+    const brand = await Brand.findById(req.params.brandId);
 
     res.status(200).json(brand);
   } catch (error) {
@@ -50,7 +50,7 @@ exports.updateBrand = catchAsyncErrors(async (req, res) => {
       const result = await cloudinary.uploader.upload(req.body.image);
       brand.image = result.secure_url;
     }
-   
+
     brand.name = req.body.name || brand.name;
     await brand.save();
     res.status(200).json({
@@ -82,7 +82,6 @@ exports.getAllBrandsByCategory = async (req, res) => {
             $push: {
               _id: "$_id",
               name: "$name",
-              products: "$products",
               image: "$image",
               category: "$category",
             },

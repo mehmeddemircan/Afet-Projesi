@@ -11,6 +11,7 @@ import {
 import { useEffect } from "react";
 import FormInfoItem from "../components/listitem/FormInfoItem";
 import { ADD_CLOTHING_FORM_RESET } from "../redux/constants/ClothingNeedFormConstants";
+import AddressInput from "../components/form/AddressInput";
 const { Option } = Select;
 const ClothingNeedFormPage = () => {
   const [name, setName] = useState("");
@@ -110,6 +111,11 @@ const ClothingNeedFormPage = () => {
   useEffect(() => {
     setUserId(auth.user._id);
   }, [auth]);
+
+  const handleSelect = (value) => {
+    setAddress(value);
+  };
+
   const handleSendForm = () => {
     dispatch(
       SendClothingForm({
@@ -221,6 +227,7 @@ const ClothingNeedFormPage = () => {
             onChange={(e) => setPhoneNumber(e.target.value)}
           />
         </Form.Item>
+        {address}
         <Form.Item
           name="address"
           label="Addres"
@@ -235,11 +242,10 @@ const ClothingNeedFormPage = () => {
             },
           ]}
         >
-          <Input
-            type="text"
-            placeholder="your address"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
+          <AddressInput
+            address={address}
+            setAddress={setAddress}
+            handleSelect={handleSelect}
           />
         </Form.Item>
         <Form.List name="clothingItems">

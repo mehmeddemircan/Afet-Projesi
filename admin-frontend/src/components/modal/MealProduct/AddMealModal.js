@@ -1,4 +1,4 @@
-import { Modal, message, Upload } from "antd";
+import { Modal, message, Upload, Form, Input } from "antd";
 import axios from "axios";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -8,6 +8,7 @@ import Resizer from "react-image-file-resizer";
 import ImgCrop from "antd-img-crop";
 import { SendOutlined, CameraFilled } from "@ant-design/icons";
 import { AddMeal } from "../../../redux/actions/MealActions";
+import AddEditMealForm from "../../form/AddEditMealForm";
 const AddMealModal = ({ handleCloseAddMealModal, showAddMealModal }) => {
   const { brandId } = useParams();
   const [title, setTitle] = useState("");
@@ -85,66 +86,26 @@ const AddMealModal = ({ handleCloseAddMealModal, showAddMealModal }) => {
 
   return (
     <Modal
+      title="Add Meal Modal"
       centered
       open={showAddMealModal}
       onOk={handleAddMeal}
       onCancel={handleCloseAddMealModal}
     >
-      <form>
-        <div class="form-group">
-          <h4 class="text-center">New Title </h4>
-          <label for="recipient-name" class="col-form-label">
-            Meal Title
-          </label>
-          <input
-            type="text"
-            class="form-control "
-            id="person-name"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-        </div>
-        <div>
-          <label for="recipient-name" class="col-form-label">
-            Price
-          </label>
-          <input
-            type="number"
-            class="form-control "
-            id="person-name"
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
-          />
-        </div>
-
-        <div>
-          <label for="recipient-name" class="col-form-label">
-            Stock
-          </label>
-          <input
-            type="number"
-            class="form-control "
-            id="person-name"
-            value={stock}
-            onChange={(e) => setStock(e.target.value)}
-          />
-        </div>
-        <div class="my-3">
-          <label for="formFile" class="form-label">
-            Default file input example
-          </label>
-          <ImgCrop rotationSlider>
-            <Upload
-              {...uploadProps}
-              onPreview={onPreview}
-              onRemove={() => setImageLength(0)}
-              listType="picture-card"
-            >
-              {imageLength === 0 && <CameraFilled style={{ fontSize: 30 }} />}
-            </Upload>
-          </ImgCrop>
-        </div>
-      </form>
+      <AddEditMealForm
+        title={title}
+        setTitle={setTitle}
+        price={price}
+        setPrice={setPrice}
+        stock={stock}
+        setStock={setStock}
+        image={image}
+        setImage={setImage}
+        uploadProps={uploadProps}
+        onPreview={onPreview}
+        imageLength={imageLength}
+        setImageLength={setImageLength}
+      />
     </Modal>
   );
 };

@@ -1,34 +1,25 @@
-import { Modal, Upload, message } from "antd";
+import { Modal, message } from "antd";
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
-import Resizer from "react-image-file-resizer";
-
-import ImgCrop from "antd-img-crop";
-import { SendOutlined, CameraFilled } from "@ant-design/icons";
-import AddEditClothesForm from "../../form/AddEditClothesForm";
+import AddEditMealForm from "../../form/AddEditMealForm";
 import axios from "axios";
+import Resizer from "react-image-file-resizer";
 import { useDispatch } from "react-redux";
-import { UpdateClotheProduct } from "../../../redux/actions/ClothesAction";
-const EditClothesProductModal = ({
+import { UpdateMealProduct } from "../../../redux/actions/MealActions";
+import { useParams } from "react-router-dom";
+const EditMealModal = ({
   item,
-  handleCloseEditClothesModal,
-  showEditClothesModal,
+  handleCloseEditMealModal,
+  showEditMealModal,
 }) => {
-  const { brandId } = useParams();
+
+  const {brandId} = useParams()
+
   const [title, setTitle] = useState(item.title);
   const [price, setPrice] = useState(item.price);
-  const [brand, setBrand] = useState(`${brandId}`);
-
-  const [genders, setGenders] = useState(["Erkek", "Kadın", "Unisex"]);
+  const [brand, setBrand] = useState(`${brandId}`)
   const [stock, setStock] = useState(item.stock);
-  const urlsOfItem = item.images.map((image) => image.url);
-  const [images, setImages] = useState(urlsOfItem);
-  const [fileList, setFileList] = useState(item.images);
-  const [gender, setGender] = useState(item.gender);
-
-  const onChange = ({ fileList: newFileList }) => {
-    setFileList(newFileList);
-  };
+  const [image, setImage] = useState(item.image);
+  const [imageLength, setImageLength] = useState(item.imageLength);
   const onPreview = async (file) => {
     let src = file.url;
     if (!src) {
@@ -63,8 +54,8 @@ const EditClothesProductModal = ({
               .then((response) => {
                 // Call the onFinish callback with the uploaded image URL
                 // onFinish(response.data.url);
-                setImages([...images, response.data.url]);
-
+                setImage(response.data.url);
+                setImageLength(1);
                 resolve(false); // prevent default antd upload behavior
               })
               .catch((error) => {
@@ -82,64 +73,40 @@ const EditClothesProductModal = ({
       } else if (status === "error") {
         message.error(`${info.file.name} file upload failed.`);
       }
-      // setImages(info.fileList);
     },
   };
 
-  const handleRemoveImage = (public_id) => {
-    console.log("remove img", public_id);
+  const dispatch = useDispatch()
+  const handleEditMealProduct = () => {
+    dispatch(UpdateMealProduct(item._id,{ title, price, brand, stock, image }))
+    handleCloseEditMealModal()
 
-    let filteredImages = item.images.filter((item) => {
-      return item.public_id !== public_id;
-    });
-    const urlsOfItem = filteredImages.map((image) => image.url);
-    setImages(urlsOfItem);
-    message.success("Successfully removed from list");
-  };
-  const dispatch = useDispatch();
-  const handleEditClotheProduct = () => {
-    dispatch(
-      UpdateClotheProduct(item._id, {
-        title,
-        price,
-        brand,
-        gender,
-        stock,
-        images,
-      })
-    );
-    handleCloseEditClothesModal();
-   
-  };
+  }
 
   return (
     <Modal
-      title="Edit Clothes Product"
+      title="Edit Meal Modal"
       centered
-      open={showEditClothesModal}
-      onOk={handleEditClotheProduct}
-      onCancel={handleCloseEditClothesModal}
+      open={showEditMealModal}
+      onOk={handleEditMealProduct}
+      onCancel={handleCloseEditMealModal}
     >
-    
-      <AddEditClothesForm
+      <AddEditMealForm
         title={title}
         setTitle={setTitle}
-        // handleSelectGender={handleSelectGender}
-        genders={genders}
         price={price}
         setPrice={setPrice}
         stock={stock}
         setStock={setStock}
-        handleRemoveImage={handleRemoveImage}
-        gender={gender}
-        images={images}
+        image={image}
+        setImage={setImage}
         uploadProps={uploadProps}
         onPreview={onPreview}
-        onChange={onChange}
-        fileList={fileList}
+        imageLength={imageLength}
+        setImageLength={setImageLength}
       />
     </Modal>
   );
 };
 
-export default EditClothesProductModal;
+export default EditMealModal;
