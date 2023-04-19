@@ -3,7 +3,7 @@ const cloudinary = require("cloudinary");
 const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
 exports.getAllBrand = catchAsyncErrors(async (req, res) => {
   try {
-    const brands = await Brand.find().select('-products');
+    const brands = await Brand.find().select("-products");
 
     res.status(200).json(brands);
   } catch (error) {
@@ -96,3 +96,36 @@ exports.getAllBrandsByCategory = async (req, res) => {
     res.status(500).json({ message: "Server Error" });
   }
 };
+
+exports.getAllClothesBrand = catchAsyncErrors(async (req, res) => {
+  try {
+    const clothesBrands = await Brand.find(
+      { category: "Giyim" },
+      { products: 0 }
+    );
+    res.status(200).json(clothesBrands);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
+exports.getAllShelterBrand = catchAsyncErrors(async (req, res) => {
+  try {
+    const shelterBrands = await Brand.find(
+      { category: "Ev-Hotel" },
+      { products: 0 }
+    );
+    res.status(200).json(shelterBrands);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
+exports.getAllMealBrand = catchAsyncErrors(async (req, res) => {
+  try {
+    const mealBrands = await Brand.find({ category: "Gıda" }, { products: 0 });
+    res.status(200).json(mealBrands);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
