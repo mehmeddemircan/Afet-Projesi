@@ -144,7 +144,7 @@ export const GetAllClothesBrand = () => async (dispatch) => {
     });
 
     const { data } = await axios.get(
-      `http://localhost:5000/api/get-clothes-brands`
+      `https://afetapi.onrender.com/api/get-clothes-brands`
     );
 
     dispatch({
@@ -167,7 +167,7 @@ export const GetAllShelterBrand = () => async (dispatch) => {
     });
 
     const { data } = await axios.get(
-      `http://localhost:5000/api/get-shelter-brands`
+      `https://afetapi.onrender.com/api/get-shelter-brands`
     );
 
     dispatch({
@@ -189,7 +189,7 @@ export const GetAllMealBrand = () => async (dispatch) => {
     });
 
     const { data } = await axios.get(
-      `http://localhost:5000/api/get-meal-brands`
+      `https://afetapi.onrender.com/api/get-meal-brands`
     );
 
     dispatch({
