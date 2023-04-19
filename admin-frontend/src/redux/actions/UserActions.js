@@ -3,7 +3,9 @@ import {
   ADD_TASK_TO_USER_FAIL,
   ADD_TASK_TO_USER_REQUEST,
   ADD_TASK_TO_USER_SUCCESS,
+  FILTER_BY_ROLE_FAIL,
   FILTER_BY_ROLE_REQUEST,
+  FILTER_BY_ROLE_SUCCESS,
   GET_ALL_USER_FAIL,
   GET_ALL_USER_REQUEST,
   GET_ALL_USER_SUCCESS,
@@ -268,12 +270,12 @@ export const GetUsersByRole = (userRoles) => async (dispatch) => {
     );
 
     dispatch({
-      type: GET_NOT_ADDED_TASK_SUCCESS,
+      type: FILTER_BY_ROLE_SUCCESS,
       payload: data,
     });
   } catch (error) {
     dispatch({
-      type: GET_NOT_ADDED_TASK_FAIL,
+      type: FILTER_BY_ROLE_FAIL,
       error: error.response,
     });
   }

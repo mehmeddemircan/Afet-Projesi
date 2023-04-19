@@ -16,7 +16,7 @@ import FiltersButtonTaskContent from "../popover/FiltersButtonTaskContent";
 import { AllCountry } from "../../redux/actions/CountryActions";
 import { GetTaskByCityId } from "../../redux/actions/TaskActions";
 import { AllCity } from "../../redux/actions/CityActions";
-import { GetAllUserLocations } from "../../redux/actions/UserActions";
+import { GetAllUserLocations, GetUsersByRole } from "../../redux/actions/UserActions";
 import CreateAreaMarker from "./markers/CreateAreaMarker";
 import AreaMarker from "./markers/AreaMarker";
 import TaskMarker from "./markers/TaskMarker";
@@ -138,7 +138,7 @@ export default function MapComponent() {
       dispatch(AllCountry());
       dispatch(GetTaskByCityId(selectedCities));
     }
-  }, [dispatch, showTaskFilter, text, dueDate]);
+  }, [dispatch, showTaskFilter, text, dueDate,selectedCities.length]);
 
   const handleAddCityChange = (value) => {
     setSelectedCities(value);
@@ -148,9 +148,7 @@ export default function MapComponent() {
     dispatch(AllCity(value));
   };
 
-  useEffect(() => {
-    dispatch(GetTaskByCityId(selectedCities));
-  }, [dispatch, selectedCities]);
+
 
   //Live location
   const getAllUserLocations = useSelector((state) => state.getAllUserLocations);
@@ -165,26 +163,33 @@ export default function MapComponent() {
       dispatch(AllPersonType())
     }
   };
+  const [selectedRoles, setSelectedRoles] = useState([])
+  const handleAddUserRole = (value) => {
+    setSelectedRoles(value)
+}
   useEffect(() => {
+
+    if (showLiveLocation && selectedRoles.length === 0) {
+      dispatch(GetAllUserLocations());
+    }
+    if (showLiveLocation && selectedRoles.length > 0) {
+      dispatch(GetUsersByRole(selectedRoles))
+    }
+
     const intervalId = setInterval(() => {
-      if (showLiveLocation) {
+      if (showLiveLocation && selectedRoles.length === 0) {
         dispatch(GetAllUserLocations());
+      }
+      if (showLiveLocation && selectedRoles.length > 0) {
+        dispatch(GetUsersByRole(selectedRoles))
       }
     }, 10000);
 
     return () => {
       clearInterval(intervalId);
     };
-  }, [dispatch, showLiveLocation]);
+  }, [dispatch, showLiveLocation,selectedRoles.length]);
   
-  const [selectedRoles, setSelectedRoles] = useState([])
-
-  const handleAddUserRole = (value) => {
-      setSelectedRoles(value)
-  }
-
-
-
   return (
     // Important! Always set the container height explicitly
     <Fragment>
@@ -195,6 +200,7 @@ export default function MapComponent() {
             setAddress={setAddress}
             handleSelect={handleSelect}
           />
+    
           <button
             className={
               showLiveLocation
