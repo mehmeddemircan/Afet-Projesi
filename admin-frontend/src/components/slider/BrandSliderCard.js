@@ -12,6 +12,7 @@ const BrandSliderCard = ({brand}) => {
   >
     <Card
       hoverable
+      className='col-sm-12'
       style={{ width: 240, borderRadius: 20, marginBottom: 10 }}
       cover={
         <img

@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { GetAllClothesBrand } from "../../redux/actions/BrandActions";
 import BrandSlider from "./BrandSlider";
 import BrandSliderCard from "./BrandSliderCard";
-const { Meta } = Card;
+
 
 const ClothesBrandSlider = () => {
   const getAllClothesBrand = useSelector(
