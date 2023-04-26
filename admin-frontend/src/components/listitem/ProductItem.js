@@ -34,7 +34,7 @@ const ProductItem = ({
   const handleCloseAddProductToAreaModal = () => {
     setShowAddProductToAreaModal(false);
   };
-
+  
   return (
     <Fragment>
       <Card
