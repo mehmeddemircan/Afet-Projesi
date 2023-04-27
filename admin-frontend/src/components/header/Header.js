@@ -21,67 +21,71 @@ const Header = () => {
     setShowLanguageModal(false);
   };
 
+  const [showMenu, setShowMenu] = useState(false);
+
+  const handleToggleMenu = () => {
+    setShowMenu(!showMenu);
+  };
+
   return (
     <Fragment>
       <nav
-        class="navbar navbar-expand-sm navbar-light"
+        class="navbar navbar-expand-lg navbar-light"
         style={{
           border: "1px solid rgb(221,221,221)",
         }}
       >
-        <div class="container  d-flex  justify-content-between py-2">
-          <div className="d-inline-flex align-items-center">
-            <a class="navbar-brand" href="/">
-              Deprem
-            </a>
+        <div class="container py-2">
+          <a class="navbar-brand" href="/">
+            Afet Yönetim
+          </a>
+          <button
+            className="navbar-toggler"
+            type="button"
+            onClick={handleToggleMenu}
+          >
+            <span className="navbar-toggler-icon"></span>
+          </button>
+          <div
+            className={`collapse navbar-collapse ${showMenu ? "show" : ""}`}
+            id="navbarNav"
+          >
+            <ul className="navbar-nav me-auto mb-2 mb-lg-0 ">
+              <li className="nav-item mt-2 mx-1">
+                <HeaderMenuDropDown />
+              </li>
 
-            <HeaderMenuDropDown />
-         
-            <a
-              className="text-dark mt-1 ms-2"
-              style={{
-                textDecorationLine: "none",
-              }}
-              href="/markalar"
-            >
-              Markalar
-            </a>
-              <FormMenuDropDown />
-          </div>
-          <div>
-            <button
-              className="btn btn-light rounded-pill d-inline-flex align-items-center"
-              style={{ border: "1px solid rgb(221,221,221)" }}
-            >
-              <div className="mx-2 my-2">
-                Herhangi bir yer{" "}
-                <a className="ms-2" href="#">
-                  {" "}
-                  |
+              <li className="nav-item pt-2 mx-1">
+                <FormMenuDropDown />
+              </li>
+              <li className="nav-item pt-1 mx-1">
+                <a
+                  className="nav-link"
+                  style={{
+                    textDecorationLine: "none",
+                  }}
+                  href="/markalar"
+                >
+                  Markalar
                 </a>
-              </div>
-              <div className="mx-2 my-2">
-                Herhangi bir yer{" "}
-                <a className="ms-2" href="#">
-                  {" "}
-                </a>
-              </div>
-            </button>
-          </div>
-          <div>
-            {/* globe */}
-            <button
-              className="btn btn-light rounded-pill"
-              onClick={handleShowLanguageModal}
-            >
-              <i class="fa-solid fa-globe"></i>
-            </button>
-            <LanguageModal
-              showLanguageModal={showLanguageModal}
-              handleCancelLanguageModal={handleCancelLanguageModal}
-            />
+              </li>
+            </ul>
 
-            {auth.authenticate ? <LoggedInSegment /> : <NotLoggedInSegment />}
+            <div>
+              {/* globe */}
+              <button
+                className="btn btn-light rounded-pill"
+                onClick={handleShowLanguageModal}
+              >
+                <i class="fa-solid fa-globe"></i>
+              </button>
+              <LanguageModal
+                showLanguageModal={showLanguageModal}
+                handleCancelLanguageModal={handleCancelLanguageModal}
+              />
+
+              {auth.authenticate ? <LoggedInSegment /> : <NotLoggedInSegment />}
+            </div>
           </div>
         </div>
       </nav>

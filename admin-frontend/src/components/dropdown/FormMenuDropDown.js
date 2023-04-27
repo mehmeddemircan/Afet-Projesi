@@ -52,7 +52,7 @@ const FormMenuDropDown = () => {
       menu={{
         items,
       }}
-      className="mt-1 text-dark mx-3"
+      className="mt-1 text-dark "
       style={{
         textDecorationLine: "none",
       }}
