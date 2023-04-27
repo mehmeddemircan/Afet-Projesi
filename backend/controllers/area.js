@@ -307,22 +307,22 @@ exports.getFilterIncludesProductForArea = catchAsyncErrors(async (req, res) => {
 
 exports.filterAreas = catchAsyncErrors(async(req,res) => {
   try {
-    const filters = req.query.filters; // Get an array of productTitle values from the query parameter
+    const filters = req.query.filters; 
     const people = req.query.people;
-    const priorityOrders = req.query.priorityOrders; // Get an array of priorityOrder values from the query parameter
+    const priorityOrders = req.query.priorityOrders; 
     const areas = await Area.find().populate({
       path: "requrired_people",
       populate: {
-        path: "Person", // Field to populate
-        model: "Person", // Model to use for population
+        path: "Person",
+        model: "Person", 
         select: "_id name",
       },
     }).populate({
       path: "requrired_products",
       populate: {
-        path: "Product", // Field to populate
-        model: "Product", // Model to use for population
-        select: "_id title description priorityOrder", // Add priorityOrder to the select fields
+        path: "Product", 
+        model: "Product", 
+        select: "_id title description priorityOrder", 
       },
     });
   
@@ -330,37 +330,37 @@ exports.filterAreas = catchAsyncErrors(async(req,res) => {
   
     if (filters) {
       filteredAreas = filteredAreas.filter((area) => {
-        // Filter the requrired_products array of each area to only include products with title values in the filters array
+
         area.requrired_products = area.requrired_products.filter((product) =>
           filters.includes(product.Product.title)
         );
-        return area.requrired_products.length > 0; // Only include areas that have at least one product with a title value in the filters array
+        return area.requrired_products.length > 0; 
       });
     }
     
     if (people) {
       filteredAreas = filteredAreas.filter((area) => {
-        // Filter the requrired_products array of each area to only include products with title values in the filters array
+
         area.requrired_people = area.requrired_people.filter((person) =>
           people.includes(person.Person.name)
         );
-        return area.requrired_people.length > 0; // Only include areas that have at least one product with a title value in the filters array
+        return area.requrired_people.length > 0; 
       });
     }
   
     if (priorityOrders) {
       filteredAreas = filteredAreas.filter((area) => {
-        // Filter the requrired_products array of each area to only include products with priorityOrder values in the priorityOrders array
+
         area.requrired_products = area.requrired_products.filter((product) =>
           priorityOrders.includes(product.priorityOrder)
         );
-        return area.requrired_products.length > 0; // Only include areas that have at least one product with a priorityOrder value in the priorityOrders array
+        return area.requrired_products.length > 0; 
       });
     }
   
     res.json(filteredAreas);
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ error: "Internal Server Error" }); // Return an error response if there is an issue with the database query
+    return res.status(500).json({ error: "Internal Server Error" }); 
   }
 })
