@@ -10,10 +10,10 @@ const HomePage = () => {
   return (
     <MainLayout>
       <HomeJumbotron />
-{/*    
+   
       <ClothesBrandSlider />
       <ShelterBrandSlider />
-      <MealBrandSlider /> */}
+      <MealBrandSlider />
     </MainLayout>
   );
 };
