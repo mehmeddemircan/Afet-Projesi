@@ -1,4 +1,4 @@
-import { Avatar, Button, Popover } from "antd";
+import { Avatar, Button, Popover, Tag } from "antd";
 import React from 'react'
 import { UserOutlined } from "@ant-design/icons"
 const UserMarker = ({ userLocation, lat, lng }) => {
@@ -7,6 +7,8 @@ const UserMarker = ({ userLocation, lat, lng }) => {
         content={
           <>
             <h6>{userLocation.name}</h6>
+            <p>Role <Tag color="
+#108ee9" >{userLocation.role}</Tag></p>
             <a>lat : {lat}</a>
             <a>lat : {lng}</a>
           </>

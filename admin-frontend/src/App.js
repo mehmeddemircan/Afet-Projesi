@@ -55,7 +55,7 @@ function App() {
     if ("permissions" in navigator) {
       navigator.permissions.query({ name: "geolocation" }).then((result) => {
         if (result.state === "granted") {
-          // Permission already granted
+          
           watchId = navigator.geolocation.watchPosition(
             (position) => {
               setLocation(position.coords);
@@ -76,7 +76,7 @@ function App() {
             }
           );
         } else if (result.state === "prompt") {
-          // Ask user for permission
+
           navigator.geolocation.getCurrentPosition(
             (position) => {
               setLocation(position.coords);
@@ -91,13 +91,13 @@ function App() {
             (error) => console.log(error)
           );
         } else {
-          // Permission denied
-          console.log("Permission denied");
+        
+          console.log("İzin verilmedi");
         }
       });
     } else {
-      // Permissions API not supported
-      console.log("Permissions API not supported");
+     
+      console.log("izinleri desteklenmiyor");
     }
     setWatchId(watchId);
 

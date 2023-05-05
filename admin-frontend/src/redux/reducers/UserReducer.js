@@ -122,7 +122,7 @@ const GET_ALL_USER_INITIAL_STATE = {
 
   export const getAllUserLocationsReducer = (
       state = {
-        userLocations: "",
+        userLocations: [],
       },
       action
     ) => {

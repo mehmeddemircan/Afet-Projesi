@@ -58,7 +58,7 @@ const Header = () => {
               <li className="nav-item pt-2 mx-1">
                 <FormMenuDropDown />
               </li>
-              <li className="nav-item pt-1 mx-1">
+              {/* <li className="nav-item pt-1 mx-1">
                 <a
                   className="nav-link"
                   style={{
@@ -68,7 +68,7 @@ const Header = () => {
                 >
                   Markalar
                 </a>
-              </li>
+              </li> */}
             </ul>
 
             <div>

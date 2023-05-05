@@ -54,7 +54,7 @@ const ClothingNeedFormPage = () => {
   const handleCategorySelect = (value) => {
     setProductCategory(value);
     if (value === "Pantolon") {
-      alert(`${value} secildi`);
+   
       setProductSizes(pantSizes);
     }
     if (value === "Sweatshirt" || value === "Pjima" || value === "Esofman") {
@@ -64,12 +64,12 @@ const ClothingNeedFormPage = () => {
 
   const handleSizeSelect = (value) => {
     setProductSize(value);
-    alert(`${value} selected`);
+
   };
 
   const handleGenderSelect = (value) => {
     setGender(value);
-    alert(value);
+
   };
 
   const handleAddClothingItem = () => {
@@ -130,6 +130,7 @@ const ClothingNeedFormPage = () => {
     );
   };
 
+
   useEffect(() => {
     handleAddClothingItem();
   }, [
@@ -156,6 +157,7 @@ const ClothingNeedFormPage = () => {
       <h4>Giyim İhtiyaç Formu</h4>
 
       <Form
+     
         className="mx-auto"
         initialValues={{
           prefix: "90",

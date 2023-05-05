@@ -10,9 +10,10 @@ import {toast} from 'react-toastify'
 import UserFilterButtons from "../components/buttons/UserFilterButtons";
 import { AllPersonType } from "../redux/actions/PersonTypeActions";
 const UsersPage = () => {
+
+
   const getAllUser = useSelector((state) => state.user.getAllUser);
   const updateUserRole = useSelector((state) => state.user.updateUserRole);
-  
 
   const [name, setName] = useState("")
 
