@@ -11,9 +11,9 @@ const HomePage = () => {
     <MainLayout>
       <HomeJumbotron />
    
-      <ClothesBrandSlider />
+      {/* <ClothesBrandSlider />
       <ShelterBrandSlider />
-      <MealBrandSlider />
+      <MealBrandSlider /> */}
     </MainLayout>
   );
 };
