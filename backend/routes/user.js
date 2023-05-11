@@ -15,6 +15,7 @@ const {
   userMakeAdmin,
   updateUserRole,
   filterUsersByUserRole,
+  getUserLocationOnMapWithCount,
 } = require("../controllers/user");
 
 var router = express.Router();
@@ -27,6 +28,7 @@ router.route("/users/:id/deleteUser").delete(deleteUser);
 router.route("/users/:userId/location").patch(updateUserLocation);
 router.route("/map/users/:id").get(getUserLocationOnMap);
 router.route("/map/users").get(getUsersOnMap);
+router.route('/user-locations').get(getUserLocationOnMapWithCount)
 router.route("/users/:userId/add-task").post(addTaskToUser);
 router.route("/users/:id/tasks").get(getTasksOfUser);
 router.route("/users/:id/tasks/:objectId/remove").delete(removeTaskFromUser);
