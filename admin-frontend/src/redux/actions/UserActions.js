@@ -12,6 +12,9 @@ import {
   GET_NOT_ADDED_TASK_FAIL,
   GET_NOT_ADDED_TASK_REQUEST,
   GET_NOT_ADDED_TASK_SUCCESS,
+  GET_USER_LOCATIONS_WITH_COUNT_FAIL,
+  GET_USER_LOCATIONS_WITH_COUNT_REQUEST,
+  GET_USER_LOCATIONS_WITH_COUNT_SUCCESS,
   GET_USER_TASKS_FAIL,
   GET_USER_TASKS_REQUEST,
   GET_USER_TASKS_SUCCESS,
@@ -139,6 +142,28 @@ export const GetAllUserLocations = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: GET_USERS_LOCATIONS_FAIL,
+      error: error.response,
+    });
+  }
+};
+
+export const GetAllUserLocationsWithCount = (limit,page) => async (dispatch) => {
+  try {
+    dispatch({
+      type: GET_USER_LOCATIONS_WITH_COUNT_REQUEST,
+    });
+
+    const { data } = await axios.get(
+      `http://localhost:5000/api/user-locations?limit=${limit}&page=${page}`
+    );
+
+    dispatch({
+      type: GET_USER_LOCATIONS_WITH_COUNT_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_USER_LOCATIONS_WITH_COUNT_FAIL,
       error: error.response,
     });
   }
