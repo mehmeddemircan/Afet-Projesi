@@ -229,14 +229,63 @@ exports.filterUsersByUserRole = async (req, res) => {
     const { userRoles } = req.query; // Get selected user roles from query parameters
 
     if (userRoles) {
-      const userRolesArray = userRoles.split(','); // Split user roles string into an array
-      users = await User.find({ role: { $in: userRolesArray } },{name:1,location:1,email:1,role:1}); // Find users with matching user roles
+      const userRolesArray = userRoles.split(","); // Split user roles string into an array
+      users = await User.find(
+        { role: { $in: userRolesArray } },
+        { name: 1, location: 1, email: 1, role: 1 }
+      ); // Find users with matching user roles
     } else {
-      users = await User.find( { location: { $exists: true } },
-        { name: 1, email: 1, location: 1, role: 1 }); // Find all users if no user roles are provided
+      users = await User.find(
+        { location: { $exists: true } },
+        { name: 1, email: 1, location: 1, role: 1 }
+      ); // Find all users if no user roles are provided
     }
     res.status(200).json(users); // Return filtered users as JSON response
   } catch (err) {
     res.status(500).json({ error: "Server error" });
   }
 };
+
+exports.getUserLocationOnMapWithCount = catchAsyncErrors(async (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 4;
+  const startIndex = (page - 1) * limit;
+  const endIndex = page * limit;
+
+  const results = {};
+
+  if (endIndex < (await User.countDocuments().exec())) {
+    results.next = {
+      page: page + 1,
+      limit: limit,
+    };
+  }
+
+  if (startIndex > 0) {
+    results.previous = {
+      page: page - 1,
+      limit: limit,
+    };
+  }
+
+  try {
+    results.users = await User.find(
+      { location: { $exists: true } },
+      {
+        name: 1,
+        email: 1,
+        location: 1,
+        role: 1,
+      }
+    )
+      .limit(limit)
+      .skip(startIndex)
+      .exec();
+    results.totalLength = (
+      await User.find({ location: { $exists: true } })
+    ).length;
+    res.status(200).json(results);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
