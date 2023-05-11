@@ -25,6 +25,7 @@ import { AllPersonType } from "../redux/actions/PersonTypeActions";
 import PersonTypeItem from "../components/listitem/PersonTypeItem";
 
 import InfoBreadcrumb from "../components/breadcrumb/InfoBreadcrumb";
+import MetaTitle from "../meta/MetaTitle";
 
 const { TabPane } = Tabs;
 const AreaDetailsPage = () => {
@@ -128,7 +129,9 @@ const AreaDetailsPage = () => {
 
   return (
     <MainLayout>
+      <MetaTitle title="Alan Detayları" name="alanDetayları" content="alanDetayları" />
       <h5 className="my-4 text-center">AreaDetailsPage</h5>
+      
       <InfoBreadcrumb
         items={[
           {

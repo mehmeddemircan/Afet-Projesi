@@ -10,6 +10,7 @@ import { ADD_CITY_RESET } from "../redux/constants/CityConstants";
 import InfoBreadcrumb from "../components/breadcrumb/InfoBreadcrumb";
 import { Badge, message } from "antd";
 import { ADD_COUNTRY_RESET } from "../redux/constants/CountryConstants";
+import MetaTitle from "../meta/MetaTitle";
 const CityCountryPage = () => {
   const [name, setName] = useState("");
 
@@ -42,6 +43,7 @@ const CityCountryPage = () => {
 
   return (
     <MainLayout>
+      <MetaTitle title="Sehir Ve Ülke " name="sehirveülke" content="sehirveülke" />
       <div className="input-group my-3">
         <input
           type="text"

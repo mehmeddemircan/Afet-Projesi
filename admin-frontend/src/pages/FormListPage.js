@@ -42,6 +42,7 @@ import {
 } from "../redux/constants/ShelterNeedFormConstants";
 import { AllMealForm, ApproveMealForm, DeleteMealForm } from "../redux/actions/MealNeedFormActions";
 import { DELETE_MEAL_NEED_FORM_RESET, UPDATE_MEAL_NEED_FORM_RESET } from "../redux/constants/MealNeedFormConstants";
+import MetaTitle from "../meta/MetaTitle";
 
 const { TabPane } = Tabs;
 const FormListPage = () => {
@@ -234,6 +235,7 @@ const FormListPage = () => {
 
   return (
     <MainLayout>
+      <MetaTitle title={`${getSingleFormCategory.formCategory.name} Detayları`} name="formKategoriDetayları" content="formKategoriDetayları" />
       <div className="row">
         <InfoBreadcrumb
           items={[

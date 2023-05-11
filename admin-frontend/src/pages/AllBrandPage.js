@@ -6,12 +6,14 @@ import { AllBrand } from "../redux/actions/BrandActions";
 import { Card, Tooltip, message } from "antd";
 import { ADD_BRAND_RESET } from "../redux/constants/BrandConstants";
 import BrandList from "../components/list/BrandList";
+import MetaTitle from "../meta/MetaTitle";
 
 const AllBrandPage = () => {
 
 
   return (
     <MainLayout>
+    <MetaTitle title="Sponsor Markalarımız" name="sponsorMarkalarımız" content="sponsorMarkalarımız" />
       <AddBrandButton />
       <BrandList />
     </MainLayout>

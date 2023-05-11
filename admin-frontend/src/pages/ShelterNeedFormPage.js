@@ -21,6 +21,7 @@ import { CREATE_SHELTER_NEED_FORM_RESET } from "../redux/constants/ShelterNeedFo
 import SearchMapContent from "../components/map/SearchMapContent";
 import PlacesAutocomplete from "react-places-autocomplete";
 import AddressInput from "../components/form/AddressInput";
+import MetaTitle from "../meta/MetaTitle";
 const { Option } = Select;
 const ShelterNeedFormPage = () => {
   const [userId, setUserId] = useState("");
@@ -107,6 +108,7 @@ const ShelterNeedFormPage = () => {
 
   return (
     <MainLayout>
+      <MetaTitle title="Barınma Formu" name="barınmaFormu" content="barınmaFormu" />
       <h4>Barınma Formu</h4>
       <Form
         className="mx-auto"

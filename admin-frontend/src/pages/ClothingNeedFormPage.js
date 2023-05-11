@@ -12,6 +12,7 @@ import { useEffect } from "react";
 import FormInfoItem from "../components/listitem/FormInfoItem";
 import { ADD_CLOTHING_FORM_RESET } from "../redux/constants/ClothingNeedFormConstants";
 import AddressInput from "../components/form/AddressInput";
+import MetaTitle from "../meta/MetaTitle";
 const { Option } = Select;
 const ClothingNeedFormPage = () => {
   const [name, setName] = useState("");
@@ -154,6 +155,7 @@ const ClothingNeedFormPage = () => {
   );
   return (
     <MainLayout>
+      <MetaTitle title="Giyim İhtiyaç Formumuz" name="giyimİhtiyaçFormu" content="giyimİhtiyaçFormu" />
       <h4>Giyim İhtiyaç Formu</h4>
 
       <Form

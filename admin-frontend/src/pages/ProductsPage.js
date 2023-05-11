@@ -13,6 +13,7 @@ import {
 import ProductList from "../components/list/ProductList";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import MetaTitle from "../meta/MetaTitle";
 
 const ProductsPage = () => {
   const addProduct = useSelector((state) => state.product.addProduct);
@@ -54,6 +55,7 @@ const ProductsPage = () => {
 
   return (
     <MainLayout>
+      <MetaTitle title="Ürünlerimiz" name="ürünlerimiz" content="ürünlerimiz"  />
       <h2 className="text-center my-4">Products Page</h2>
       <AddProductButton handleShowAddProductModal={handleShowAddProductModal} />
       <AddProductModal

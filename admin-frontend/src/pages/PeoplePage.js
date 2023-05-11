@@ -11,6 +11,7 @@ import {
 } from "../redux/constants/PersonTypeConstants";
 import InfoBreadcrumb from "../components/breadcrumb/InfoBreadcrumb";
 import { Badge } from "antd";
+import MetaTitle from "../meta/MetaTitle";
 const PeoplePage = () => {
   const addPersonType = useSelector((state) => state.personType.addPersonType);
   const deleteUpdatePersonType = useSelector(
@@ -39,6 +40,7 @@ const PeoplePage = () => {
 
   return (
     <MainLayout>
+      <MetaTitle title="Kişi Tipleri" name="kişiTipleri" content="kişiTipleri" />
       <InfoBreadcrumb
         items={[
           {

@@ -15,6 +15,7 @@ import CategoryPagination from "../components/pagination/CategoryPagination";
 import { Badge, Pagination } from "antd";
 import { AllSubCategory } from "../redux/actions/SubCategoryActions";
 import InfoBreadcrumb from "../components/breadcrumb/InfoBreadcrumb";
+import MetaTitle from "../meta/MetaTitle";
 
 const CategoriesPage = () => {
   const addCategory = useSelector((state) => state.category.addCategory);
@@ -63,6 +64,7 @@ const CategoriesPage = () => {
 
   return (
     <MainLayout>
+      <MetaTitle title="Kategorilerimiz" name="kategorilerimiz" content="kategorilerimiz" />
       <AddCategoryButton />
       <InfoBreadcrumb
         items={[
