@@ -9,6 +9,7 @@ import {  UPDATE_USER_ROLE_RESET } from "../redux/constants/UserConstants";
 import {toast} from 'react-toastify'
 import UserFilterButtons from "../components/buttons/UserFilterButtons";
 import { AllPersonType } from "../redux/actions/PersonTypeActions";
+import MetaTitle from "../meta/MetaTitle";
 const UsersPage = () => {
 
 
@@ -38,6 +39,7 @@ const UsersPage = () => {
 
   return (
     <MainLayout>
+      <MetaTitle title="Kullanıcılar" name="Kullanicilar" content="Kullanicilar" />
       <h5 className="my-3 text-center">UsersPage</h5>
       <UserFilterButtons />
       <SearchUserInput name={name} setName={setName} />

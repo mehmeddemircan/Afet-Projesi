@@ -33,6 +33,7 @@ import {
 } from "../redux/constants/ShelterConstants";
 
 import BrandProductItem from "../components/listitem/BrandProductItem";
+import MetaTitle from "../meta/MetaTitle";
 const BrandDetailsPage = () => {
   const { brandId } = useParams();
   const dispatch = useDispatch();
@@ -173,6 +174,7 @@ const BrandDetailsPage = () => {
 
   return (
     <MainLayout>
+      <MetaTitle title={`${getSingleBrand.brand.name} Detayları `} name="detaylar" content="detaylar" />
       <div>
         <InfoBreadcrumb
           items={[

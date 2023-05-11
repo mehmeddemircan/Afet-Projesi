@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigation , useParams } from 'react-router-dom'
 import { ResetPassword } from '../redux/actions/AuthActions'
 import { toast } from 'react-toastify'
+import MetaTitle from '../meta/MetaTitle'
 
 const ResetPasswordPage = () => {
 
@@ -37,6 +38,7 @@ const ResetPasswordPage = () => {
   return (
    
         <MainLayout>
+          <MetaTitle title="Şifrenizi Yenileyiniz" name="şifreYenileme" content="şifreYenileme" />
 <div class="container d-flex flex-column mt-5">
         <div
           class="row align-items-center justify-content-center

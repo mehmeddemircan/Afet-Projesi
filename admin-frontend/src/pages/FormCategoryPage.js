@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { GET_ALL_CLOTHING_FORM_RESET } from "../redux/constants/ClothingNeedFormConstants";
 import { GET_ALL_SHELTER_FORM_RESET } from "../redux/constants/ShelterNeedFormConstants";
 import { GET_ALL_MEAL_NEED_FORM_RESET } from "../redux/constants/MealNeedFormConstants";
+import MetaTitle from "../meta/MetaTitle";
 
 const FormCategoryPage = () => {
   const getAllFormCategory = useSelector(
@@ -27,6 +28,7 @@ const FormCategoryPage = () => {
 
   return (
     <Fragment>
+      <MetaTitle title="Form Kategorilerimiz" name="formKategorilerimiz" content="formKategorilerimiz" />
       <MainLayout>
         {getAllFormCategory.results.map((category) =>
           category.parent === null ? (

@@ -51,33 +51,35 @@ const UserItem = ({ user }) => {
       //update role
       actions={[
         <>
-          <Space wrap>
-            <Popover
-              content={
-                <>
-                  {role}
-                  <div className="d-flex flex-column">
-                    {getAllPersonType.personTypes.map((personType) => (
-                      <button
-                        key={personType._id}
-                        className="btn  btn-sm btn-light rounded-pill text-white my-1"
-                        style={{ background: "rgb(255,56,92)" }}
-                        onClick={() => handleGiveRoleToUser(personType.name)}
-                      >
-                        {personType.name}
-                      </button>
-                    ))}
-                  </div>
-                </>
-              }
-              placement="left"
-              trigger="click"
-            >
-              <Button type="primary" shape="round" className="mx-2">
-                Roles
-              </Button>
-            </Popover>
-          </Space>
+          {user.location && (
+              <Space wrap>
+              <Popover
+                content={
+                  <>
+                    {role}
+                    <div className="d-flex flex-column">
+                      {getAllPersonType.personTypes.map((personType) => (
+                        <button
+                          key={personType._id}
+                          className="btn  btn-sm btn-light rounded-pill text-white my-1"
+                          style={{ background: "rgb(255,56,92)" }}
+                          onClick={() => handleGiveRoleToUser(personType.name)}
+                        >
+                          {personType.name}
+                        </button>
+                      ))}
+                    </div>
+                  </>
+                }
+                placement="left"
+                trigger="click"
+              >
+                <Button type="primary" shape="round" className="mx-2">
+                  Roles
+                </Button>
+              </Popover>
+            </Space>
+          )}
 
           <button
             className="btn btn-sm btn-light text-dark rounded-pill me-2"

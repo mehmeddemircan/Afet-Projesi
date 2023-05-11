@@ -17,7 +17,7 @@ import ResetPasswordPage from "./pages/ResetPasswordPage";
 import { useDispatch, useSelector } from "react-redux";
 import { isUserLoggedIn } from "./redux/actions/AuthActions";
 import { useEffect, useState } from "react";
-import AntdUploadPage from "./pages/AntdUploadPage";
+
 import ProductDetailsPage from "./pages/ProductDetailsPage";
 
 import FormListPage from "./pages/FormListPage";
@@ -129,7 +129,7 @@ function App() {
         <Route path="/location" element={<LocationPage />} />
         <Route path="/gorevler" element={<TasksPage />} />
         <Route path="/sehir-ulke" element={<CityCountryPage />} />
-        <Route path="/upload" element={<AntdUploadPage />} />
+   
         <Route path="/markalar" element={<AllBrandPage />} />
         <Route path="/markalar/:brandId" element={<BrandDetailsPage />} />
         <Route path="/giyimformu" element={<ClothingNeedFormPage />} />

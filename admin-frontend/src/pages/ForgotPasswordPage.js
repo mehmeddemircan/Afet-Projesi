@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { ForgotPassword } from "../redux/actions/AuthActions";
 import { toast } from "react-toastify";
 import SuccessResult from "../components/result/SuccessResult";
+import MetaTitle from "../meta/MetaTitle";
 
 const ForgotPasswordPage = () => {
   const forgotResetPassword = useSelector((state) => state.forgotResetPassword);
@@ -27,6 +28,7 @@ const ForgotPasswordPage = () => {
   }, [forgotResetPassword.success, forgotResetPassword.error]);
   return (
     <MainLayout>
+      <MetaTitle title="Şifremi Unuttum" content="şifremiUnuttum" name="şifremiUnuttum" />
       <div class="container d-flex flex-column mt-5">
         <div
           class="row align-items-center justify-content-center"

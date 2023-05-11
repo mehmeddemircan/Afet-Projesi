@@ -7,6 +7,7 @@ import {  useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import InfoBreadcrumb from "../components/breadcrumb/InfoBreadcrumb";
 import { Badge } from "antd";
+import MetaTitle from "../meta/MetaTitle";
 
 
 const AllAreaPage = () => {
@@ -19,6 +20,7 @@ const AllAreaPage = () => {
   return (
     <Fragment>
       <MainLayout>
+        <MetaTitle title="Afet Alanları" name="afetalanları" content="afetalanlarılisteleme" />
         <InfoBreadcrumb
           items={[
             {

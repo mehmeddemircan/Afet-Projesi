@@ -10,6 +10,7 @@ import {
   UPDATE_TASK_RESET,
 } from "../redux/constants/TaskConstants";
 import SearchTask from "../components/search/SearchTask";
+import MetaTitle from "../meta/MetaTitle";
 
 const TasksPage = () => {
   const [showAddTaskModal, setShowAddTaskModal] = useState(false);
@@ -46,6 +47,7 @@ const TasksPage = () => {
   };
   return (
     <Fragment>
+      <MetaTitle title="Genel Görevlerimiz" content="Genel Görevlerimiz" name="Genel Görevlerimiz" />
       <MainLayout>
         <SearchTask
           text={text}

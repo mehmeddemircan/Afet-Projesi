@@ -6,6 +6,7 @@ import { AllMealForm, SendMealForm } from "../redux/actions/MealNeedFormActions"
 import { useDispatch, useSelector } from "react-redux";
 import TextArea from "antd/es/input/TextArea";
 import { CREATE_MEAL_NEED_FORM_RESET } from "../redux/constants/MealNeedFormConstants";
+import MetaTitle from "../meta/MetaTitle";
 const { Option } = Select;
 const MealNeedFormPage = () => {
   const [userId, setUserId] = useState("");
@@ -64,6 +65,7 @@ const MealNeedFormPage = () => {
 
   return (
     <MainLayout>
+      <MetaTitle title="Gıda İhtiyaç Formumuz" name="gidaİhtiyaçFormumuz" content="gidaİhtiyaçFormumuz" />
       <h4>Gıda Formu</h4>
       <Form
         className="mx-auto"

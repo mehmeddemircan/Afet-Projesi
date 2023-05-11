@@ -23,6 +23,7 @@ import {
 import axios from "axios";
 import Resizer from "react-image-file-resizer";
 import { toast } from "react-toastify";
+import MetaTitle from "../meta/MetaTitle";
 const { Meta } = Card;
 const ProductDetailsPage = () => {
   const [images, setImages] = useState([]);
@@ -117,6 +118,7 @@ const ProductDetailsPage = () => {
 
   return (
     <MainLayout>
+      <MetaTitle title="Ürün Detayları" name="ürünDetayları" content="ürünDetayları" />
       <Fragment>
         <InfoBreadcrumb
           items={[

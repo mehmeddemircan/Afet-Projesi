@@ -5,15 +5,25 @@ import CardSlider from "../components/slider/CardSlider";
 import ClothesBrandSlider from "../components/slider/ClothesBrandSlider";
 import ShelterBrandSlider from "../components/slider/ShelterBrandSlider";
 import MealBrandSlider from "../components/slider/MealBrandSlider";
+import MetaTitle from "../meta/MetaTitle";
 
 const HomePage = () => {
   return (
     <MainLayout>
+      <MetaTitle
+        title="Afet Yönetim Sistemi"
+        name="afetYönetimAnasayfa"
+        content="afetYönetimAnasayfacontent"
+      />
       <HomeJumbotron />
    
-      {/* <ClothesBrandSlider />
+
+
+
+      <ClothesBrandSlider />
+
       <ShelterBrandSlider />
-      <MealBrandSlider /> */}
+      <MealBrandSlider />
     </MainLayout>
   );
 };

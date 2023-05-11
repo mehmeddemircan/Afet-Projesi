@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { AllSubCategory } from '../redux/actions/SubCategoryActions'
 import { ADD_SUBCATEGORY_RESET, DELETE_SUBCATEGORY_RESET, UPDATE_SUBCATEGORY_RESET } from '../redux/constants/SubCategoryConstants'
 import { toast } from 'react-toastify'
+import MetaTitle from '../meta/MetaTitle'
 
 const SubCategoriesPage = () => {
 
@@ -32,6 +33,7 @@ const SubCategoriesPage = () => {
 
   return (
     <MainLayout>
+        <MetaTitle title="Alt Kategorilerimiz" name="Alt Kategoriler" content="AltKategoriler" />
         <h2 className='text-center'>SUB Page</h2>
 
         <AddSubCategoryForm />
