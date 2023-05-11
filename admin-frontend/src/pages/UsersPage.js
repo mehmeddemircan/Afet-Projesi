@@ -37,14 +37,23 @@ const UsersPage = () => {
     dispatch(AllPersonType())
   }, [dispatch])
 
+
+  //Live Location Button 
+  const [showLiveLocationUsers, setShowLiveLocationUsers] = useState(false)
+  const handleToggleShowLiveLocationUsers = () => {
+      setShowLiveLocationUsers((prev) => !prev)
+  }
+
+
+
   return (
     <MainLayout>
       <MetaTitle title="Kullanıcılar" name="Kullanicilar" content="Kullanicilar" />
       <h5 className="my-3 text-center">UsersPage</h5>
-      <UserFilterButtons />
-      <SearchUserInput name={name} setName={setName} />
+      <UserFilterButtons handleToggleShowLiveLocationUsers={handleToggleShowLiveLocationUsers} />
+      <SearchUserInput name={name} setName={setName}  />
   
-      <UserList name={name}/>
+      <UserList name={name} showLiveLocationUsers={showLiveLocationUsers}/>
 
       <div className="row">
         <div className="d-flex justify-content-end">

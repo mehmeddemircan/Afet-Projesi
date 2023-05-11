@@ -5,11 +5,13 @@ import UserItem from '../listitem/UserItem'
 import { ADD_TASK_TO_USER_RESET } from '../../redux/constants/UserConstants'
 
 
-const UserList = ({name}) => {
+const UserList = ({name,showLiveLocationUsers}) => {
 
     const getAllUser = useSelector((state) => state.user.getAllUser)
     const searchUsers = useSelector((state) => state.user.searchUsers)
- 
+    //The people that turned on  live location
+    const usersWithLocation = getAllUser.users.filter(user => user.location);
+
 
     
 
@@ -22,9 +24,11 @@ const UserList = ({name}) => {
            <>{searchUsers.users.map((user) => (
             <UserItem key={`search-${user._id}`} user={user} />
            ))}</> 
-         :   getAllUser.users.map((user) => (
+         : showLiveLocationUsers ?  usersWithLocation.map((user) =>(
             <UserItem key={user._id} user={user} />
-        ))   }
+         ) ):   getAllUser.users.map((user) => (
+            <UserItem key={user._id} user={user} />
+        ))  } 
  </List>
         </Fragment>
     )

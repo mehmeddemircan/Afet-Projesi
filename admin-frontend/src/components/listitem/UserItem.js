@@ -1,4 +1,4 @@
-import { Button, List, Popover, Space, message } from "antd";
+import { Button, List, Popover, Space, Tag, message } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -52,7 +52,7 @@ const UserItem = ({ user }) => {
       actions={[
         <>
           {user.location && (
-              <Space wrap>
+            <Space wrap>
               <Popover
                 content={
                   <>
@@ -113,12 +113,23 @@ const UserItem = ({ user }) => {
     >
       <List.Item.Meta
         title={<a>{user.name}</a>}
-        description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+        description={
+          <>
+            <p className="my-1">Email : {user.email}</p>
+
+            <p>
+              Role :
+              <Tag
+                color="#108ee9"
+              >
+                {user.role}
+              </Tag>
+            </p>
+          </>
+        }
       />
     </List.Item>
   );
 };
 
 export default UserItem;
-
-
