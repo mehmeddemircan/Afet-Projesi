@@ -1,5 +1,5 @@
 import { GET_USERS_LOCATIONS_FAIL, GET_USERS_LOCATIONS_REQUEST, GET_USERS_LOCATIONS_SUCCESS, UPDATE_LIVE_LOCATION_FAIL, UPDATE_LIVE_LOCATION_RESET, UPDATE_LIVE_LOCATION_SUCCESS } from "../constants/LocationConstants";
-import { ADD_TASK_TO_USER_FAIL, ADD_TASK_TO_USER_REQUEST, ADD_TASK_TO_USER_RESET, ADD_TASK_TO_USER_SUCCESS, FILTER_BY_ROLE_FAIL, FILTER_BY_ROLE_REQUEST, FILTER_BY_ROLE_RESET, FILTER_BY_ROLE_SUCCESS, GET_ALL_USER_FAIL, GET_ALL_USER_REQUEST, GET_ALL_USER_SUCCESS, GET_NOT_ADDED_TASK_FAIL, GET_NOT_ADDED_TASK_REQUEST, GET_NOT_ADDED_TASK_SUCCESS, GET_USER_TASKS_FAIL, GET_USER_TASKS_REQUEST, GET_USER_TASKS_SUCCESS, REMOVE_TASK_TO_USER_FAIL, REMOVE_TASK_TO_USER_REQUEST, REMOVE_TASK_TO_USER_RESET, REMOVE_TASK_TO_USER_SUCCESS, SEARCH_USERS_BY_NAME_FAIL, SEARCH_USERS_BY_NAME_REQUEST, SEARCH_USERS_BY_NAME_RESET, SEARCH_USERS_BY_NAME_SUCCESS, UPDATE_USER_ROLE_FAIL, UPDATE_USER_ROLE_REQUEST, UPDATE_USER_ROLE_RESET, UPDATE_USER_ROLE_SUCCESS } from "../constants/UserConstants";
+import { ADD_TASK_TO_USER_FAIL, ADD_TASK_TO_USER_REQUEST, ADD_TASK_TO_USER_RESET, ADD_TASK_TO_USER_SUCCESS, FILTER_BY_ROLE_FAIL, FILTER_BY_ROLE_REQUEST, FILTER_BY_ROLE_RESET, FILTER_BY_ROLE_SUCCESS, GET_ALL_USER_FAIL, GET_ALL_USER_REQUEST, GET_ALL_USER_SUCCESS, GET_NOT_ADDED_TASK_FAIL, GET_NOT_ADDED_TASK_REQUEST, GET_NOT_ADDED_TASK_SUCCESS, GET_USER_LOCATIONS_WITH_COUNT_FAIL, GET_USER_LOCATIONS_WITH_COUNT_REQUEST, GET_USER_LOCATIONS_WITH_COUNT_RESET, GET_USER_LOCATIONS_WITH_COUNT_SUCCESS, GET_USER_TASKS_FAIL, GET_USER_TASKS_REQUEST, GET_USER_TASKS_SUCCESS, REMOVE_TASK_TO_USER_FAIL, REMOVE_TASK_TO_USER_REQUEST, REMOVE_TASK_TO_USER_RESET, REMOVE_TASK_TO_USER_SUCCESS, SEARCH_USERS_BY_NAME_FAIL, SEARCH_USERS_BY_NAME_REQUEST, SEARCH_USERS_BY_NAME_RESET, SEARCH_USERS_BY_NAME_SUCCESS, UPDATE_USER_ROLE_FAIL, UPDATE_USER_ROLE_REQUEST, UPDATE_USER_ROLE_RESET, UPDATE_USER_ROLE_SUCCESS } from "../constants/UserConstants";
 
 import { combineReducers } from "redux";
 
@@ -44,7 +44,42 @@ const GET_ALL_USER_INITIAL_STATE = {
   };
   
 
-
+  export const getAllUserLocationWithCountReducer = (
+    state = {users: [], totalLength : 0},
+    action
+  ) => {
+    switch (action.type) {
+      case GET_USER_LOCATIONS_WITH_COUNT_REQUEST:
+        return { ...state, loading: true };
+  
+      case GET_USER_LOCATIONS_WITH_COUNT_SUCCESS:
+        return {
+          ...state,
+          loading: false,
+          success: true,
+          totalLength  :action.payload.totalLength,
+          users: action.payload.users,
+        };
+  
+      case GET_USER_LOCATIONS_WITH_COUNT_FAIL:
+        return {
+          ...state,
+          loading: false,
+          success: false,
+          error: action.payload,
+        };
+      case GET_USER_LOCATIONS_WITH_COUNT_RESET:
+          return {
+            ...state,
+        
+            success: false,
+            
+          };
+      default:
+        return state;
+    }
+  };
+  
   export const searchUsersReducer = (
     state = {users : []},
     action
@@ -321,6 +356,7 @@ const UPDATE_USER_LOCATION_INITIAL_STATE ={
     addRemoveTaskToUser: addRemoveTaskToUserReducer,
     getNotAddedTasks: getNotAddedTasksReducer,
     getUserTasks: getUserTasksReducer,
+    getAllUserLocationWithCount: getAllUserLocationWithCountReducer
 
    
     });
