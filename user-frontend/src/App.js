@@ -5,6 +5,8 @@ import NotFoundPage from "./pages/NotFoundPage";
 import AuthPage from "./pages/AuthPage";
 import { isUserLoggedIn } from "./redux/actions/AuthActions";
 import {useSelector, useDispatch} from 'react-redux'
+import BrandsPage from "./pages/BrandsPage";
+import BrandDetailsPage from "./pages/BrandDetailsPage";
 function App() {
 
   const dispatch = useDispatch();
@@ -21,7 +23,10 @@ function App() {
       <Routes>
         <Route index path="/" element={<HomePage />} />
         <Route path="/login" element={<AuthPage />} />
+        <Route path="/kategoriler/:name" element={<BrandsPage />} />
+        <Route path="/markalar/:id" element={<BrandDetailsPage />} />
         <Route path="*" element={<NotFoundPage />} />
+        
       </Routes>
     </Router>
   );
