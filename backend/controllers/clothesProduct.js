@@ -4,7 +4,7 @@ const ClothesProduct = require("../models/ClothesProduct");
 const cloudinary = require("cloudinary");
 exports.getAllClothesProductByBrandId = catchAsyncErrors(async (req, res) => {
   try {
-    const clothes = await ClothesProduct.find({ brand: req.params.brandId });
+    const clothes = await ClothesProduct.find({ brand: req.params.brandId }).populate('brand','category')
 
     res.status(200).json(clothes);
   } catch (error) {

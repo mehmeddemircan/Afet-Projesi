@@ -4,7 +4,7 @@ const MealProduct = require("../models/MealProduct");
 const cloudinary = require("cloudinary");
 exports.getAllMealProductByBrand = catchAsyncErrors(async (req, res) => {
   try {
-    const mealProducts = await MealProduct.find({ brand: req.params.brandId });
+    const mealProducts = await MealProduct.find({ brand: req.params.brandId }).populate('brand','category');
     res.status(200).json(mealProducts);
   } catch (error) {
     res.status(500).json(error);
