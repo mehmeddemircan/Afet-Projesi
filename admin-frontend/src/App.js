@@ -52,61 +52,63 @@ function App() {
   useEffect(() => {
     let watchId = null;
 
-    if ("permissions" in navigator) {
-      navigator.permissions.query({ name: "geolocation" }).then((result) => {
-        if (result.state === "granted") {
-          
-          watchId = navigator.geolocation.watchPosition(
-            (position) => {
-              setLocation(position.coords);
-              dispatch(
-                UpdateLiveLocation(
-                  auth.user._id,
-                  location.latitude,
-                  location.longitude
-                )
+      if (auth.authenticate) {
+        if ("permissions" in navigator) {
+          navigator.permissions.query({ name: "geolocation" }).then((result) => {
+            if (result.state === "granted") {
+              
+              watchId = navigator.geolocation.watchPosition(
+                (position) => {
+                  setLocation(position.coords);
+                  dispatch(
+                    UpdateLiveLocation(
+                      auth.user._id,
+                      location.latitude,
+                      location.longitude
+                    )
+                  );
+                },
+                (error) => console.log(error),
+    
+                {
+                  enableHighAccuracy: true,
+                  timeout: 10000,
+                  maximumAge: 0,
+                }
               );
-            },
-            (error) => console.log(error),
-
-            {
-              enableHighAccuracy: true,
-              timeout: 10000,
-              maximumAge: 0,
+            } else if (result.state === "prompt") {
+    
+              navigator.geolocation.getCurrentPosition(
+                (position) => {
+                  setLocation(position.coords);
+                  dispatch(
+                    UpdateLiveLocation(
+                      auth.user._id,
+                      location.latitude,
+                      location.longitude
+                    )
+                  );
+                },
+                (error) => console.log(error)
+              );
+            } else {
+            
+              console.log("İzin verilmedi");
             }
-          );
-        } else if (result.state === "prompt") {
-
-          navigator.geolocation.getCurrentPosition(
-            (position) => {
-              setLocation(position.coords);
-              dispatch(
-                UpdateLiveLocation(
-                  auth.user._id,
-                  location.latitude,
-                  location.longitude
-                )
-              );
-            },
-            (error) => console.log(error)
-          );
+          });
         } else {
-        
-          console.log("İzin verilmedi");
+         
+          console.log("izinleri desteklenmiyor");
         }
-      });
-    } else {
-     
-      console.log("izinleri desteklenmiyor");
-    }
-    setWatchId(watchId);
-
-    return () => {
-      if (watchId) {
-        navigator.geolocation.clearWatch(watchId);
+        setWatchId(watchId);
+    
+        return () => {
+          if (watchId) {
+            navigator.geolocation.clearWatch(watchId);
+          }
+        };
       }
-    };
-  }, [auth, dispatch, location]);
+  }, [auth, dispatch, location,auth.authenticate]);
 
   return (
     <Router>
