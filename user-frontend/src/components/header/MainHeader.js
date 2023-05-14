@@ -49,11 +49,11 @@ const MainHeader = () => {
    >
      <ul className="navbar-nav me-auto mb-2 mb-lg-0 ">
        <li className="nav-item mt-2 mx-1">
-         {/* <HeaderMenuDropDown /> */}
+ 
        </li>
 
        <li className="nav-item pt-2 mx-1">
-         {/* <FormMenuDropDown /> */}
+  
        </li>
        <li className="nav-item pt-1 mx-1">
          <a
@@ -61,9 +61,9 @@ const MainHeader = () => {
            style={{
              textDecorationLine: "none",
            }}
-           href="/markalar"
+           href="/form-kategoriler"
          >
-           Markalar
+           Form Gönder
          </a>
        </li>
      </ul>
