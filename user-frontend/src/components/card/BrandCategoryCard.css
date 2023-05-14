@@ -3,12 +3,12 @@
 
 } */
 
-.card {
+.brand-card {
     position: relative ; 
     overflow: hidden;
   
 }
-.card:before {
+.brand-card:before {
     position: absolute;
     content:  '';
     width: 110%;
@@ -22,16 +22,16 @@
     transition: .5s;
 
 }
-.card:hover:before {
+.brand-card:hover:before {
     left: 10%;
 }
-.card img {
+.brand-card img {
     width: 100%;
     height: auto;
       
 
 }
-.card-text {
+.brand-card-text {
     width: 100%;
     padding: 0 20px;
     position: absolute;
@@ -43,10 +43,10 @@
 
 }
 
-.card-text h3 {
+.brand-card-text h3 {
     font-family: poppins;
 }
 
-.card:hover .card-text {
+.brand-card:hover .brand-card-text {
     top: 80px;
 }
