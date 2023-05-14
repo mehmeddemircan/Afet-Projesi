@@ -31,9 +31,9 @@ const BrandCategoryCard = () => {
       {brandCategories.map((brandCategory) => (
         <div className="col-md-4 col-sm-12" style={{ marginBottom: 18 }}>
           <Link to={`/kategoriler/${brandCategory.name}`}>
-            <div className="card" style={{ borderRadius: 18 }}>
+            <div className="brand-card" style={{ borderRadius: 18 }}>
               <img src={`${brandCategory.image}`} className="img-fluid" />
-              <div className="card-text">
+              <div className="brand-card-text">
                 <h3>{brandCategory.name}</h3>
               </div>
             </div>
