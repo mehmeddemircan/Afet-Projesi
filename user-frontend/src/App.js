@@ -7,6 +7,9 @@ import { isUserLoggedIn } from "./redux/actions/AuthActions";
 import {useSelector, useDispatch} from 'react-redux'
 import BrandsPage from "./pages/BrandsPage";
 import BrandDetailsPage from "./pages/BrandDetailsPage";
+import FormCategoryPage from "./pages/FormCategoryPage";
+import FormCategoryDetailsPage from "./pages/FormCategoryDetailsPage";
+
 function App() {
 
   const dispatch = useDispatch();
@@ -25,6 +28,8 @@ function App() {
         <Route path="/login" element={<AuthPage />} />
         <Route path="/kategoriler/:name" element={<BrandsPage />} />
         <Route path="/markalar/:id" element={<BrandDetailsPage />} />
+        <Route path="/form-kategoriler" element={<FormCategoryPage />} />
+        <Route path="/form-kategoriler/:id" element={<FormCategoryDetailsPage />} />
         <Route path="*" element={<NotFoundPage />} />
         
       </Routes>
