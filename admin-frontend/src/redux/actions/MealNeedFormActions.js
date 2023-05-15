@@ -46,14 +46,14 @@ export const AllMealForm = () => async (dispatch) => {
     }
   };
   
-  export const DeleteMealForm = (mealFormId) => async (dispatch) => {
+  export const DeleteMealForm = (userId,mealFormId) => async (dispatch) => {
     try {
       dispatch({
         type: DELETE_MEAL_NEED_FORM_REQUEST,
       });
   
       const { data } = await axios.delete(
-        `https://afetapi.onrender.com/api/mealNeedForms/${mealFormId}/delete`
+        `https://afetapi.onrender.com/api/users/${userId}/mealNeedForms/${mealFormId}/delete`
       );
   
       dispatch({

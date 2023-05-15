@@ -46,14 +46,14 @@ export const AllShelterForm = () => async (dispatch) => {
     }
   };
   
-  export const DeleteShelterForm = (shelterFormId) => async (dispatch) => {
+  export const DeleteShelterForm = (userId,shelterFormId) => async (dispatch) => {
     try {
       dispatch({
         type: DELETE_SHELTER_FORM_REQUEST,
       });
   
       const { data } = await axios.delete(
-        `https://afetapi.onrender.com/api/shelterNeedForms/${shelterFormId}/delete`
+        `https://afetapi.onrender.com/api/users/${userId}/shelterNeedForms/${shelterFormId}/delete`
       );
   
       dispatch({

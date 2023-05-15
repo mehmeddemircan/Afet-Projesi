@@ -59,14 +59,14 @@ export const SendClothingForm = (clothingForm) => async (dispatch) => {
   }
 };
 
-export const DeleteClothingForm = (clothingFormId) => async (dispatch) => {
+export const DeleteClothingForm = (userId,clothingFormId) => async (dispatch) => {
   try {
     dispatch({
       type: DELETE_CLOTHING_FORM_REQUEST,
     });
 
     const { data } = await axios.delete(
-      `https://afetapi.onrender.com/api/clothingNeedForms/${clothingFormId}/delete`
+      `https://afetapi.onrender.com/api/users/${userId}/clothingNeedForms/${clothingFormId}/delete`
     );
 
     dispatch({
