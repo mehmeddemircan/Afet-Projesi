@@ -60,11 +60,11 @@ const FormInfoItem = ({
                     className="btn btn-light"
                     onClick={() =>
                       isMealForm ? 
-                        handleDeleteMealForm(form._id) : 
+                        handleDeleteMealForm(form.userId,form._id) : 
                       isClothingForm
-                        ? handleDeleteClothingForm(form._id)
+                        ? handleDeleteClothingForm(form.userId,form._id)
                         : isShelterForm
-                        ? handleDeleteShelterForm(form._id)
+                        ? handleDeleteShelterForm(form.userId,form._id)
                         : handleDeleteForm(form._id)
                     }
                   >
