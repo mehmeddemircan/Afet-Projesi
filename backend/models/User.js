@@ -53,6 +53,23 @@ const userSchema = new mongoose.Schema(
         ref: 'Task',
       },
     ],
+    clothingForms : [{
+      type : ObjectId ,
+      ref : 'ClothingNeedForm'
+    }],
+    mealForms : [
+      {
+        type : ObjectId,
+        ref : 'MealNeedForm'
+      }
+    ],
+    shelterForms : [
+      {
+        type : ObjectId,
+        ref : 'ShelterNeedForm'
+      }
+    ],
+
     basket: [{
       product: {
         type: mongoose.Schema.Types.ObjectId,
