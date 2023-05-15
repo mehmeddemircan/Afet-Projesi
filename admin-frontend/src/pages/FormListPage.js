@@ -112,16 +112,16 @@ const FormListPage = () => {
     dispatch(ApproveGetHelpForm(id));
   };
 
-  const handleDeleteClothingForm = (id) => {
-    dispatch(DeleteClothingForm(id));
+  const handleDeleteClothingForm = (userId,id) => {
+    dispatch(DeleteClothingForm(userId,id));
   };
 
   const handleApproveClothingForm = (id) => {
     dispatch(ApproveClothingForm(id));
   };
 
-  const handleDeleteShelterForm = (id) => {
-    dispatch(DeleteShelterForm(id));
+  const handleDeleteShelterForm = (userId,id) => {
+    dispatch(DeleteShelterForm(userId,id));
   };
 
   const handleApproveShelterForm = (id) => {
@@ -204,8 +204,8 @@ const FormListPage = () => {
       (form) => form.isApproved === false
     );
 
-    const handleDeleteMealForm = (id) => {
-      dispatch(DeleteMealForm(id));
+    const handleDeleteMealForm = (userId, id) => {
+      dispatch(DeleteMealForm(userId,id));
     };
   
     const handleApproveMealForm = (id) => {
