@@ -1,9 +1,17 @@
 const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
 const ShelterNeedForm = require("../models/ShelterNeedForm");
+const User = require("../models/User");
 
 exports.createShelterNeedForm = catchAsyncErrors(async (req, res) => {
   try {
-    await ShelterNeedForm.create(req.body);
+     const shelterNeedForm =  await ShelterNeedForm.create(req.body);
+
+        // Add form ID to user model's clothingForms array
+ const user = await User.findById(req.body.userId);
+ if (user) {
+   user.shelterForms.push(shelterNeedForm._id);
+   await user.save();
+ }
     res.status(200).json({ message: "Successfully sent it " });
   } catch (error) {
     res.status(500).json(error);
@@ -62,7 +70,10 @@ exports.updateShelterNeedForm = catchAsyncErrors(async (req, res) => {
 exports.deleteShelterNeedForm = catchAsyncErrors(async (req, res) => {
   try {
     await ShelterNeedForm.findByIdAndDelete(req.params.id);
-
+    const userId = req.params.userId; // Assuming you have a middleware that sets the authenticated user in req.user
+    await User.findByIdAndUpdate(userId, {
+      $pull: { shelterForms: req.params.id }
+    });
     res.status(200).json({
       message: "Successfully deleted Shelter need form ",
     });
@@ -90,3 +101,23 @@ exports.approveShelterNeedForm = catchAsyncErrors(async (req, res) => {
   }
 });
 
+exports.getUserShelterForms = catchAsyncErrors(async(req,res) => {
+  try {
+
+    const user = await User.findById(req.params.userId).populate("shelterForms")
+    res.status(200).json({ shelterForms : user.shelterForms})
+  } catch (error) {
+    res.status(500).json({error : error.message})
+  }
+})
+
+
+exports.getUserShelterFormsLength = catchAsyncErrors(async(req,res) => {
+  try {
+
+    const user = await User.findById(req.params.userId)
+    res.status(200).json({ length : user.shelterForms.length})
+  } catch (error) {
+    res.status(500).json({error : error.message})
+  }
+})
