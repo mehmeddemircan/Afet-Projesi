@@ -3,7 +3,12 @@ import { Fragment } from 'react'
 import { logout } from '../../redux/actions/AuthActions';
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import {Popover,Avatar} from 'antd'
+import {Popover,Avatar } from 'antd'
+import FormMenuDropDown from '../dropdown/FormMenuDropdown';
+import { GetUserTasks } from '../../redux/actions/TaskActions';
+import LoadingSpinner from '../spinner/LoadingSpinner';
+import UserTaskItem from '../listItem/UserTaskItem';
+import { useEffect } from 'react';
 const LoggedInSegment = () => {
 
     const auth = useSelector((state) => state.auth)
@@ -13,12 +18,36 @@ const LoggedInSegment = () => {
     // çıkış yapma işlemi 
     const LogoutHandler = () => {
       dispatch(logout());
+      navigate('/login',{replace : true })
     
     };
 
+    const getUserTasks = useSelector((state) => state.task.getUserTasks)
+
+    useEffect(() => {
+        dispatch(GetUserTasks(auth.user._id))
+    }, [dispatch,auth])
+
+   
 
   return (
    <Fragment>
+
+      <Popover title="Görevlerim"  trigger={'click'} placement='bottom' content={<>
+          {getUserTasks.loading ? <LoadingSpinner /> : getUserTasks.userTasks.length === 0 ? <h4>Henüz göreviniz yoktur</h4> : getUserTasks.userTasks.map((userTask) => (
+           <UserTaskItem key={userTask._id} userTask={userTask} />
+          ))}
+      </>}  >
+      <button
+          className="btn btn-sm btn-light rounded-pill text-center mx-2"
+         
+        >
+          <i class="fa-solid fa-bell fs-6"></i>
+       
+        </button>
+      </Popover>
+      <FormMenuDropDown />
+
     <Popover
         content={
           <ul class="list-group">
