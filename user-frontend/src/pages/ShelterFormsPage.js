@@ -8,6 +8,7 @@ import EmptyComponent from "../components/empty/EmptyComponent";
 import FormInfoCard from "../components/card/FormInfoCard";
 import { message } from "antd";
 import { DELETE_SHELTER_FORM_RESET } from "../redux/constants/FormConstants";
+import { AllCity } from "../redux/actions/CityCountryActions";
 const ShelterFormsPage = () => {
   const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
@@ -29,6 +30,12 @@ const ShelterFormsPage = () => {
     auth.authenticate,
     deleteUpdateForm.isShelterFormDeleted,
   ]);
+
+  const countryId = "642aee9f57a3fb51360bfcdc"
+
+  useEffect(() => {
+        dispatch(AllCity(countryId))
+  }, [dispatch,countryId])
 
   return (
     <MainLayout>
