@@ -1,5 +1,6 @@
 import { Card, Carousel , Image } from "antd";
 import React from "react";
+import { ShoppingOutlined,} from '@ant-design/icons';
 const {Meta} = Card
 const BrandProductCard = ({item}) => {
   return (
@@ -9,6 +10,9 @@ const BrandProductCard = ({item}) => {
         width: 300,
       }}
       className="my-3 mx-2"
+      actions={[
+        <button className="btn btn-light d-inline-flex align-items-center ">Sepete Ekle  <ShoppingOutlined className="mx-2" /> </button>
+      ]}
       cover={
         <div
           style={{
@@ -45,9 +49,11 @@ const BrandProductCard = ({item}) => {
           )}
         </div>
       }
+    
     >
       <Meta
         title={item.title}
+        
         description={
           <>
             {item.category === "Ev-Hotel" && (
