@@ -1,4 +1,7 @@
 import {
+  GET_TASKS_BY_CITY_FAIL,
+  GET_TASKS_BY_CITY_REQUEST,
+  GET_TASKS_BY_CITY_SUCCESS,
   GET_USER_TASKS_FAIL,
   GET_USER_TASKS_REQUEST,
   GET_USER_TASKS_SUCCESS,
@@ -33,8 +36,36 @@ export const getUserTasksReducer = (state = { userTasks: [] }, action) => {
 };
 
 
+
+export const getTasksByCityReducer = (
+  state = {
+      tasks : []
+  },
+  action
+) => {
+  switch (action.type) {
+    case GET_TASKS_BY_CITY_REQUEST:
+      return { ...state, loading: true };
+
+    case GET_TASKS_BY_CITY_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: true,
+        tasks: action.payload,
+      };
+
+    case GET_TASKS_BY_CITY_FAIL:
+      return { ...state, loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+
 const taskReducer = combineReducers({
-    getUserTasks : getUserTasksReducer
+    getUserTasks : getUserTasksReducer,
+    getTasksByCity : getTasksByCityReducer
 })
 
 export default taskReducer
