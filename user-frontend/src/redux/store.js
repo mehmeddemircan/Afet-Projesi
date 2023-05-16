@@ -6,6 +6,7 @@ import brandReducer from "./reducers/BrandReducer";
 import areaReducer from "./reducers/AreaReducer";
 import formReducer from "./reducers/FormReducer";
 import cityCountryReducer from "./reducers/CityCountryReducer";
+import taskReducer from "./reducers/TaskReducer";
 
 
 
@@ -14,7 +15,8 @@ const rootReducer = combineReducers({
     brand : brandReducer ,
     area : areaReducer , 
     form : formReducer,
-    cityCountry :  cityCountryReducer
+    cityCountry :  cityCountryReducer,
+    task : taskReducer
 })
 
 const initialState = {}
