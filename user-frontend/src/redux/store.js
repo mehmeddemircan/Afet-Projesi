@@ -7,6 +7,9 @@ import areaReducer from "./reducers/AreaReducer";
 import formReducer from "./reducers/FormReducer";
 import cityCountryReducer from "./reducers/CityCountryReducer";
 import taskReducer from "./reducers/TaskReducer";
+import productReducer from "./reducers/ProductReducer";
+import personTypeReducer from "./reducers/PersonTypeReducer";
+import userReducer from "./reducers/UserReducer";
 
 
 
@@ -16,7 +19,10 @@ const rootReducer = combineReducers({
     area : areaReducer , 
     form : formReducer,
     cityCountry :  cityCountryReducer,
-    task : taskReducer
+    task : taskReducer,
+    product : productReducer,
+    personType : personTypeReducer,
+    user : userReducer
 })
 
 const initialState = {}
