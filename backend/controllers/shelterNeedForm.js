@@ -104,8 +104,10 @@ exports.approveShelterNeedForm = catchAsyncErrors(async (req, res) => {
 exports.getUserShelterForms = catchAsyncErrors(async(req,res) => {
   try {
 
-    const user = await User.findById(req.params.userId).populate("shelterForms")
-    res.status(200).json({ shelterForms : user.shelterForms})
+    const shelterForms = await ShelterNeedForm.find({userId : req.params.userId}).populate("cityOptions","name")
+    
+
+    res.status(200).json(shelterForms)
   } catch (error) {
     res.status(500).json({error : error.message})
   }
