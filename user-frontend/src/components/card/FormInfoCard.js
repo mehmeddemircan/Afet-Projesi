@@ -9,8 +9,13 @@ import {
   DeleteMealForm,
   DeleteShelterForm,
 } from "../../redux/actions/FormActions";
+import { useState } from "react";
+import EditClothingFormModal from "../modal/EditClothingFormModal";
+import EditMealFormModal from "../modal/EditMealFormModal";
+import EditShelterFormModal from "../modal/EditShelterFormModal";
 
-const FormInfoCard = ({ form, isClothingForm, isShelterForm , isMealForm }) => {
+
+const FormInfoCard = ({ form, isClothingForm, isShelterForm, isMealForm }) => {
   const getAllClothingForm = useSelector(
     (state) => state.form.getAllClothingForm
   );
@@ -18,9 +23,7 @@ const FormInfoCard = ({ form, isClothingForm, isShelterForm , isMealForm }) => {
     (state) => state.form.getAllShelterForm
   );
 
-  const getAllMealForm = useSelector(
-    (state) => state.form.getAllMealForm
-  );
+  const getAllMealForm = useSelector((state) => state.form.getAllMealForm);
 
   const dispatch = useDispatch();
   const handleDeleteClothingForm = (userId, formId) => {
@@ -31,25 +34,80 @@ const FormInfoCard = ({ form, isClothingForm, isShelterForm , isMealForm }) => {
     dispatch(DeleteShelterForm(userId, formId));
   };
 
-  const handleDeleteMealForm  = (userId,formId) => {
-    dispatch(DeleteMealForm(userId,formId))
+  const handleDeleteMealForm = (userId, formId) => {
+    dispatch(DeleteMealForm(userId, formId));
+  };
+
+  const [showEditClothingFormModal, setShowEditClothingFormModal] =
+    useState(false);
+
+  const handleShowEditClothingFormModal = () => {
+    setShowEditClothingFormModal(true);
+  };
+  const handleCloseEditClothingFormModal = () => {
+    setShowEditClothingFormModal(false);
+  };
+
+  const [showEditMealFormModal, setShowEditMealFormModal] = useState(false)
+
+  const handleShowEditMealFormModal = () => {
+    setShowEditMealFormModal(true)
   }
+  const handleCloseEditMealFormModal = () => {
+    setShowEditMealFormModal(false)
+  }
+
+  const [showEditShelterFormModal, setShowEditShelterFormModal] = useState(false)
+
+  const handleShowEditShelterFormModal = () => {
+    setShowEditShelterFormModal(true)
+  }
+
+  const handleCloseEditShelterFormModal = () => {
+    setShowEditShelterFormModal(false)
+  }
+  
+  
 
   return (
     <List.Item key={form._id} className="card my-3 px-2">
       <Descriptions
         title={
-          <div className="d-flex justify-content-between">
+          <div className="d-flex justify-content-between my-1">
             <a>Form Bilgileri</a>{" "}
             <div>
-            <Tooltip title="Düzenle">
+              <Tooltip title="Düzenle">
                 <button
                   className="btn btn-light mx-2"
-                 
+                  onClick={() => isClothingForm ? handleShowEditClothingFormModal() : isMealForm ? handleShowEditMealFormModal() : isShelterForm ? handleShowEditShelterFormModal() : null}
                 >
-                    Düzenle
+                  Düzenle
                 </button>
               </Tooltip>
+              {showEditClothingFormModal && (
+                <EditClothingFormModal
+                  form={form}
+                  showEditClothingFormModal={showEditClothingFormModal}
+                  handleCloseEditClothingFormModal={
+                    handleCloseEditClothingFormModal
+                  }
+                />
+              )}
+              {showEditMealFormModal && (
+                <EditMealFormModal 
+                    form={form}
+                    showEditMealFormModal={showEditMealFormModal}
+                    handleCloseEditMealFormModal={handleCloseEditMealFormModal}
+                />
+              )}
+              {showEditShelterFormModal && (
+                <EditShelterFormModal 
+                    form={form}
+                    showEditShelterFormModal={showEditShelterFormModal}
+                    handleCloseEditShelterFormModal={handleCloseEditShelterFormModal}
+                />
+              )}
+
               <Tooltip title="Sil">
                 <button
                   className="btn btn-light"
@@ -58,15 +116,13 @@ const FormInfoCard = ({ form, isClothingForm, isShelterForm , isMealForm }) => {
                       ? handleDeleteClothingForm(form.userId, form._id)
                       : isShelterForm
                       ? handleDeleteShelterForm(form.userId, form._id)
-                      : handleDeleteMealForm(form.userId,form._id)
+                      : handleDeleteMealForm(form.userId, form._id)
                   }
                 >
                   <i class="fa-solid fa-trash"></i>
                 </button>
               </Tooltip>
-          
             </div>
-            
           </div>
         }
       >
@@ -75,7 +131,9 @@ const FormInfoCard = ({ form, isClothingForm, isShelterForm , isMealForm }) => {
           {form.phoneNumber}
         </Descriptions.Item>
         <Descriptions.Item label="Email">{form.email}</Descriptions.Item>
-        {getAllClothingForm.success || getAllShelterForm.success  || getAllMealForm.success ?  null : (
+        {getAllClothingForm.success ||
+        getAllShelterForm.success ||
+        getAllMealForm.success ? null : (
           <>
             <Descriptions.Item label="Urgency">
               {form.urgency}
@@ -110,16 +168,15 @@ const FormInfoCard = ({ form, isClothingForm, isShelterForm , isMealForm }) => {
           </>
         )}
         {getAllMealForm.success && (
-            <>
-               <Descriptions.Item label="Number of Adults">
-             {form.numberOfAdults}
-           </Descriptions.Item>
-           <Descriptions.Item label="Number Of Children">
-             {form.numberOfChildren}
-           </Descriptions.Item>
-            </>
-          
-          )}
+          <>
+            <Descriptions.Item label="Number of Adults">
+              {form.numberOfAdults}
+            </Descriptions.Item>
+            <Descriptions.Item label="Number Of Children">
+              {form.numberOfChildren}
+            </Descriptions.Item>
+          </>
+        )}
 
         <Descriptions.Item label="Additional Info">
           {form.additionalInfo}
