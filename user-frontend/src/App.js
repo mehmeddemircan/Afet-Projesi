@@ -9,6 +9,9 @@ import BrandsPage from "./pages/BrandsPage";
 import BrandDetailsPage from "./pages/BrandDetailsPage";
 import FormCategoryPage from "./pages/FormCategoryPage";
 import FormCategoryDetailsPage from "./pages/FormCategoryDetailsPage";
+import ClothingFormsPage from "./pages/ClothingFormsPage";
+import ShelterFormsPage from "./pages/ShelterFormsPage";
+import MealFormsPage from "./pages/MealFormsPage";
 
 function App() {
 
@@ -30,6 +33,9 @@ function App() {
         <Route path="/markalar/:id" element={<BrandDetailsPage />} />
         <Route path="/form-kategoriler" element={<FormCategoryPage />} />
         <Route path="/form-kategoriler/:id" element={<FormCategoryDetailsPage />} />
+        <Route path="/giyim-formlarım" element={<ClothingFormsPage />} />
+        <Route path="/barınma-formlarım" element={<ShelterFormsPage />} />
+        <Route path="/gida-formlarım" element={<MealFormsPage />} />
         <Route path="*" element={<NotFoundPage />} />
         
       </Routes>
