@@ -75,7 +75,7 @@ const AuthPage = () => {
                   >
                     {register ? "Giriş Yap" : "Kayıt Ol"}
                   </button>
-                  <h4 className="my-0">AkınSoft Anket Yönetim</h4>
+                  <h4 className="my-0">Afet Yönetim</h4>
                   <div></div>
                 </div>
                 <div className="row justify-content-center">
