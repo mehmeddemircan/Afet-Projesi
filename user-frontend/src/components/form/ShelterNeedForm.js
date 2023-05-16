@@ -25,7 +25,8 @@ const ShelterNeedForm = ({
   numberOfChildren,
   setNumberOfChildren,
   handleSendShelterForm,
-  getAllCity
+  getAllCity,
+  isEditForm
 }) => {
   const prefixSelector = (
     <Form.Item name="prefix" noStyle>
@@ -238,7 +239,7 @@ const ShelterNeedForm = ({
           className="btn btn-dark rounded-pill"
           onClick={handleSendShelterForm}
         >
-          Send
+          {isEditForm ? "Güncelle" : "Gönder"}
         </button>
       </div>
     </Form>

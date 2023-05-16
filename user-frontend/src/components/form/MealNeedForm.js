@@ -22,6 +22,7 @@ const MealNeedForm = ({
   handleSelect,
   handleSendMealForm,
   form,
+  isEditForm
 }) => {
   const prefixSelector = (
     <Form.Item name="prefix" noStyle>
@@ -207,7 +208,7 @@ const MealNeedForm = ({
           className="btn btn-dark rounded-pill"
           onClick={handleSendMealForm}
         >
-          Send
+        {isEditForm ? "Güncelle" : "Gönder"}
         </button>
       </div>
     </Form>
