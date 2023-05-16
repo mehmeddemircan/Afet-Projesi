@@ -30,6 +30,7 @@ const ClothingNeedForm = ({
   additionalInfo,
   setAdditionalInfo,
   handleSendForm,
+  isEditForm
 }) => {
   const prefixSelector = (
     <Form.Item name="prefix" noStyle>
@@ -294,7 +295,7 @@ const ClothingNeedForm = ({
             className="btn btn-dark rounded-pill"
             onClick={handleSendForm}
           >
-            Send
+            {isEditForm ? "Güncelle" : "Gönder"}
           </button>
         </div>
       </Form>
