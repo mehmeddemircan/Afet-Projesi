@@ -234,7 +234,7 @@ const GoogleMapComp = () => {
       {showLiveLocation ? (
   
             !getAllUserLocations.success ? (
-              <LoadingSpinner />
+              <MapLoadingSpinner />
             ) : (
               getAllUserLocations.userLocations &&
               getAllUserLocations.userLocations.map((userLocation) => (
@@ -260,7 +260,7 @@ const GoogleMapComp = () => {
               ))
             )
           ) : !getAllArea.success ? (
-            <LoadingSpinner />
+            <MapLoadingSpinner />
           ) : (
             getAllArea.areas.map((area) => (
               <AreaMarker
