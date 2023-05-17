@@ -16,6 +16,15 @@ const {
   updateUserRole,
   filterUsersByUserRole,
   getUserLocationOnMapWithCount,
+  addClothingProductToBasket,
+  removeClothingProductFromBasket,
+  getUserClothingProductsInBasket,
+  addShelterProductToBasket,
+  removeShelterProductFromBasket,
+  getUserShelterProductsInBasket,
+  addMealProductToBasket,
+  removeMealProductFromBasket,
+  getUserMealProductsInBasket,
 } = require("../controllers/user");
 
 var router = express.Router();
@@ -38,5 +47,20 @@ router.route("/users/:userId/myShelterForms").get(getMyShelterNeedForms);
 router.route("/users/:userId/myClothingForms").get(getMyClothingNeedForms);
 
 router.route("/users/filter-by-role").get(filterUsersByUserRole)
+
+// user clothing basket 
+router.route('/clothingBasket/add').post(addClothingProductToBasket)
+router.route('/clothingBasket/remove/:userId/:itemId').delete(removeClothingProductFromBasket);
+router.route('/users/:userId/clothingBasket').get(getUserClothingProductsInBasket);
+//user shelter basket
+router.route('/shelterBasket/add').post(addShelterProductToBasket)
+router.route('/shelterBasket/remove/:userId/:itemId').delete(removeShelterProductFromBasket)
+router.route('/users/:userId/shelterBasket').get(getUserShelterProductsInBasket)
+
+// user meal basket
+router.route('/mealBasket/add').post(addMealProductToBasket)
+router.route('/mealBasket/remove/:userId/:itemId').delete(removeMealProductFromBasket)
+router.route('/users/:userId/mealBasket').get(getUserMealProductsInBasket)
+
 
 module.exports = router;
