@@ -12,6 +12,8 @@ import FormCategoryDetailsPage from "./pages/FormCategoryDetailsPage";
 import ClothingFormsPage from "./pages/ClothingFormsPage";
 import ShelterFormsPage from "./pages/ShelterFormsPage";
 import MealFormsPage from "./pages/MealFormsPage";
+import MyBasketPage from "./pages/MyBasketPage";
+
 
 function App() {
 
@@ -36,6 +38,8 @@ function App() {
         <Route path="/giyim-formlarım" element={<ClothingFormsPage />} />
         <Route path="/barınma-formlarım" element={<ShelterFormsPage />} />
         <Route path="/gida-formlarım" element={<MealFormsPage />} />
+        <Route path="/sepetim" element={<MyBasketPage />} />
+ 
         <Route path="*" element={<NotFoundPage />} />
         
       </Routes>
