@@ -30,7 +30,7 @@ export const GetUsersByRole = (userRoles) => async (dispatch) => {
       });
   
       const { data } = await axios.get(
-        `http://localhost:5000/api/users/${userId}/clothingBasket`
+        `https://afetapi.onrender.com/api/users/${userId}/clothingBasket`
       );
   
       dispatch({
@@ -52,7 +52,7 @@ export const GetUsersByRole = (userRoles) => async (dispatch) => {
       });
   
       const { data } = await axios.post(
-        `http://localhost:5000/api/clothingBasket/add`,clothingItem
+        `https://afetapi.onrender.com/api/clothingBasket/add`,clothingItem
       );
   
       dispatch({
@@ -75,7 +75,7 @@ export const GetUsersByRole = (userRoles) => async (dispatch) => {
       });
   
       const { data } = await axios.delete(
-        `http://localhost:5000/api/clothingBasket/remove/${userId}/${itemId}`)
+        `https://afetapi.onrender.com/api/clothingBasket/remove/${userId}/${itemId}`)
   
       dispatch({
         type: REMOVE_CLOTHING_FROM_BASKET_SUCCESS,
@@ -97,7 +97,7 @@ export const GetUsersByRole = (userRoles) => async (dispatch) => {
       });
   
       const { data } = await axios.get(
-        `http://localhost:5000/api/users/${userId}/shelterBasket`
+        `https://afetapi.onrender.com/api/users/${userId}/shelterBasket`
       );
   
       dispatch({
@@ -119,7 +119,7 @@ export const GetUsersByRole = (userRoles) => async (dispatch) => {
       });
   
       const { data } = await axios.post(
-        `http://localhost:5000/api/shelterBasket/add`,shelterItem
+        `https://afetapi.onrender.com/api/shelterBasket/add`,shelterItem
       );
   
       dispatch({
@@ -142,7 +142,7 @@ export const GetUsersByRole = (userRoles) => async (dispatch) => {
       });
   
       const { data } = await axios.delete(
-        `http://localhost:5000/api/shelterBasket/remove/${userId}/${itemId}`)
+        `https://afetapi.onrender.com/api/shelterBasket/remove/${userId}/${itemId}`)
   
       dispatch({
         type: REMOVE_SHELTER_FROM_BASKET_SUCCESS,
@@ -165,7 +165,7 @@ export const GetUsersByRole = (userRoles) => async (dispatch) => {
       });
   
       const { data } = await axios.get(
-        `http://localhost:5000/api/users/${userId}/mealBasket`
+        `https://afetapi.onrender.com/api/users/${userId}/mealBasket`
       );
   
       dispatch({
@@ -187,7 +187,7 @@ export const GetUsersByRole = (userRoles) => async (dispatch) => {
       });
   
       const { data } = await axios.post(
-        `http://localhost:5000/api/mealBasket/add`,mealItem
+        `https://afetapi.onrender.com/api/mealBasket/add`,mealItem
       );
   
       dispatch({
@@ -209,7 +209,7 @@ export const GetUsersByRole = (userRoles) => async (dispatch) => {
       });
   
       const { data } = await axios.delete(
-        `http://localhost:5000/api/mealBasket/remove/${userId}/${itemId}`)
+        `https://afetapi.onrender.com/api/mealBasket/remove/${userId}/${itemId}`)
   
       dispatch({
         type: REMOVE_MEAL_FROM_BASKET_SUCCESS,
