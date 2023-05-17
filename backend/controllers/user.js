@@ -289,3 +289,193 @@ exports.getUserLocationOnMapWithCount = catchAsyncErrors(async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
+
+
+// Controller function to add a clothing product to the user's basket
+exports.addClothingProductToBasket =  catchAsyncErrors(async (req, res) => {
+  const { userId, clothingProductId, quantity } = req.body;
+
+  try {
+    // Find the user by their ID
+    const user = await User.findById(userId);
+
+    // Create a new item with the clothingProduct and quantity
+    const newItem = {
+      clothingProduct: clothingProductId,
+      quantity: quantity,
+    };
+
+    // Push the new item to the clothingBasket array
+    user.clothingBasket.push(newItem);
+
+    // Save the updated user object
+    await user.save();
+
+    res.status(200).json({ message: 'Item added to basket successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'An error occurred while adding the item to the basket' });
+  }
+});
+
+exports.removeClothingProductFromBasket = catchAsyncErrors(async (req, res) => {
+  const { userId, itemId } = req.params;
+
+  try {
+    // Find the user by their ID
+    const user = await User.findById(userId);
+
+    // Find the index of the item in the clothingBasket array
+    const itemIndex = user.clothingBasket.findIndex((item) => item._id.toString() === itemId);
+
+    // If the item is found, remove it from the array
+    if (itemIndex !== -1) {
+      user.clothingBasket.splice(itemIndex, 1);
+      await user.save();
+      res.status(200).json({ message: 'Item removed from basket successfully' });
+    } else {
+      res.status(404).json({ message: 'Item not found in the basket' });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'An error occurred while removing the item from the basket' });
+  }
+});
+
+exports.getUserClothingProductsInBasket = catchAsyncErrors(async(req,res) => {
+  try {
+
+    const user = await User.findById(req.params.userId).populate('clothingBasket.clothingProduct').exec()
+
+    res.status(200).json(user.clothingBasket)
+  } catch (error) {
+    res.status(500).json({error : error.message})
+  }
+})
+
+
+exports.addShelterProductToBasket =  catchAsyncErrors(async (req, res) => {
+  const { userId, shelterProductId, quantity } = req.body;
+
+  try {
+    // Find the user by their ID
+    const user = await User.findById(userId);
+
+    // Create a new item with the clothingProduct and quantity
+    const newItem = {
+      shelterProduct: shelterProductId,
+      quantity: quantity,
+    };
+
+    // Push the new item to the clothingBasket array
+    user.shelterBasket.push(newItem);
+
+    // Save the updated user object
+    await user.save();
+
+    res.status(200).json({ message: 'Item added to basket successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'An error occurred while adding the item to the basket' });
+  }
+});
+
+
+exports.removeShelterProductFromBasket = catchAsyncErrors(async (req, res) => {
+  const { userId, itemId } = req.params;
+
+  try {
+    // Find the user by their ID
+    const user = await User.findById(userId);
+
+    // Find the index of the item in the clothingBasket array
+    const itemIndex = user.shelterBasket.findIndex((item) => item._id.toString() === itemId);
+
+    // If the item is found, remove it from the array
+    if (itemIndex !== -1) {
+      user.shelterBasket.splice(itemIndex, 1);
+      await user.save();
+      res.status(200).json({ message: 'Item removed from basket successfully' });
+    } else {
+      res.status(404).json({ message: 'Item not found in the basket' });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'An error occurred while removing the item from the basket' });
+  }
+});
+
+
+exports.getUserShelterProductsInBasket = catchAsyncErrors(async(req,res) => {
+  try {
+
+    const user = await User.findById(req.params.userId).populate('shelterBasket.shelterProduct').exec()
+
+    res.status(200).json(user.shelterBasket)
+  } catch (error) {
+    res.status(500).json({error : error.message})
+  }
+})
+
+
+exports.addMealProductToBasket =  catchAsyncErrors(async (req, res) => {
+  const { userId, mealProductId, quantity } = req.body;
+
+  try {
+    // Find the user by their ID
+    const user = await User.findById(userId);
+
+    // Create a new item with the clothingProduct and quantity
+    const newItem = {
+      mealProduct: mealProductId,
+      quantity: quantity,
+    };
+
+    // Push the new item to the clothingBasket array
+    user.mealBasket.push(newItem);
+
+    // Save the updated user object
+    await user.save();
+
+    res.status(200).json({ message: 'Item added to basket successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'An error occurred while adding the item to the basket' });
+  }
+});
+
+exports.removeMealProductFromBasket = catchAsyncErrors(async (req, res) => {
+  const { userId, itemId } = req.params;
+
+  try {
+    // Find the user by their ID
+    const user = await User.findById(userId);
+
+    // Find the index of the item in the clothingBasket array
+    const itemIndex = user.mealBasket.findIndex((item) => item._id.toString() === itemId);
+
+    // If the item is found, remove it from the array
+    if (itemIndex !== -1) {
+      user.mealBasket.splice(itemIndex, 1);
+      await user.save();
+      res.status(200).json({ message: 'Item removed from basket successfully' });
+    } else {
+      res.status(404).json({ message: 'Item not found in the basket' });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'An error occurred while removing the item from the basket' });
+  }
+});
+
+
+exports.getUserMealProductsInBasket = catchAsyncErrors(async(req,res) => {
+  try {
+
+    const user = await User.findById(req.params.userId).populate('mealBasket.mealProduct').exec()
+
+    res.status(200).json(user.mealBasket)
+  } catch (error) {
+    res.status(500).json({error : error.message})
+  }
+})
