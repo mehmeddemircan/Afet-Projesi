@@ -68,7 +68,7 @@ const LoggedInSegment = () => {
             </li>
             <li
               class="list-group-item border-0"
-              onClick={() => navigate("/favorilerim", { replace: true })}
+              onClick={() => navigate("/sepetim", { replace: true })}
             >
               <div className="d-inline-flex align-items-center">
                 <i class="fa-solid fa-shopping-cart me-2"></i>
