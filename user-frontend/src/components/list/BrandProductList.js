@@ -1,5 +1,5 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import LoadingSpinner from '../spinner/LoadingSpinner'
 import BrandProductCard from '../card/BrandProductCard'
 import EmptyComponent from '../empty/EmptyComponent'
@@ -9,7 +9,8 @@ const BrandProductList = () => {
 
     const  getAllProductsByBrand = useSelector((state) => state.brand.getAllProductsByBrand)
     const getSingleBrand = useSelector((state) => state.brand.getSingleBrand)
-    
+ 
+
 
   return (
     <div className='d-flex flex-row flex-wrap justify-content-start'>
