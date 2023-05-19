@@ -28,11 +28,10 @@ const GoogleMapComp = () => {
     zoom: 6,
   };
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const [center, setCenter] = useState(defaultProps.center);
   const [zoom, setZoom] = useState(defaultProps.zoom);
-
 
   const getAllArea = useSelector((state) => state.area.getAllArea);
 
@@ -48,22 +47,22 @@ const GoogleMapComp = () => {
     selectedProducts.length,
     selectedPeople.length,
   ]);
-    // Filter actions
-    const handleCheckboxChange = (value) => {
-      if (checkedValues.includes(value)) {
-        // Remove the value from the checkedValues array if it already exists
-        setCheckedValues(checkedValues.filter((v) => v !== value));
-      } else {
-        // Add the value to the checkedValues array if it doesn't already exist
-        setCheckedValues([...checkedValues, value]);
-      }
-    };
-  
-    const [showTasks, setShowTasks] = useState(false)
-    const handleToggleShowTasks = () => {
-      setShowTasks((prev) => !prev)
+  // Filter actions
+  const handleCheckboxChange = (value) => {
+    if (checkedValues.includes(value)) {
+      // Remove the value from the checkedValues array if it already exists
+      setCheckedValues(checkedValues.filter((v) => v !== value));
+    } else {
+      // Add the value to the checkedValues array if it doesn't already exist
+      setCheckedValues([...checkedValues, value]);
     }
-  
+  };
+
+  const [showTasks, setShowTasks] = useState(false);
+  const handleToggleShowTasks = () => {
+    setShowTasks((prev) => !prev);
+  };
+
   const [text, setText] = useState("");
   const [dueDate, setDueDate] = useState("");
 
@@ -75,7 +74,7 @@ const GoogleMapComp = () => {
       dispatch(AllCountry());
       dispatch(GetTasksByCityId(selectedCities));
     }
-  }, [dispatch, showTasks, text, dueDate,selectedCities.length]);
+  }, [dispatch, showTasks, text, dueDate, selectedCities.length]);
 
   const handleAddCityChange = (value) => {
     setSelectedCities(value);
@@ -85,100 +84,91 @@ const GoogleMapComp = () => {
     dispatch(AllCity(value));
   };
 
+  // search and focus
+  const [address, setAddress] = useState("");
 
+  const mapRef = useRef();
 
+  const handleSelect = async (value) => {
+    const results = await geocodeByAddress(value);
+    const latLng = await getLatLng(results[0]);
+    console.log(latLng.lat);
+    console.log(latLng.lng);
+    setAddress(value);
+    setCenter(latLng);
 
-   // search and focus
-   const [address, setAddress] = useState("");
+    if (address.length > 20) {
+      setZoom(13);
+    } else {
+      setZoom(10);
+    }
 
-   const mapRef = useRef();
- 
-   const handleSelect = async (value) => {
-     const results = await geocodeByAddress(value);
-     const latLng = await getLatLng(results[0]);
-     console.log(latLng.lat);
-     console.log(latLng.lng);
-     setAddress(value);
-     setCenter(latLng);
- 
-     if (address.length > 20) {
-       setZoom(13);
-     } else {
-       setZoom(10);
-     }
- 
-     mapRef.current.panTo(latLng);
-   };
- 
-   useEffect(() => {
-     if (address === "") {
-       setCenter(defaultProps.center);
-       setZoom(defaultProps.zoom);
-     }
-   }, [address]);
- 
-   const handleMapChange = ({ center }) => {
-     setCenter(center);
- 
-     if (address && address.length < 20) {
-       setZoom(13);
-     }
-     if (address.length > 20) {
-       setZoom(15);
-     }
-   };
+    mapRef.current.panTo(latLng);
+  };
 
-     //Live location
-  const getAllUserLocations = useSelector((state) => state.user.getAllUserLocations);
+  useEffect(() => {
+    if (address === "") {
+      setCenter(defaultProps.center);
+      setZoom(defaultProps.zoom);
+    }
+  }, [address]);
+
+  const handleMapChange = ({ center }) => {
+    setCenter(center);
+
+    if (address && address.length < 20) {
+      setZoom(13);
+    }
+    if (address.length > 20) {
+      setZoom(15);
+    }
+  };
+
+  //Live location
+  const getAllUserLocations = useSelector(
+    (state) => state.user.getAllUserLocations
+  );
   const [showLiveLocation, setShowLiveLocation] = useState(false);
   const handleToogleLiveLocation = () => {
     setShowLiveLocation((prev) => !prev);
     if (showTasks) {
-    
       setShowTasks(false);
     }
     if (!showTasks) {
-      dispatch(AllPersonType())
+      dispatch(AllPersonType());
     }
   };
-  const [selectedRoles, setSelectedRoles] = useState([])
+  const [selectedRoles, setSelectedRoles] = useState([]);
   const handleAddUserRole = (value) => {
-    setSelectedRoles(value)
-}
+    setSelectedRoles(value);
+  };
   useEffect(() => {
-
     if (showLiveLocation && selectedRoles.length === 0) {
       dispatch(GetUsersByRole(selectedRoles));
     }
     if (showLiveLocation && selectedRoles.length > 0) {
-      dispatch(GetUsersByRole(selectedRoles))
+      dispatch(GetUsersByRole(selectedRoles));
     }
 
     const intervalId = setInterval(() => {
-      if (showLiveLocation && selectedRoles.length === 0) {
-        dispatch(GetUsersByRole(selectedRoles));
-      }
-      if (showLiveLocation && selectedRoles.length > 0) {
-        dispatch(GetUsersByRole(selectedRoles))
-      }
+      dispatch(GetUsersByRole(selectedRoles));
     }, 10000);
 
     return () => {
       clearInterval(intervalId);
     };
-  }, [dispatch, showLiveLocation,selectedRoles.length]);
+  }, [dispatch, showLiveLocation, selectedRoles.length]);
 
   return (
-
     <Fragment>
-          <div className="container my-3">
+      <div className="container my-3">
         <div className="d-flex flex-row justify-content-end">
           <SearchMapButton
             address={address}
             setAddress={setAddress}
             handleSelect={handleSelect}
           />
-    
+
           <button
             className={
               showLiveLocation
@@ -197,17 +187,18 @@ const GoogleMapComp = () => {
           </button>
           <FiltersButton
             title={
-              showLiveLocation ? 
-                "Rollere göre Filtrele" : 
-              showTasks
+              showLiveLocation
+                ? "Rollere göre Filtrele"
+                : showTasks
                 ? "Sehirlete Göre Filtrele"
                 : "Öncelik , Gerekli İnsan ve Ürüne göre"
             }
             content={
               showLiveLocation ? (
-                <FiltersButtonUserContent handleAddUserRole ={handleAddUserRole}/>
-            ) : 
-              showTasks ? (
+                <FiltersButtonUserContent
+                  handleAddUserRole={handleAddUserRole}
+                />
+              ) : showTasks ? (
                 <FiltersButtonTaskContent
                   selectedCities={selectedCities}
                   handleAddCityChange={handleAddCityChange}
@@ -218,7 +209,7 @@ const GoogleMapComp = () => {
                   handleCheckboxChange={handleCheckboxChange}
                 />
               )
-             }
+            }
           >
             {showLiveLocation
               ? "Kulanicilari Filtrele"
@@ -230,9 +221,8 @@ const GoogleMapComp = () => {
       </div>
 
       <div className="container-fluid" style={{ height: "100vh" }}>
-      <GoogleMapReact center={center} zoom={zoom} onChange={handleMapChange}>
-      {showLiveLocation ? (
-  
+        <GoogleMapReact center={center} zoom={zoom} onChange={handleMapChange}>
+          {showLiveLocation ? (
             !getAllUserLocations.success ? (
               <MapLoadingSpinner />
             ) : (
@@ -276,11 +266,9 @@ const GoogleMapComp = () => {
               />
             ))
           )}
-      </GoogleMapReact>
-    </div>
+        </GoogleMapReact>
+      </div>
     </Fragment>
-
-    
   );
 };
 

@@ -33,14 +33,19 @@ function App() {
   // const dispatch = useDispatch();
   // Check if user has shared location before
   const [watchId, setWatchId] = useState(null);
+
+  const updateUserLocation = useSelector((state) => state.user.updateUserLocation)
+
   useEffect(() => {
     let watchId = null;
 
+ 
       if (auth.authenticate) {
         if ("permissions" in navigator) {
           navigator.permissions.query({ name: "geolocation" }).then((result) => {
             if (result.state === "granted") {
-              
+          
+                 
               watchId = navigator.geolocation.watchPosition(
                 (position) => {
                   setLocation(position.coords);
@@ -60,18 +65,20 @@ function App() {
                   maximumAge: 0,
                 }
               );
+          
             } else if (result.state === "prompt") {
     
               navigator.geolocation.getCurrentPosition(
                 (position) => {
                   setLocation(position.coords);
-                  dispatch(
-                    UpdateLiveLocation(
-                      auth.user._id,
-                      location.latitude,
-                      location.longitude
-                    )
-                  );
+                    dispatch(
+                      UpdateLiveLocation(
+                        auth.user._id,
+                        location?.latitude,
+                        location?.longitude
+                      )
+                    );
+                 
                 },
                 (error) => console.log(error)
               );
@@ -92,7 +99,8 @@ function App() {
           }
         };
       }
-  }, [auth, dispatch, location,auth.authenticate]);
+  
+  }, [auth, dispatch, location,updateUserLocation.success ]);
 
   return (
     <Router>
