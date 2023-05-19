@@ -114,7 +114,7 @@ exports.updateUserLocation = catchAsyncErrors(async (req, res) => {
     // Save the updated user to the database
     await user.save();
 
-    res.status(200).json({ message: "Location updated successfully" });
+    res.status(200).json({ message: "Location updated successfully" , user : user });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });
