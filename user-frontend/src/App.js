@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import NotFoundPage from "./pages/NotFoundPage";
@@ -13,6 +13,7 @@ import ClothingFormsPage from "./pages/ClothingFormsPage";
 import ShelterFormsPage from "./pages/ShelterFormsPage";
 import MealFormsPage from "./pages/MealFormsPage";
 import MyBasketPage from "./pages/MyBasketPage";
+import { UpdateLiveLocation } from "./redux/actions/UserActions";
 
 
 function App() {
@@ -26,6 +27,73 @@ function App() {
       dispatch(isUserLoggedIn());
     }
   }, [auth.authenticate]);
+
+  const [location, setLocation] = useState(null);
+
+  // const dispatch = useDispatch();
+  // Check if user has shared location before
+  const [watchId, setWatchId] = useState(null);
+  useEffect(() => {
+    let watchId = null;
+
+      if (auth.authenticate) {
+        if ("permissions" in navigator) {
+          navigator.permissions.query({ name: "geolocation" }).then((result) => {
+            if (result.state === "granted") {
+              
+              watchId = navigator.geolocation.watchPosition(
+                (position) => {
+                  setLocation(position.coords);
+                  dispatch(
+                    UpdateLiveLocation(
+                      auth.user._id,
+                      location?.latitude,
+                      location?.longitude
+                    )
+                  );
+                },
+                (error) => console.log(error),
+    
+                {
+                  enableHighAccuracy: true,
+                  timeout: 10000,
+                  maximumAge: 0,
+                }
+              );
+            } else if (result.state === "prompt") {
+    
+              navigator.geolocation.getCurrentPosition(
+                (position) => {
+                  setLocation(position.coords);
+                  dispatch(
+                    UpdateLiveLocation(
+                      auth.user._id,
+                      location.latitude,
+                      location.longitude
+                    )
+                  );
+                },
+                (error) => console.log(error)
+              );
+            } else {
+            
+              console.log("İzin verilmedi");
+            }
+          });
+        } else {
+         
+          console.log("izinleri desteklenmiyor");
+        }
+        setWatchId(watchId);
+    
+        return () => {
+          if (watchId) {
+            navigator.geolocation.clearWatch(watchId);
+          }
+        };
+      }
+  }, [auth, dispatch, location,auth.authenticate]);
+
   return (
     <Router>
       <Routes>

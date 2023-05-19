@@ -5,6 +5,10 @@ const initialState = {
   user: {
     name: "",
     email: "",
+    location : {
+      latitude : 0 ,
+      longitude : 0 
+    }
   },
   authenticate: false,
   authenticating: false,
